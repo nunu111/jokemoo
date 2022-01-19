@@ -4,7 +4,7 @@ using namespace std;
 void seat(char a[],int N,int M){
     for(int j = 0; j < M-2;j++){    
         for(int i=0; i<N ;i++){
-            if(i == 1 || i == M){
+            if(i == 0 || i == M){
                 a[i] = '|';
             }else{
                 a[i] = '.';
