@@ -1,18 +1,23 @@
-#include<iostream>
+ #include<iostream>
 using namespace std;
 
-void seat(int N,int M){
-    char seat[N][M];
-    for(int i=0; i<N ;i++){
-        for(int j=0; j<M ; j++){
-            if(i == 0 || i == N)seat[i][j] = '-';
-            else if(j == 0 || j == M) seat[i][j]= '|';
-            else seat[i][j]=' ';
+void seat(string a[],int N,int M){
+    for(int j = 0; j < M-2;j++){    
+        for(int i=0; i<N ;i++){
+            if(i == 1 || i == M){
+                a[i] = "|";
+            }else{
+                a[i] = "'";
+            }
         }
     }
 }
 
 int main(){
-seat(20,20);
+int M = 5;
+int N = 5;
+string block[(N*M)+(N+M)];
+seat(block,(N*M)+(N+M),M+2);
+
 return 0;
 }
