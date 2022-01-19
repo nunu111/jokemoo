@@ -1,15 +1,18 @@
 #include<iostream>
 using namespace std;
 
-int main(){
-int N=10,M=10;
-char seat[N][M];
-for(int i=0; i<N ;i++){
-    for(int j=0; j<M ; j++){
-        if(j%3==0)seat[i][j] = 'X';
-        else seat[i][j]= 'O';
+void seat(int N,int M){
+    char seat[N][M];
+    for(int i=0; i<N ;i++){
+        for(int j=0; j<M ; j++){
+            if(i == 0 || i == N)seat[i][j] = '-';
+            else if(j == 0 || j == M) seat[i][j]= '|';
+            else seat[i][j]=' ';
+        }
     }
 }
-cout << seat[0][0];
+
+int main(){
+seat(20,20);
 return 0;
 }
