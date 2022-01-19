@@ -1,13 +1,13 @@
  #include<iostream>
 using namespace std;
 
-void seat(string a[],int N,int M){
+void seat(char a[],int N,int M){
     for(int j = 0; j < M-2;j++){    
         for(int i=0; i<N ;i++){
             if(i == 1 || i == M){
-                a[i] = "|";
+                a[i] = '|';
             }else{
-                a[i] = "'";
+                a[i] = '.';
             }
         }
     }
@@ -16,7 +16,7 @@ void seat(string a[],int N,int M){
 int main(){
 int M = 5;
 int N = 5;
-string block[(N*M)+(N+M)];
+char block[(N*M)+(N+M)];
 seat(block,(N*M)+(N+M),M+2);
 
 return 0;
