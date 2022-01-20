@@ -38,34 +38,29 @@ void check_seat(string movie_name){
 }
 
 void seat(string a[],int N,int M){   
-        for(int i=0;i<N;i++){
-                a[i] = '.';
+        for(int i=0;i<N*M;i++){
+                a[i] = ".";
         }
 
 }
 
-void show(string a[],int N,int M){   
+void show(string a[],int N,int M){  
         for(int i=0;i<N;i++){
-            char A = 'A'+i;
+            char A = '1'+i;
             cout << A<<' ';
             cout << "| " ;
             for(int j=0;j<M;j++){
-                cout << a[i];
+                cout << a[j+(i*M)];
             }
             cout << " |" <<endl; 
         }  
 }
 
-void walk(string a[],int x,int number,int N){
-    for(int i;i<number;i++){
-        if(i <= ((x-1)*N)-1 || i >= ((x+1)*N)-1){
-            a[i] = ".";
-        }else{
-            a[i] = "=";
-        }
+void walk(string a[],int x,int number,int M){
+    for(int i=(x-1)*M;i<M*x;i++){
+            a[i] = " ";
     }
 }
-
 
 
 int main(){
@@ -75,7 +70,8 @@ int main(){
     seat(block,N,M);
     show(block,N,M);
     int A = 3;
-    walk(block,A,N*M,N);
+    cout << endl;
+    walk(block,A,N*M,M);
     show(block,N,M);
     return 0;
 }
