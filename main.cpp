@@ -4,8 +4,9 @@
 #include<cstdlib>
 using namespace std;
 
-void remove_movie(char movie_name[]){
-    remove(movie_name);
+void remove_movie(string movie_name){
+    const char *str = movie_name.c_str();
+    remove(str);
 }
 
 //สร้างไฟล์ขึ้นมาเพื่อจัดเก็บข้อมูลที่นั่ง * ย้ำว่าใช้สร้างเท่านั้นหากใช้ใหม่ข้อมูลเก่าจะหาย *
@@ -53,6 +54,7 @@ int main(){
     int N = 5;
     create_movieseat("matrix",N,M);
     check_seat("matrix");
+    remove_movie("matrix");
     char block[(N*M)+(N+M)];
     seat(block,(N*M)+(N+M),M+2);
     return 0;
