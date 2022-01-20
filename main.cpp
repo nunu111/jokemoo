@@ -62,6 +62,15 @@ void walk(string a[],int x,int number,int M){
     }
 }
 
+void comferm_seat(string a[],int N,int M){
+    for(int i=0;i<N*M;i++){
+        if(a[i] == "."){
+            a[i] = "0";
+        }
+    }
+        
+}
+
 
 int main(){
     int N = 5;
@@ -72,6 +81,8 @@ int main(){
     int A = 3;
     cout << endl;
     walk(block,A,N*M,M);
+    show(block,N,M);
+    comferm_seat(block,N,M);
     show(block,N,M);
     return 0;
 }
