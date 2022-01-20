@@ -61,5 +61,8 @@ int main(){
     seat(block,N,M);
     show(block,N,M);
     
+
+
+    อิอิ
     return 0;
 }
