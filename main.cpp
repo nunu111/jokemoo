@@ -44,25 +44,38 @@ void seat(string a[],int N,int M){
 
 }
 
-void show(string a[],int N,int M){     
+void show(string a[],int N,int M){   
         for(int i=0;i<N;i++){
-            cout << '|' ;
+            char A = 'A'+i;
+            cout << A<<' ';
+            cout << "| " ;
             for(int j=0;j<M;j++){
                 cout << a[i];
             }
-            cout << '|' <<endl; 
+            cout << " |" <<endl; 
         }  
 }
 
+void walk(string a[],int x,int number,int N){
+    for(int i;i<number;i++){
+        if(i <= ((x-1)*N)-1 || i >= ((x+1)*N)-1){
+            a[i] = ".";
+        }else{
+            a[i] = "=";
+        }
+    }
+}
+
+
+
 int main(){
-    int N = 3;
-    int M = 3;
+    int N = 5;
+    int M = 5;
     string block[(N*M)];
     seat(block,N,M);
     show(block,N,M);
-    
-
-
-    อิอิ
+    int A = 3;
+    walk(block,A,N*M,N);
+    show(block,N,M);
     return 0;
 }
