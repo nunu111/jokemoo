@@ -37,25 +37,25 @@ void check_seat(string movie_name){
     check.close();
 }
 
-void seat(char a[],int N,int M){
-    for(int j = 0; j < M-2;j++){  
-        for(int i=0; i<N ;i++){
-            if(i == 0 || i == M){
-                a[i] = '|';
-            }else{
+void seat(string a[],int N,int M){   
+        for(int i=0;i<N;i++){
                 a[i] = '.';
-            }
         }
-    }
+
+}
+
+void show(string a[],int N,int M){     
+        for(int i=0;i<N;i++){
+            cout << a[i];
+        }  
 }
 
 int main(){
-    int M = 5;
-    int N = 5;
-    create_movieseat("matrix",N,M);
-    check_seat("matrix");
-    remove_movie("matrix");
-    char block[(N*M)+(N+M)];
-    seat(block,(N*M)+(N+M),M+2);
+    int N = 3;
+    int M = 3;
+    string block[(N*M)];
+    seat(block,N,M);
+    show(block,N+2,M);
+    
     return 0;
 }
