@@ -46,11 +46,13 @@ void seat(string a[],int N,int M){
 
 void show(string a[],int N,int M){   
         for(int i=0;i<N;i++){
-            cout << '|' ;
+            char A = 'A'+i;
+            cout << A<<' ';
+            cout << "| " ;
             for(int j=0;j<M;j++){
                 cout << a[i];
             }
-            cout << '|' <<endl; 
+            cout << " |" <<endl; 
         }  
 }
 
