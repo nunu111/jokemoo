@@ -53,7 +53,8 @@ void show(string a[],int N,int M){
                 cout << a[j+(i*M)];
             }
             cout << " |" <<endl; 
-        }  
+        }
+    cout << endl;  
 }
 
 void walk(string a[],int x,int number,int M){
@@ -79,7 +80,6 @@ int main(){
     seat(block,N,M);
     show(block,N,M);
     int A = 3;
-    cout << endl;
     walk(block,A,N*M,M);
     show(block,N,M);
     comferm_seat(block,N,M);
