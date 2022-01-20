@@ -44,7 +44,7 @@ void seat(string a[],int N,int M){
 
 }
 
-void show(string a[],int N,int M){     
+void show(string a[],int N,int M){   
         for(int i=0;i<N;i++){
             cout << '|' ;
             for(int j=0;j<M;j++){
@@ -55,14 +55,11 @@ void show(string a[],int N,int M){
 }
 
 int main(){
-    int N = 3;
-    int M = 3;
+    int N = 5;
+    int M = 5;
     string block[(N*M)];
     seat(block,N,M);
     show(block,N,M);
     
-
-
-    อิอิ
     return 0;
 }
