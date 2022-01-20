@@ -7,6 +7,7 @@ using namespace std;
 void remove_movie(char movie_name[]){
     remove(movie_name);
 }
+
 //สร้างไฟล์ขึ้นมาเพื่อจัดเก็บข้อมูลที่นั่ง * ย้ำว่าใช้สร้างเท่านั้นหากใช้ใหม่ข้อมูลเก่าจะหาย *
 void create_movieseat(string movie_name,int N,int M){
     ofstream seatmovie (movie_name);
