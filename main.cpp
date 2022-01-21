@@ -76,7 +76,7 @@ void comferm_seat(string a[],int N,int M){
 int main(){
     int N = 5;
     int M = 5;
-    string block[(N*M)];
+    string *block=new string[N*M];
     seat(block,N,M);
     show(block,N,M);
     int A = 3;
@@ -84,5 +84,6 @@ int main(){
     show(block,N,M);
     comferm_seat(block,N,M);
     show(block,N,M);
+    delete [] block;
     return 0;
 }
