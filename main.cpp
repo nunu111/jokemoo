@@ -10,15 +10,15 @@ void remove_movie(string movie_name){
 }
 
 //สร้างไฟล์ขึ้นมาเพื่อจัดเก็บข้อมูลที่นั่ง * ย้ำว่าใช้สร้างเท่านั้นหากใช้ใหม่ข้อมูลเก่าจะหาย *
-void create_movieseat(string movie_name,int N,int M){
+void create_movieseat(string movie_name,string a[],int N,int M){
     ofstream seatmovie (movie_name);
     for(int i =0;i <N*M;i++){
-        seatmovie << "0" << "\n";
+        seatmovie << a[i] << "\n";
     }
     seatmovie.close();
 }
 //ยังไม่เสร็จ
-void check_seat(string movie_name){
+void check_seat(string movie_name,string a[]){
     string name,num;
     int i;
     ifstream check (movie_name);
@@ -28,9 +28,9 @@ void check_seat(string movie_name){
        i++;
        if (i >200) break;
     } while (movie_name != name);
-    while(getline(check,num)){
-        if( num == "0" ) cout << 'O';
-        else if ( num == "1" ) cout << 'X';
+    for(int i=0;getline(check,num);i++){
+        if( num == "0" )  a[i] = "O" ;
+        else if ( num == "1" ) a[i] = "X" ;
         else;
     }
     check.close();
@@ -44,15 +44,20 @@ void seat(string a[],int N,int M){
 }
 
 void show(string a[],int N,int M){  
-        for(int i=0;i<N;i++){
-            char A = '1'+i;
-            cout << A<<' ';
-            cout << "| " ;
-            for(int j=0;j<M;j++){
-                cout << a[j+(i*M)];
-            }
-            cout << " |" <<endl; 
+    cout << "    ";
+    for(int p=0;p<M;p++){
+        cout << char('A'+p);
+    }
+    cout << endl;
+    for(int i=0;i<N;i++){
+        char A = '1'+i;
+        cout << A<<' ';
+        cout << "| " ;
+        for(int j=0;j<M;j++){
+            cout << a[j+(i*M)];
         }
+        cout << " |" <<endl; 
+    }
     cout << endl;  
 }
 
