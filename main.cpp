@@ -76,10 +76,19 @@ void comferm_seat(string a[],int N,int M){
         
 }
 
-
+void showEX1(){
+    cout << " " << endl;
+        for(int i=0;i<6;i++){
+            cout << "Example" << "\t" ;
+            cout << char('A'+i);
+        }
+    
+}
 int main(){
-    int N = 5;
-    int M = 5;
+    int N;
+    int M;
+    cout << " " << endl;
+
     string *block=new string[N*M];
     seat(block,N,M);
     show(block,N,M);
