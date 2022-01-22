@@ -2,7 +2,10 @@
 #include<string>
 #include<fstream>
 #include<cstdlib>
+#include<windows.h>
 using namespace std;
+
+HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 
 void remove_movie(string movie_name){
     const char *str = movie_name.c_str();
@@ -44,17 +47,20 @@ void seat(string a[],int N,int M){
 }
 
 void show(string a[],int N,int M){  
-    cout << "    ";
+    cout << "         ";
     for(int p=0;p<M;p++){
         cout << char('A'+p);
+        cout << " ";
     }
     cout << endl;
     for(int i=0;i<N;i++){
+        cout << "    ";
         char A = '1'+i;
         cout << A<<' ';
-        cout << "| " ;
+        cout << "|  " ;
         for(int j=0;j<M;j++){
             cout << a[j+(i*M)];
+            cout << " ";
         }
         cout << " |" <<endl; 
     }
@@ -76,27 +82,88 @@ void comferm_seat(string a[],int N,int M){
         
 }
 
-void showEX1(){
+void showEX1(int &N,int &M){
     cout << " " << endl;
-        for(int i=0;i<6;i++){
-            cout << "Example" << "\t" ;
-            cout << char('A'+i);
+    SetConsoleTextAttribute(h,06);
+    cout << "Example" << endl;
+    SetConsoleTextAttribute(h,07);
+    cout << "        ";
+        for(int i=0;i<5;i++){
+            cout << " ";
+            cout << char('A'+i); 
         }
-    
+        SetConsoleTextAttribute(h,04);
+        cout << "   << column";
+        SetConsoleTextAttribute(h,7);
+    cout << endl;
+    cout << "    1 |  . . . . .  |";
+    SetConsoleTextAttribute(h,06);
+    cout << "               Equation" << endl;
+    SetConsoleTextAttribute(h,07);
+    cout << "    2 |  . . . . .  |";
+    SetConsoleTextAttribute(h,06);
+    cout << "        Number_of_seat =  line X column" << endl;
+    SetConsoleTextAttribute(h,07);
+    cout << "    3 |  . . . . .  |" << endl << endl;
+    SetConsoleTextAttribute(h,04);
+    cout << "         ^ ^ ^ ^ ^ ";
+    SetConsoleTextAttribute(h,11);
+    cout << "                 column = ";
+    cin >> M;
+    SetConsoleTextAttribute(h,04);
+    cout << "            line";
+    SetConsoleTextAttribute(h,11);
+    cout << "                    line = ";
+    cin >> N;
+    cout << endl;
+    SetConsoleTextAttribute(h,07);
 }
+
+void showEX2(int &A){
+    SetConsoleTextAttribute(h,06);
+    cout << "                                    Where is your aisle?" << endl;
+    SetConsoleTextAttribute(h,11);
+    cout << "                                    column = ";
+    cin >> A;
+    SetConsoleTextAttribute(h,07);
+}
+
+void showEX3(int x){
+    SetConsoleTextAttribute(h,06);
+    cout << "        Your cinema" << endl << endl;
+    SetConsoleTextAttribute(h,07);
+}
+
+string checkAns(string &Ans){
+    string sum;
+    SetConsoleTextAttribute(h,06);
+    cout << "                                    right or No" << endl;
+    cout << "                                    (Yes = y,No = n)" << endl;
+    SetConsoleTextAttribute(h,11);
+    cout << "                                    Your Answer is ";
+    cin >> sum;
+    SetConsoleTextAttribute(h,07);
+    Ans = sum;
+    return "Ans";
+}
+
 int main(){
     int N;
     int M;
-    cout << " " << endl;
-
-    string *block=new string[N*M];
-    seat(block,N,M);
-    show(block,N,M);
-    int A = 3;
-    walk(block,A,N*M,M);
-    show(block,N,M);
-    comferm_seat(block,N,M);
-    show(block,N,M);
-    delete [] block;
+    string Ans;
+    do{
+        showEX1(N,M);
+        string *block=new string[N*M];
+        seat(block,N,M);
+        show(block,N,M);
+        int A;
+        showEX2(A);
+        walk(block,A,N*M,M);
+        show(block,N,M);
+        comferm_seat(block,N,M);
+        showEX3(1);
+        show(block,N,M);
+        checkAns(Ans);
+    }while(Ans != "y");
     return 0;
 }
