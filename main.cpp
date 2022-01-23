@@ -8,7 +8,7 @@
 using namespace std;
 
 HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
-
+//ไม่เสร็จ
 void remove_movie(string movie_name){
     const char *str = movie_name.c_str();
     remove(str);
@@ -161,7 +161,7 @@ string checkAns(string &Ans){
     Ans = sum;
     return "Ans";
 }
-
+//คล้าย main เลย แต่ต้องพิมพ์ 1 ก่อน
 void admin(){
     int N;
     int M;
@@ -195,12 +195,12 @@ void runprogram(){
     cout <<"\n>>> ";
     getline(cin,moviename);
     for(int i=0,j=0;i<a.size();i++){
-        if(moviename == "saksit") admin();
-        if(moviename == a[i]){
+        if(moviename == "1") admin(); // ถ้าพิมพ์ 1 จะทำการสร้างโรง เหมือน main เมื่อก่อน
+        if(moviename == a[i]){             // หาหนังแล้วเข้าหน้าเลือกที่นั่ง *ยังไม่เสร็จ*
             j++;
         }
         else if(i== a.size()-1 && j ==0){
-            cout << "We cannot found movie pls try again\n>>> ";
+            cout << "We cannot found movie pls try again\n>>> "; //กรณีหาหนังไม่เจอ
             getline(cin,moviename);
             i = 0;
             continue;
