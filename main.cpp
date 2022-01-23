@@ -3,6 +3,8 @@
 #include<fstream>
 #include<cstdlib>
 #include<windows.h>
+#include<iomanip>
+#include<vector>
 using namespace std;
 
 HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -46,8 +48,8 @@ void seat(string a[],int N,int M){
 
 }
 
-void show(string a[],int N,int M){  
-    cout << "         ";
+void show(string a[],int N,int M){
+    cout << "          ";
     for(int p=0;p<M;p++){
         cout << char('A'+p);
         cout << " ";
@@ -55,8 +57,8 @@ void show(string a[],int N,int M){
     cout << endl;
     for(int i=0;i<N;i++){
         cout << "    ";
-        char A = '1'+i;
-        cout << A<<' ';
+        int A = i+1;
+        cout << setw(3) << left <<A;
         cout << "|  " ;
         for(int j=0;j<M;j++){
             cout << a[j+(i*M)];
