@@ -99,7 +99,7 @@ void comferm_seat(string a[],int N,int M){
 }
 
 void showEX1(int &N,int &M){
-    cout << " " << endl;
+    cout << "Please fill in the number of row seats in  the movie theather (including aisle) " << endl;
     SetConsoleTextAttribute(h,06);
     cout << "Example" << endl;
     SetConsoleTextAttribute(h,07);
