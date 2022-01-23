@@ -12,6 +12,18 @@ HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 void remove_movie(string movie_name){
     const char *str = movie_name.c_str();
     remove(str);
+    ifstream change ("listmovie.txt");
+    string check;
+    getline(change,check);
+    vector<string> a;
+    a.push_back(check);
+    change.close();
+    ofstream change ("listmovie.txt");
+    for (int i=0;i<a.size();i++){
+        if(movie_name == a[i]){
+            a[i] =" ";
+        }
+    }
 }
 
 //สร้างไฟล์ขึ้นมาเพื่อจัดเก็บข้อมูลที่นั่ง * ย้ำว่าใช้สร้างเท่านั้นหากใช้ใหม่ข้อมูลเก่าจะหาย *
@@ -21,6 +33,8 @@ void create_movieseat(string movie_name,string a[],int N,int M){
         seatmovie << a[i] << "\n";
     }
     seatmovie.close();
+    ofstream movie ("listmovie.txt",ios::app);
+    movie << movie_name << endl;
 }
 //ยังไม่เสร็จ
 void check_seat(string movie_name,string a[]){
@@ -149,7 +163,7 @@ string checkAns(string &Ans){
     return "Ans";
 }
 
-int main(){
+void admin(){
     int N;
     int M;
     string Ans;
@@ -167,5 +181,36 @@ int main(){
         show(block,N,M);
         checkAns(Ans);
     }while(Ans != "y");
+}
+
+void runprogram(){
+    ifstream movie ("listmovie.txt");
+    string moviename;
+    vector<string> a;
+    cout << "Hello, please choose your movie\n";
+    for(int i =0;getline(movie,moviename);i++){
+        a.push_back(moviename);
+        cout << setw(25)<<left <<a[i];
+        if(i==5) cout << endl;
+    }
+    cout <<"\n>>> ";
+    getline(cin,moviename);
+    for(int i=0,j=0;i<a.size();i++){
+        if(moviename == "saksit") admin();
+        if(moviename == a[i]){
+            j++;
+        }
+        else if(i== a.size()-1 && j ==0){
+            cout << "We cannot found movie pls try again\n>>> ";
+            getline(cin,moviename);
+            i = 0;
+            continue;
+        }
+    }
+    
+}
+
+int main(){
+    runprogram();
     return 0;
 }
