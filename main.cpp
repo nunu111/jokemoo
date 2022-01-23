@@ -18,7 +18,6 @@ void remove_movie(string movie_name){
     vector<string> a;
     a.push_back(check);
     change.close();
-    ofstream change ("listmovie.txt");
     for (int i=0;i<a.size();i++){
         if(movie_name == a[i]){
             a[i] =" ";
