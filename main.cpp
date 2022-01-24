@@ -163,7 +163,7 @@ string checkAns(string &Ans){
 }
 //คล้าย main เลย แต่ต้องพิมพ์ 1 ก่อน
 void admin(){
-    int N,M,Ans1;
+    int N,M,Ans1,room;
     string Ans;
     vector<string> theater;
     ifstream movie ("listmovie.txt");
@@ -171,9 +171,11 @@ void admin(){
     vector<string> a;
     while(1){
         cout << "Which system do you want to manage ?\n1 : Manage Theater\n2 : Manage movie\n0 : Go to Home page\nYour answer is ";
-        cin >> Ans1; 
+        cin >> Ans1;
         if(Ans1==1){
             do{
+                cout << "How many theater do you want ?\nYour answer is ";
+                cin >> room;
             showEX1(N,M);
             string *block=new string[N*M];
             seat(block,N,M);
@@ -191,7 +193,7 @@ void admin(){
             }
             delete [] block ;
             }while(Ans != "y");
-        }else if(Ans1==2){       //Movie setting;
+        }else if(Ans1==2){
             int Ans5,Ans2,Ans4;
             char Ans3;
             while(1){
@@ -254,10 +256,18 @@ void admin(){
             }
         }else if(Ans1==0) {
              ofstream theater1 ("theater.txt");
+                for(int x=0; x<room ; x++){
                     for(int i=0;i<theater.size();i++){
                         theater1 << theater[i];
                     }
-                    theater1.close();
+                    theater1 << endl;
+                }    
+                theater1.close();
+            ofstream movielist1 ("listmovie.txt");
+                    for(int i=0;i<a.size();i++){
+                        movielist1 << a[i] << endl;
+                    }  
+                movielist1.close();
             break;
         }
         else{
@@ -274,26 +284,30 @@ void runprogram(){
     string textline;
     string Ans;
     input.open("listmovie.txt");
-    if((getline(input,textline))){
-        cout << "Hello, please choose your movie\n";
-        for(int i =0;getline(movie,moviename);i++){
-            a.push_back(moviename);
-            cout << setw(25)<<left <<a[i];
-            if(i==5) cout << endl;
-        }
-    }else{
-        cout << "Now There are no movies on the list." << endl;
-        cout << "Please Manage movie." << endl;
-        cout << "Pass y to go to the Menu" << endl;
-        cout << "Your Answer is ";
-        cin >> Ans;
-        while(1){
-            if(Ans == "y"){
-                admin();
-            }else{
+    while(1){
+        if((getline(input,textline))){
+            cout << "Hello, please choose your movie\n";
+            for(int i =0;getline(movie,moviename);i++){
+                a.push_back(moviename);
+                cout << setw(25)<<left <<a[i];
+                if(i==5) cout << endl;
+            }
+            break;
+        }else{
+            cout << "Now There are no movies on the list." << endl;
+            cout << "Please Manage movie." << endl;
             cout << "Pass y to go to the Menu" << endl;
             cout << "Your Answer is ";
-                cin >> Ans;
+            cin >> Ans;
+            while(1){
+                if(Ans == "y"){
+                    admin();
+                    break;
+                }else{
+                    cout << "Pass y to go to the Menu" << endl;
+                    cout << "Your Answer is ";
+                    cin >> Ans;
+                }
             }
         }
     }
@@ -318,6 +332,6 @@ void runprogram(){
 }
 
 int main(){
-    while(1) runprogram();
+    runprogram();
     return 0;
 }
