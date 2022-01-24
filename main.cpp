@@ -32,8 +32,6 @@ void create_movieseat(string movie_name,string a[],int N,int M){
         seatmovie << a[i] << "\n";
     }
     seatmovie.close();
-    ofstream movie ("listmovie.txt",ios::app);
-    movie << movie_name << endl;
 }
 //ยังไม่เสร็จ
 void check_seat(string movie_name,string a[]){
