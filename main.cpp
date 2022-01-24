@@ -179,6 +179,7 @@ void admin(){
         showEX3(1);
         show(block,N,M);
         checkAns(Ans);
+        delete [] block;
     }while(Ans != "y");
 }
 
