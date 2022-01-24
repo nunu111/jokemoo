@@ -247,18 +247,19 @@ void admin(){
                         if(Ans3 == 'n') break;
                     }
                 }else if(Ans5 == 0){
-                    ofstream theater1 ("theater.txt");
-                    for(int i=0;i<theater.size();i++){
-                        theater1 << theater[i];
-                    }
-                    theater1.close();
-                    //ต่อ เรื่องการคอนเฟิร์มและบันทึกลงไฟล์
                     break;
                 }else {
                     cout << "Not find system manage.\nPlease try again.";
                 }
             }
-        }else if(Ans1==0) break;
+        }else if(Ans1==0) {
+             ofstream theater1 ("theater.txt");
+                    for(int i=0;i<theater.size();i++){
+                        theater1 << theater[i];
+                    }
+                    theater1.close();
+            break;
+        }
         else{
             cout << "Not find system manage.\nPlease try again.";
         }
