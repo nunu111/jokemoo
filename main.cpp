@@ -191,7 +191,7 @@ void admin(){
             }
             delete [] block ;
             }while(Ans != "y");
-        }else if(Ans1==2){
+        }else if(Ans1==2){       //Movie setting;
             int Ans5,Ans2,Ans4;
             char Ans3;
             while(1){
@@ -270,11 +270,32 @@ void runprogram(){
     ifstream movie ("listmovie.txt");
     string moviename;
     vector<string> a;
-    cout << "Hello, please choose your movie\n";
-    for(int i =0;getline(movie,moviename);i++){
-        a.push_back(moviename);
-        cout << setw(25)<<left <<a[i];
-        if(i==5) cout << endl;
+    ifstream input;
+    string textline;
+    string Ans;
+    input.open("listmovie.txt");
+    if((getline(input,textline))){
+        cout << "Hello, please choose your movie\n";
+        for(int i =0;getline(movie,moviename);i++){
+            a.push_back(moviename);
+            cout << setw(25)<<left <<a[i];
+            if(i==5) cout << endl;
+        }
+    }else{
+        cout << "Now There are no movies on the list." << endl;
+        cout << "Please Manage movie." << endl;
+        cout << "Pass y to go to the Menu" << endl;
+        cout << "Your Answer is ";
+        cin >> Ans;
+        while(1){
+            if(Ans == "y"){
+                admin();
+            }else{
+            cout << "Pass y to go to the Menu" << endl;
+            cout << "Your Answer is ";
+                cin >> Ans;
+            }
+        }
     }
     cout <<"\n>>> ";
     getline(cin,moviename);
