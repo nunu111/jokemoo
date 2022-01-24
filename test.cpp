@@ -9,11 +9,19 @@ using namespace std;
 int a[5] = {1,2,3,4,5};
 int N = 5;
 int main(){ 
-    ofstream outfile("test.txt"); 
+    ofstream Outputfile("test.txt"); 
     for(int i = 0;i<N;i++){
-        outfile << a[i] << endl; 
-}
-outfile.close();
+        Outputfile << a[i] << endl;
+    }
+    Outputfile.close();
+    ifstream input;
+    input.open("test.txt");
+    string textline;
+    while(getline(input,textline)){
+        cout << textline;
+    }
+    input.close();
+
 return 0;
 }
 

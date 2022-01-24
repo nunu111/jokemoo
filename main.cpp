@@ -79,7 +79,11 @@ void show(string a[],int N,int M){
         }
         cout << " |" <<endl; 
     }
-    cout << endl;  
+    cout << endl << endl;
+    for(int j=0;j<M+2;j++){
+                                //ยังไม่เสร็จ
+    }
+      
 }
 
 void walk(string a[],int x,int number,int M){
@@ -97,9 +101,9 @@ void comferm_seat(string a[],int N,int M){
         
 }
 
-void showEX1(int &N,int &M){
-    cout << "Please fill in the number of row seats in  the movie theather (including aisle) " << endl;
+void showEX1(int &N,int &M){    //check input ยังไม่เสร็จ
     SetConsoleTextAttribute(h,06);
+    cout << "Please fill in the number of row seats in  the movie theather (including aisle) " << endl;
     cout << "Example" << endl;
     SetConsoleTextAttribute(h,07);
     cout << "        ";
@@ -134,7 +138,7 @@ void showEX1(int &N,int &M){
     SetConsoleTextAttribute(h,07);
 }
 
-void showEX2(int &A){
+void showEX2(int &A){ //check input ยังไม่เสร็จ
     SetConsoleTextAttribute(h,06);
     cout << "                                    Where is your aisle?" << endl;
     SetConsoleTextAttribute(h,11);
@@ -149,7 +153,7 @@ void showEX3(int x){
     SetConsoleTextAttribute(h,07);
 }
 
-string checkAns(string &Ans){
+string checkAns(string &Ans){ //check input ยังไม่เสร็จ
     string sum;
     SetConsoleTextAttribute(h,06);
     cout << "                                    right or No" << endl;
@@ -208,6 +212,9 @@ void runprogram(){
     }
     
 }
+
+
+
 
 int main(){
     runprogram();
