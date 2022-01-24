@@ -283,8 +283,8 @@ void runprogram(){
     ifstream input;
     string textline;
     string Ans;
-    input.open("listmovie.txt");
     while(1){
+        input.open("listmovie.txt");
         if((getline(input,textline))){
             cout << "Hello, please choose your movie\n";
             for(int i =0;getline(movie,moviename);i++){
@@ -302,6 +302,7 @@ void runprogram(){
             while(1){
                 if(Ans == "y"){
                     admin();
+                    input.close();
                     break;
                 }else{
                     cout << "Pass y to go to the Menu" << endl;
