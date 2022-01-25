@@ -5,6 +5,7 @@
 #include<windows.h>
 #include<iomanip>
 #include<vector>
+#include<sstream>
 using namespace std;
 
 HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -168,41 +169,52 @@ void admin(){
     string moviename;
     vector<string> a;
     while(1){
+        //เลือกระบบที่ต้องการแก้ไข
         cout << "Which system do you want to manage ?\n1 : Manage Theater\n2 : Manage movie\n0 : Go to Home page\nYour answer is ";
         cin >> Ans1;
-        if(Ans1==1){
+        if(Ans1==1){//ระบบจัดการโรงหนัง
             do{
+                int count=1;
                 cout << "How many theater do you want ?\nYour answer is ";
                 cin >> room;
-            showEX1(N,M);
-            string *block=new string[N*M];
-            seat(block,N,M);
-            show(block,N,M);
-            int A;
-            showEX2(A);
-            walk(block,A,N*M,M);
-            show(block,N,M);
-            comferm_seat(block,N,M);
-            showEX3(1);
-            show(block ,N,M);
-            checkAns(Ans);
-            for(int i=0 ; i<N*M ; i++){
-                theater.push_back(*(block+i));
-            }
-            delete [] block ;
+                for(int i=0; i < room ;i++){
+                    showEX1(N,M);
+                    string *block=new string[N*M];
+                    seat(block,N,M);
+                    show(block,N,M);
+                    int A;
+                    showEX2(A);
+                    walk(block,A,N*M,M);
+                    show(block,N,M);
+                    comferm_seat(block,N,M);
+                    showEX3(1);
+                    show(block ,N,M);
+                    stringstream ss;
+                    ss << count;
+                    string s;
+                    ss >> s;
+                    theater.push_back(s);
+                    for(int i=0 ; i<N*M ; i++){
+                        theater.push_back(*(block+i));
+                    }
+                    delete [] block ;
+                    count++;
+                }
+                checkAns(Ans);
             }while(Ans != "y");
-        }else if(Ans1==2){
+        }else if(Ans1==2){//ระบบจัดการรอบหนัง
             int Ans5,Ans2,Ans4;
             char Ans3;
             while(1){
-                cout << "Movie program today" << endl;
+                cout << "Movie program today" << endl;//แสดงโปรแกรมหนังวันนี้
                 for(int i =0;getline(movie,moviename);i++){
                     a.push_back(moviename);
                     cout << "- " << a[i] << endl;
                 }
+                //เลือกเพิ่ม\ลบหนัง
                 cout << "What do you want to do ?\n1 : Add movie\n2 : Remove movie\n0 : Go to Admin setting\nYour answer is ";
                 cin >> Ans5;
-                if(Ans5 == 1){
+                if(Ans5 == 1){//ระบบเพิ่มหนัง
                     while(1){
                         string name;
                         cout << "What movie do you to add ?" << endl << "Your answer is ";
@@ -230,7 +242,7 @@ void admin(){
                         cin >> Ans3;
                         if(Ans3 == 'n') break;
                     }
-                }else if(Ans5 == 2){
+                }else if(Ans5 == 2){//ระบบลบหนัง
                     while(1){
                         cout << "Which movie do you to delete ?" << endl ;
                         for(int i =0;i<a.size();i++){
@@ -252,13 +264,13 @@ void admin(){
                     cout << "Not find system manage.\nPlease try again.";
                 }
             }
-        }else if(Ans1==0) {
+        }else if(Ans1==0) {//ออกไปหน้าหลัก(หน้าลูกค้า)และsaveการตั้งค่า
              ofstream theater1 ("theater.txt");
                 for(int x=0; x<room ; x++){
                     for(int i=0;i<theater.size();i++){
                         theater1 << theater[i];
+                        theater1 << endl;
                     }
-                    theater1 << endl;
                 }    
                 theater1.close();
             ofstream movielist1 ("listmovie.txt");
