@@ -382,9 +382,43 @@ void runprogram(){
     
 }
 
+
+void settime(int &x,int &y,int &mx,int &my,int &end){
+    cout << "START ";
+    cin >> x;
+    cout << x << ":";
+    cin >> mx;
+    cout << "howlong ";
+    cin >> y;
+    cout << y << ":";
+    cin >> my;
+}
+
+void Calcu(int &x,int &y,int &mx,int &my,int &end){
+    int sum;
+    sum = mx + my;
+        if(sum > 60 || sum == 60){
+            y += 1;
+            sum = sum - 60;
+        }
+    cout << "star " << x << ":" << mx << endl;
+    cout << "End " << x+y << ":" << sum << endl;
+    
+    
+}
+
+void timesetting(){
+    int timeStart,timeLong,MinniStart;
+    int minnilong=0;
+    int timeend=0;
+    settime(timeStart,timeLong,MinniStart,minnilong,timeend);
+    Calcu(timeStart,timeLong,MinniStart,minnilong,timeend);
+}
+
+
 int main(){
     if(refac == 0) passwordconfig();
-    
+    timesetting();
     runprogram();
     return 0;
 }
