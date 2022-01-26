@@ -15,6 +15,12 @@ HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 string password;
 int refac;
 
+string toUpperStr(string x){ //code เปลี่ยนตัวเป็นตัวใหญ่ทั้งหมด ของอาจารย์เห็นว่ามันใช้ได้
+    string y = x;
+    for(unsigned i = 0; i < x.size();i++) y[i] = toupper(x[i]);
+    return y;
+}
+
 string passwordcheck(){
     string p;
     ifstream isthatright ("Password");
@@ -33,7 +39,7 @@ void passwordconfig(){
     }
     else{
         pass.close();
-        cout << "This is the first time you run this program pls input your password" << endl;
+        cout << "This is the first time you run this program please input your password" << endl;
         cout <<">> ";
         getline(cin,bypass);
         ofstream by ("Password");
@@ -331,26 +337,26 @@ void runprogram(){
         input.open("listmovie.txt");
         if((getline(input,textline))){
             cout << "Hello, please choose your movie\n";
-            for(int i =0;getline(movie,moviename);i++){
+            for(int i =1;getline(movie,moviename);i++){
                 a.push_back(moviename);
-                cout << setw(25)<<left <<a[i];
-                if(i==5) cout << endl;
+                cout <<setw(10)<<"|* " <<setw(20)<<left << a[i-1] <<setw(25)<< right <<" *|" ;
+                if(i != 0 && i%2 == 0) cout << endl << endl;
             }
             break;
         }else{
-            cout << "Now There are no movies on the list." << endl;
+            cout << "There are no movies on the list." << endl;
             cout << "Please Manage movie." << endl;
-            cout << "Pass y to go to the Menu" << endl;
-            cout << "Your Answer is ";
+            cout << "Press y to go to the Menu" << endl;
+            cout << ">> ";
             cin >> Ans;
             while(1){
-                if(Ans == "y"){
+                if(toUpperStr(Ans) == toUpperStr("y")){
                     admin();
                     input.close();
                     break;
                 }else{
-                    cout << "Pass y to go to the Menu" << endl;
-                    cout << "Your Answer is ";
+                    cout << "Press y to go to the Menu" << endl;
+                    cout << ">> ";
                     cin >> Ans;
                 }
             }
@@ -363,11 +369,11 @@ void runprogram(){
             admin(); // ถ้าพิมพ์ 1 จะทำการสร้างโรง เหมือน main เมื่อก่อน
             break;
         }
-        if(moviename == a[i]){             // หาหนังแล้วเข้าหน้าเลือกที่นั่ง *ยังไม่เสร็จ*
+        if(toUpperStr(moviename) == toUpperStr(a[i])){             // หาหนังแล้วเข้าหน้าเลือกที่นั่ง *ยังไม่เสร็จ*
             j++;
         }
         else if(i== a.size()-1 && j ==0){
-            cout << "We cannot found movie pls try again\n>>> "; //กรณีหาหนังไม่เจอ
+            cout << "We cannot found movie please try again\n>>> "; //กรณีหาหนังไม่เจอ
             getline(cin,moviename);
             i = 0;
             continue;
