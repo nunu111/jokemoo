@@ -29,10 +29,10 @@ void passwordconfig(){
         cout <<">> ";
         getline(cin,bypass);
         ofstream by ("Password");
-        int ran= (rand()/94)+33;
-        by << ran << endl;
+        int ran= (rand()%94)+33;
+        by << ran/2 << endl;
         for (int i=0;i<bypass.size();i++){
-            by << char(bypass.c_str()[i]+ran) <<endl;
+            by << char(((bypass.c_str()[i]+ran)%94)+33) <<endl;
         }
         by.close();
 
@@ -373,7 +373,7 @@ void runprogram(){
 }
 
 int main(){
-    //if(refac == 0) passwordconfig();
+    if(refac == 0) passwordconfig();
     
     runprogram();
     return 0;
