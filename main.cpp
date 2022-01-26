@@ -6,9 +6,38 @@
 #include<iomanip>
 #include<vector>
 #include<sstream>
+#include<ctime>
+#include<cstdlib>
 using namespace std;
 
 HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+
+string password;
+int refac;
+
+void passwordconfig(){
+    srand(time(0));
+    ifstream pass ("Password");
+    string p,bypass;
+    if(getline(pass,p)) {
+        refac=1;
+        pass.close();
+    }
+    else{
+        pass.close();
+        cout << "This is the first time you run this program pls input your password" << endl;
+        cout <<">> ";
+        getline(cin,bypass);
+        ofstream by ("Password");
+        int ran= rand()/201;
+        by << ran << endl;
+        for (int i=0;i<bypass.size();i++){
+            by << bypass.c_str()+ran;
+        }
+
+    }
+}
+
 //ไม่เสร็จ
 void remove_movie(string movie_name){
     const char *str = movie_name.c_str();
@@ -343,6 +372,8 @@ void runprogram(){
 }
 
 int main(){
+    if(refac == 0) passwordconfig();
+    
     runprogram();
     return 0;
 }
