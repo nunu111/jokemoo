@@ -15,12 +15,12 @@ HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 string password;
 int refac;
 
-void passwordcheck(){
+string passwordcheck(){
+    string p;
     ifstream isthatright ("Password");
-    int r;
-    string ch;
-    vector<char> a;
-    
+    getline(isthatright,p);
+    isthatright.close();
+    return p;
 }
 
 void passwordconfig(){
@@ -37,7 +37,7 @@ void passwordconfig(){
         cout <<">> ";
         getline(cin,bypass);
         ofstream by ("Password");
-    
+        by << bypass;
         by.close();
 
     }
@@ -359,7 +359,7 @@ void runprogram(){
     cout <<"\n>>> ";
     getline(cin,moviename);
     for(int i=0,j=0;i<a.size();i++){
-        if(moviename == "1") {
+        if(moviename == passwordcheck()) {
             admin(); // ถ้าพิมพ์ 1 จะทำการสร้างโรง เหมือน main เมื่อก่อน
             break;
         }
