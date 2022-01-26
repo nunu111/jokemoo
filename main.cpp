@@ -15,6 +15,14 @@ HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 string password;
 int refac;
 
+void passwordcheck(){
+    ifstream isthatright ("Password");
+    int r;
+    string ch;
+    vector<char> a;
+    
+}
+
 void passwordconfig(){
     srand(time(0));
     ifstream pass ("Password");
@@ -29,11 +37,7 @@ void passwordconfig(){
         cout <<">> ";
         getline(cin,bypass);
         ofstream by ("Password");
-        int ran= (rand()%94)+33;
-        by << ran/2 << endl;
-        for (int i=0;i<bypass.size();i++){
-            by << char(((bypass.c_str()[i]+ran)%94)+33) <<endl;
-        }
+    
         by.close();
 
     }
