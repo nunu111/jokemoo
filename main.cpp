@@ -10,6 +10,7 @@
 #include<cstdlib>
 using namespace std;
 
+string  file= ".txt";
 HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 
 string password;
@@ -200,9 +201,49 @@ string checkAns(string &Ans){
     Ans = sum;
     return "Ans";
 }
+
+
+void settime(int &x,int &y,int &mx,int &my,int &end){
+    cout << "Your answer is ( XX hr. : xx m.) ";
+    cin >> x;
+    cout << x << ":";
+    cin >> mx;
+    cout << "How long do you want to your cinema open ?" << endl;
+    cout << "Your answer is ( XX hr. : XX m.) ";
+    cin >> y;
+    cout << y << ":";
+    cin >> my;
+}
+
+void Calcu(int &x,int &y,int &mx,int &my,int &end){
+    int sum;
+    sum = mx + my;
+        if(sum > 60 || sum == 60){
+            y += 1;
+            sum = sum - 60;
+        }
+    cout << "Open => " << x << ":" << mx << endl;
+    cout << "Close => " << x+y << ":" << sum << endl;
+    
+    
+}
+
+void timesetting(){
+    int timeStart,timeLong,MinniStart;
+    int minnilong=0;
+    int timeend=0;
+    settime(timeStart,timeLong,MinniStart,minnilong,timeend);
+    Calcu(timeStart,timeLong,MinniStart,minnilong,timeend);
+}
+
+
+
+
+
+
 //คล้าย main เลย แต่ต้องพิมพ์ 1 ก่อน
 void admin(){
-    int N,M,Ans1,room;
+    int N,M,Ans1,room,mode1=0,mode2=0;
     string Ans;
     vector<string> theater;
     ifstream movie ("listmovie.txt");
@@ -210,10 +251,10 @@ void admin(){
     vector<string> a;
     while(1){
         //เลือกระบบที่ต้องการแก้ไข
-        cout << "Which system do you want to manage ?\n1 : Manage Theater\n2 : Manage movie\n0 : Go to Home page\nYour answer is ";
+        cout << "Which system do you want to manage ?\n1 : Theater manage\n2 : Movie manage\n3 : Time manage\n0 : Go to Home page\nYour answer is ";
         cin >> Ans1;
         if(Ans1==1){//ระบบจัดการโรงหนัง
-            do{
+            while(1){
                 int count=1;
                 cout << "How many theater do you want ?\nYour answer is ";
                 cin >> room;
@@ -240,8 +281,22 @@ void admin(){
                     delete [] block ;
                     count++;
                 }
-                checkAns(Ans);
-            }while(Ans != "y");
+                while(1){
+                    checkAns(Ans);
+                    if(Ans == "y") break;
+                    else if(Ans == "n"){
+                        theater.clear();
+                        break;
+                    }
+                    else{
+                        cout << "Please try again.";
+                    }
+                }
+                if(Ans == "y"){
+                    break;
+                }         
+            }
+            mode1++;
         }else if(Ans1==2){//ระบบจัดการรอบหนัง
             int Ans5,Ans2,Ans4;
             char Ans3;
@@ -286,7 +341,7 @@ void admin(){
                     while(1){
                         cout << "Which movie do you to delete ?" << endl ;
                         for(int i =0;i<a.size();i++){
-                            cout << a[i] << "<--- " << i+1 << endl;
+                            cout << a[i] << "    <--- " << i+1 << endl;
                         }
                         cout << "Your answer is ";
                         cin >> Ans4;
@@ -304,20 +359,45 @@ void admin(){
                     cout << "Not find system manage.\nPlease try again.";
                 }
             }
-        }else if(Ans1==0) {//ออกไปหน้าหลัก(หน้าลูกค้า)และsaveการตั้งค่า
-             ofstream theater1 ("theater.txt");
-                for(int x=0; x<room ; x++){
-                    for(int i=0;i<theater.size();i++){
-                        theater1 << theater[i];
-                        theater1 << endl;
+            mode2++;
+        }else if(Ans1==3){
+            while(1){
+                char x;
+                cout << "What time do you want to your cinema open ?" << endl;
+                timesetting();
+                while(1){
+                    cout << "Are you sure ? (Yes = y,No = n)"<<endl;
+                    cout << "Your answer is ";
+                    cin >> x;
+                    if(x == 'y'){
+                        break;
+                    }else if(x == 'n'){
+                        break;
+                    }else{
+                        cout << "Please try again."<< endl;
                     }
-                }    
-                theater1.close();
-            ofstream movielist1 ("listmovie.txt");
-                    for(int i=0;i<a.size();i++){
-                        movielist1 << a[i] << endl;
-                    }  
-                movielist1.close();
+                }
+                if(x = 'y'){
+                    break;
+                }
+            }
+
+        }else if(Ans1==0) {//ออกไปหน้าหลัก(หน้าลูกค้า)และsaveการตั้งค่า
+            if(mode1 != 0){
+                ofstream theater1 ("theater.txt");
+                        for(int i=0;i<theater.size();i++){
+                            theater1 << theater[i];
+                            theater1 << endl;
+                        }
+                    theater1.close();
+            }
+            if(mode2 != 0){
+                ofstream movielist1 ("listmovie.txt");
+                        for(int i=0;i<a.size();i++){
+                            movielist1 << a[i] << endl;
+                        }  
+                    movielist1.close();
+            }
             break;
         }
         else{
@@ -325,6 +405,7 @@ void admin(){
         }
     }
 }
+
 
 void runprogram(){
     ifstream movie ("listmovie.txt");
@@ -379,46 +460,11 @@ void runprogram(){
             continue;
         }
     }
-    
-}
-
-
-void settime(int &x,int &y,int &mx,int &my,int &end){
-    cout << "START ";
-    cin >> x;
-    cout << x << ":";
-    cin >> mx;
-    cout << "howlong ";
-    cin >> y;
-    cout << y << ":";
-    cin >> my;
-}
-
-void Calcu(int &x,int &y,int &mx,int &my,int &end){
-    int sum;
-    sum = mx + my;
-        if(sum > 60 || sum == 60){
-            y += 1;
-            sum = sum - 60;
-        }
-    cout << "star " << x << ":" << mx << endl;
-    cout << "End " << x+y << ":" << sum << endl;
-    
-    
-}
-
-void timesetting(){
-    int timeStart,timeLong,MinniStart;
-    int minnilong=0;
-    int timeend=0;
-    settime(timeStart,timeLong,MinniStart,minnilong,timeend);
-    Calcu(timeStart,timeLong,MinniStart,minnilong,timeend);
 }
 
 
 int main(){
     if(refac == 0) passwordconfig();
-    timesetting();
     runprogram();
     return 0;
 }
