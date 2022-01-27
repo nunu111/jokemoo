@@ -237,18 +237,26 @@ void timesetting(){
 }
 
 
-
-
-
+void ShowListMovie(vector<string> a){
+    cout << "This is your listmovie."<< endl;
+    cout << "-------------------------------------------"<< endl;
+    for(int i =0;i<a.size();i++){
+        cout << a[i] << "   <--- " << i+1 << endl;
+    }
+    cout << "-------------------------------------------"<< endl;
+}
 
 //คล้าย main เลย แต่ต้องพิมพ์ 1 ก่อน
 void admin(){
     int N,M,Ans1,room,mode1=0,mode2=0;
     string Ans;
     vector<string> theater;
+    ifstream time ("timemovie.txt");
     ifstream movie ("listmovie.txt");
+    string movietime;
     string moviename;
     vector<string> a;
+    vector<int> b;
     while(1){
         //เลือกระบบที่ต้องการแก้ไข
         cout << "Which system do you want to manage ?\n1 : Theater manage\n2 : Movie manage\n3 : Time manage\n0 : Go to Home page\nYour answer is ";
@@ -258,6 +266,7 @@ void admin(){
                 int count=1;
                 cout << "How many theater do you want ?\nYour answer is ";
                 cin >> room;
+                theater.clear();
                 for(int i=0; i < room ;i++){
                     showEX1(N,M);
                     string *block=new string[N*M];
@@ -306,49 +315,57 @@ void admin(){
                     a.push_back(moviename);
                     cout << "- " << a[i] << endl;
                 }
+                for(int i =0;getline(time,movietime);i++){
+                    b.push_back(stoi(movietime));
+                }
                 //เลือกเพิ่ม\ลบหนัง
                 cout << "What do you want to do ?\n1 : Add movie\n2 : Remove movie\n0 : Go to Admin setting\nYour answer is ";
                 cin >> Ans5;
                 if(Ans5 == 1){//ระบบเพิ่มหนัง
                     while(1){
+                        int t;
                         string name;
                         cout << "What movie do you to add ?" << endl << "Your answer is ";
                         cin.ignore();
                         getline(cin,name);
+                        cout << "How long this movie ? (minute unit)" << endl << "Your answer is ";
+                        cin >> t;
                         while(1){
                             cout << "Where do you want to insert movie in the list ?" << endl;
-                            for(int i =0;i<a.size();i++){
-                                cout << a[i] << "   <--- " << i+1 << endl;
-                            }
+                            ShowListMovie(a);
                             cout << "Your answer is ";
                             cin >> Ans2;
                             if(Ans2 > 0 && Ans2 <= a.size()+1){
                                 a.insert(a.begin()+Ans2-1,name);
+                                b.insert(b.begin()+Ans2-1,t);
                                 break;
                             }
                             else{
                                 cout << "Wrong!!! Please try again."<< endl;
                             }
                         }
-                        for(int i =0;i<a.size();i++){
-                                cout << a[i] << "   <--- " << i+1 << endl;
-                        }
+                        ShowListMovie(a);
                         cout << "Anything else ? (Yes = y or anything,No = n)"<< endl;
                         cin >> Ans3;
                         if(Ans3 == 'n') break;
                     }
                 }else if(Ans5 == 2){//ระบบลบหนัง
                     while(1){
-                        cout << "Which movie do you to delete ?" << endl ;
-                        for(int i =0;i<a.size();i++){
-                            cout << a[i] << "    <--- " << i+1 << endl;
+                        while(1){    
+                            cout << "Which movie do you to delete ?" << endl ;
+                            ShowListMovie(a);
+                            cout << "Your answer is ";
+                            cin >> Ans4;
+                            if(Ans4 > 0 && Ans4 <= a.size()+1){
+                                a.erase(a.begin()+Ans4-1);
+                                b.erase(b.begin()+Ans4-1);
+                                break;
+                            }
+                            else{
+                                cout << "Wrong!!! Please try again."<< endl;
+                            }
                         }
-                        cout << "Your answer is ";
-                        cin >> Ans4;
-                        a.erase(a.begin()+Ans4-1);
-                        for(int i =0;i<a.size();i++){
-                            cout << a[i] << "   <--- " << i+1 << endl;
-                        }
+                        ShowListMovie(a);
                         cout << "Anything else ? (Yes = y or anything,No = n)"<< endl;
                         cin >> Ans3;
                         if(Ans3 == 'n') break;
