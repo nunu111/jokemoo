@@ -464,6 +464,7 @@ void runprogram(){
         }
     }
 }
+
 void settime(int &x,int &y,int &mx,int &my){
     cout << "START ";
     cin >> x;
@@ -488,6 +489,7 @@ void Calcu(int &x,int &y,int &mx,int &my,int &end,int &mend){
     mend = sum;
     
 }
+
 void Line(int timeLong,int minnilong,int timeStart,int MinniStart,int timeend,int MinTimeEnd,int sum){
     for(int i = 0;i<sum;i++){
         cout << "-" ;
@@ -500,6 +502,7 @@ void Line(int timeLong,int minnilong,int timeStart,int MinniStart,int timeend,in
         cout << timeend << ":" << MinTimeEnd << endl;
 
 }  
+
 void showsetting(int x,int timeLong,int minnilong ,int timeStart,int MinniStart,int timeend,int MinTimeEnd,int &sum){
     sum += (timeLong*4);
     sum += (minnilong/15);
@@ -515,12 +518,24 @@ void showsetting(int x,int timeLong,int minnilong ,int timeStart,int MinniStart,
         Line(timeLong,minnilong,timeStart,MinniStart,timeend,MinTimeEnd,sum);
     }
 }
+
+string checkAns2(string &Ans){
+    string sum;
+    cout << "                                    right or No" << endl;
+    cout << "                                    (Yes = y,No = n)" << endl;
+    cout << "                                    Your Answer is ";
+    cin >> sum;
+    Ans = sum;
+    return "Ans";
+}
+
+
 void timesetting(){
     do{
     settime(timeStart,timeLong,MinniStart,minnilong);
     Calcu(timeStart,timeLong,MinniStart,minnilong,timeend,MinTimeEnd);
     showsetting(room,timeLong,minnilong,timeStart,MinniStart,timeend,MinTimeEnd,sum);
-    checkAns(Ans);
+    checkAns2(Ans);
         }while(Ans != "y");
         ofstream Outputfile("Timeline.txt");
         for(int j=0;j<room;j++){   
@@ -532,6 +547,7 @@ void timesetting(){
         Outputfile.close();
     
 }
+
 
 int main(){
     if(refac == 0) passwordconfig();
