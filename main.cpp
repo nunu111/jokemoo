@@ -19,7 +19,7 @@ int timeStart,timeLong,MinniStart,timeend,minnilong,MinTimeEnd,sum,room;
 string Ans;
 
 void timesetting(void);
-
+string checkAns(string &);
 
 string toUpperStr(string x){ //code เปลี่ยนตัวเป็นตัวใหญ่ทั้งหมด ของอาจารย์เห็นว่ามันใช้ได้
     string y = x;
@@ -207,6 +207,17 @@ string checkAns(string &Ans){
     return "Ans";
 }
 
+void checkAns2(string &Ans){
+    string sum;
+    SetConsoleTextAttribute(h,06);
+    cout << "  right or No" << endl;
+    cout << "  (Yes = y,No = n)" << endl;
+    SetConsoleTextAttribute(h,11);
+    cout << "Your Answer is ";
+    cin >> sum;
+    SetConsoleTextAttribute(h,07);
+    Ans = sum;
+}
 
 void settime(int &x,int &y,int &mx,int &my,int &end){
     cout << "Your answer is ( XX hr. : xx m.) ";
@@ -234,6 +245,7 @@ void Calcu(int &x,int &y,int &mx,int &my,int &end){
 }
 
 
+
 void ShowListMovie(vector<string> a){
     cout << "This is your listmovie."<< endl;
     cout << "-------------------------------------------"<< endl;
@@ -243,7 +255,7 @@ void ShowListMovie(vector<string> a){
     cout << "-------------------------------------------"<< endl;
 }
 //คล้าย main เลย แต่ต้องพิมพ์ 1 ก่อน
-void admin(){
+void admin(int &room){
     int N,M,Ans1,mode1=0,mode2=0;
     string Ans;
     vector<string> theater;
@@ -429,7 +441,7 @@ void runprogram(){
             cin >> Ans;
             while(1){
                 if(toUpperStr(Ans) == toUpperStr("y")){
-                    admin();
+                    admin(room);
                     input.close();
                     break;
                 }else{
@@ -445,7 +457,7 @@ void runprogram(){
     getline(cin,moviename);
     for(int i=0,j=0;i<a.size();i++){
         if(moviename == passwordcheck()) {
-            admin(); // ถ้าพิมพ์ 1 จะทำการสร้างโรง เหมือน main เมื่อก่อน
+            admin(room); // ถ้าพิมพ์ 1 จะทำการสร้างโรง เหมือน main เมื่อก่อน
             break;
         }
         if(toUpperStr(moviename) == toUpperStr(a[i])){             // หาหนังแล้วเข้าหน้าเลือกที่นั่ง *ยังไม่เสร็จ*
@@ -502,10 +514,9 @@ void Line(int timeLong,int minnilong,int timeStart,int MinniStart,int timeend,in
 }  
 
 void showsetting(int x,int timeLong,int minnilong ,int timeStart,int MinniStart,int timeend,int MinTimeEnd,int &sum){
-    sum += (timeLong*4);
-    sum += (minnilong/15);
+    sum = (timeLong*4)+(minnilong/15);
     for(int i=0;i<x;i++){
-        cout << "Cienama " << i << endl;
+        cout << "Cienama " << i+1 << endl;
         ifstream infile;
         infile.open("listmovie.txt");
         string textline;
@@ -517,15 +528,6 @@ void showsetting(int x,int timeLong,int minnilong ,int timeStart,int MinniStart,
     }
 }
 
-string checkAns2(string &Ans){
-    string sum;
-    cout << "                                    right or No" << endl;
-    cout << "                                    (Yes = y,No = n)" << endl;
-    cout << "                                    Your Answer is ";
-    cin >> sum;
-    Ans = sum;
-    return "Ans";
-}
 
 
 void timesetting(){
@@ -533,8 +535,17 @@ void timesetting(){
     settime(timeStart,timeLong,MinniStart,minnilong);
     Calcu(timeStart,timeLong,MinniStart,minnilong,timeend,MinTimeEnd);
     showsetting(room,timeLong,minnilong,timeStart,MinniStart,timeend,MinTimeEnd,sum);
-    checkAns2(Ans);
-        }while(Ans != "y");
+    while(1){
+        checkAns2(Ans);
+        if(Ans == "y") break;
+        else if(Ans == "n"){
+            break;
+        }else{
+            cout << "Please try again.";
+        }
+    }
+
+    }while(Ans != "y");
     ofstream Outputfile("Timeline.txt");
     for(int j=0;j<room;j++){   
         for(int i=0;i<sum;i++){
@@ -545,6 +556,8 @@ void timesetting(){
     Outputfile.close();
     
 }
+
+
 
 
 int main(){
