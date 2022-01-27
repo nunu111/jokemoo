@@ -407,6 +407,7 @@ void admin(){
 }
 
 
+
 void runprogram(){
     ifstream movie ("listmovie.txt");
     string moviename;
@@ -417,9 +418,11 @@ void runprogram(){
     while(1){
         input.open("listmovie.txt");
         if((getline(input,textline))){
-            cout << "Hello, please choose your movie\n";
+            SetConsoleTextAttribute(h,6);
+            cout <<endl<<setw(80) <<"\\|-*-*-*- Hello, please choose your movie -*-*-*-|/\n\n";
             for(int i =1;getline(movie,moviename);i++){
                 a.push_back(moviename);
+                SetConsoleTextAttribute(h,10);
                 cout <<setw(10)<<"|* " <<setw(20)<<left << a[i-1] <<setw(25)<< right <<" *|" ;
                 if(i != 0 && i%2 == 0) cout << endl << endl;
             }
@@ -443,6 +446,7 @@ void runprogram(){
             }
         }
     }
+    SetConsoleTextAttribute(h,15);
     cout <<"\n>>> ";
     getline(cin,moviename);
     for(int i=0,j=0;i<a.size();i++){
@@ -454,9 +458,12 @@ void runprogram(){
             j++;
         }
         else if(i== a.size()-1 && j ==0){
-            cout << "We cannot found movie please try again\n>>> "; //กรณีหาหนังไม่เจอ
+            SetConsoleTextAttribute(h,04);
+            cout << "We cannot found movie please try again\n"; //กรณีหาหนังไม่เจอ
+            SetConsoleTextAttribute(h,15);
+            cout << ">>> ";
             getline(cin,moviename);
-            i = 0;
+            i = -1;
             continue;
         }
     }
