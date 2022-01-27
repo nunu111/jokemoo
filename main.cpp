@@ -232,13 +232,6 @@ void Calcu(int &x,int &y,int &mx,int &my,int &end){
     
     
 }
-void timesetting(){
-    int timeStart,timeLong,MinniStart;
-    int minnilong=0;
-    int timeend=0;
-    settime(timeStart,timeLong,MinniStart,minnilong,timeend);
-    Calcu(timeStart,timeLong,MinniStart,minnilong,timeend);
-}
 
 
 void ShowListMovie(vector<string> a){
@@ -260,6 +253,7 @@ void admin(){
     string moviename;
     vector<string> a;
     vector<int> b;
+
     while(1){
         //เลือกระบบที่ต้องการแก้ไข
         cout << "Which system do you want to manage ?\n1 : Theater manage\n2 : Movie manage\n3 : Time manage\n0 : Go to Home page\nYour answer is ";
@@ -306,9 +300,14 @@ void admin(){
                 }
                 if(Ans == "y"){
                     break;
-                }         
+                }
             }
-            mode1++;
+            ofstream theater1 ("theater.txt");
+                for(int i=0;i<theater.size();i++){
+                    theater1 << theater[i];
+                    theater1 << endl;
+                }
+            theater1.close();
         }else if(Ans1==2){//ระบบจัดการรอบหนัง
             int Ans5,Ans2,Ans4;
             char Ans3;
@@ -379,45 +378,20 @@ void admin(){
                     cout << "Not find system manage.\nPlease try again.";
                 }
             }
-            mode2++;
+            ofstream movielist1 ("listmovie.txt");
+                for(int i=0;i<a.size();i++){
+                    movielist1 << a[i] << endl;
+                }
+            movielist1.close();
         }else if(Ans1==3){
             while(1){
                 char x;
                 cout << "What time do you want to your cinema open ?" << endl;
                 timesetting();
-                while(1){
-                    cout << "Are you sure ? (Yes = y,No = n)"<<endl;
-                    cout << "Your answer is ";
-                    cin >> x;
-                    if(x == 'y'){
-                        break;
-                    }else if(x == 'n'){
-                        break;
-                    }else{
-                        cout << "Please try again."<< endl;
-                    }
-                }
-                if(x = 'y'){
-                    break;
-                }
+                break;
             }
 
-        }else if(Ans1==0) {//ออกไปหน้าหลัก(หน้าลูกค้า)และsaveการตั้งค่า
-            if(mode1 != 0){
-                ofstream theater1 ("theater.txt");
-                        for(int i=0;i<theater.size();i++){
-                            theater1 << theater[i];
-                            theater1 << endl;
-                        }
-                    theater1.close();
-            }
-            if(mode2 != 0){
-                ofstream movielist1 ("listmovie.txt");
-                        for(int i=0;i<a.size();i++){
-                            movielist1 << a[i] << endl;
-                        }  
-                    movielist1.close();
-            }
+        }else if(Ans1==0) {//ออกไปหน้าหลัก(หน้าลูกค้า)
             break;
         }
         else{
@@ -561,14 +535,14 @@ void timesetting(){
     showsetting(room,timeLong,minnilong,timeStart,MinniStart,timeend,MinTimeEnd,sum);
     checkAns2(Ans);
         }while(Ans != "y");
-        ofstream Outputfile("Timeline.txt");
-        for(int j=0;j<room;j++){   
-            for(int i=0;i<sum;i++){
-                Outputfile << "-";
-            }
-        Outputfile << endl;    
+    ofstream Outputfile("Timeline.txt");
+    for(int j=0;j<room;j++){   
+        for(int i=0;i<sum;i++){
+            Outputfile << "-";
         }
-        Outputfile.close();
+        Outputfile << endl;    
+    }
+    Outputfile.close();
     
 }
 
