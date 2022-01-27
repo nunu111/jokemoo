@@ -15,6 +15,11 @@ HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 
 string password;
 int refac;
+int timeStart,timeLong,MinniStart,timeend,minnilong,MinTimeEnd,sum,room;
+string Ans;
+
+void timesetting(void);
+
 
 string toUpperStr(string x){ //code เปลี่ยนตัวเป็นตัวใหญ่ทั้งหมด ของอาจารย์เห็นว่ามันใช้ได้
     string y = x;
@@ -228,6 +233,7 @@ void Calcu(int &x,int &y,int &mx,int &my,int &end){
     
 }
 
+<<<<<<< HEAD
 void timesetting(){
     int timeStart,timeLong,MinniStart;
     int minnilong=0;
@@ -245,10 +251,15 @@ void ShowListMovie(vector<string> a){
     }
     cout << "-------------------------------------------"<< endl;
 }
+=======
+
+
+
+>>>>>>> 5189b132244fdbd0a2595233159a3ca191907f90
 
 //คล้าย main เลย แต่ต้องพิมพ์ 1 ก่อน
 void admin(){
-    int N,M,Ans1,room,mode1=0,mode2=0;
+    int N,M,Ans1,mode1=0,mode2=0;
     string Ans;
     vector<string> theater;
     ifstream time ("timemovie.txt");
@@ -424,6 +435,7 @@ void admin(){
 }
 
 
+
 void runprogram(){
     ifstream movie ("listmovie.txt");
     string moviename;
@@ -434,9 +446,11 @@ void runprogram(){
     while(1){
         input.open("listmovie.txt");
         if((getline(input,textline))){
-            cout << "Hello, please choose your movie\n";
+            SetConsoleTextAttribute(h,6);
+            cout <<endl<<setw(80) <<"\\|-*-*-*- Hello, please choose your movie -*-*-*-|/\n\n";
             for(int i =1;getline(movie,moviename);i++){
                 a.push_back(moviename);
+                SetConsoleTextAttribute(h,10);
                 cout <<setw(10)<<"|* " <<setw(20)<<left << a[i-1] <<setw(25)<< right <<" *|" ;
                 if(i != 0 && i%2 == 0) cout << endl << endl;
             }
@@ -460,6 +474,7 @@ void runprogram(){
             }
         }
     }
+    SetConsoleTextAttribute(h,15);
     cout <<"\n>>> ";
     getline(cin,moviename);
     for(int i=0,j=0;i<a.size();i++){
@@ -471,14 +486,84 @@ void runprogram(){
             j++;
         }
         else if(i== a.size()-1 && j ==0){
-            cout << "We cannot found movie please try again\n>>> "; //กรณีหาหนังไม่เจอ
+            SetConsoleTextAttribute(h,04);
+            cout << "We cannot found movie please try again\n"; //กรณีหาหนังไม่เจอ
+            SetConsoleTextAttribute(h,15);
+            cout << ">>> ";
             getline(cin,moviename);
-            i = 0;
+            i = -1;
             continue;
         }
     }
 }
+void settime(int &x,int &y,int &mx,int &my){
+    cout << "START ";
+    cin >> x;
+    cout << x << ":";
+    cin >> mx;
+    cout << "howlong ";
+    cin >> y;
+    cout << y << ":";
+    cin >> my;
+}
 
+void Calcu(int &x,int &y,int &mx,int &my,int &end,int &mend){
+    int sum = 0;
+    sum = mx + my;
+        if(sum > 60 || sum == 60){
+            y += 1;
+            sum = sum - 60;
+        }
+    cout << "star " << x << ":" << mx << endl;
+    cout << "End " << x+y << ":" << sum << endl;
+    end = x+y;
+    mend = sum;
+    
+}
+void Line(int timeLong,int minnilong,int timeStart,int MinniStart,int timeend,int MinTimeEnd,int sum){
+    for(int i = 0;i<sum;i++){
+        cout << "-" ;
+    }
+    cout << endl;
+    cout << timeStart << ":" << MinniStart;
+        for(int i=0;i<sum - 8;i++){
+            cout << " ";
+        } 
+        cout << timeend << ":" << MinTimeEnd << endl;
+
+}  
+void showsetting(int x,int timeLong,int minnilong ,int timeStart,int MinniStart,int timeend,int MinTimeEnd,int &sum){
+    sum += (timeLong*4);
+    sum += (minnilong/15);
+    for(int i=0;i<x;i++){
+        cout << "Cienama " << i << endl;
+        ifstream infile;
+        infile.open("listmovie.txt");
+        string textline;
+        while(getline(infile,textline)){
+            cout << textline << "  ";
+        }
+        cout << endl;
+        Line(timeLong,minnilong,timeStart,MinniStart,timeend,MinTimeEnd,sum);
+    }
+}
+void timesetting(){
+    do{
+    settime(timeStart,timeLong,MinniStart,minnilong);
+    Calcu(timeStart,timeLong,MinniStart,minnilong,timeend,MinTimeEnd);
+    showsetting(room,timeLong,minnilong,timeStart,MinniStart,timeend,MinTimeEnd,sum);
+    checkAns(Ans);
+        }while(Ans != "y");
+        ofstream Outputfile("Timeline.txt");
+        for(int j=0;j<room;j++){   
+            for(int i=0;i<sum;i++){
+                Outputfile << "-";
+            }
+        Outputfile << endl;    
+        }
+        Outputfile.close();
+    
+}
 
 int main(){
     if(refac == 0) passwordconfig();
