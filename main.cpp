@@ -232,8 +232,6 @@ void Calcu(int &x,int &y,int &mx,int &my,int &end){
     
     
 }
-
-<<<<<<< HEAD
 void timesetting(){
     int timeStart,timeLong,MinniStart;
     int minnilong=0;
@@ -251,12 +249,6 @@ void ShowListMovie(vector<string> a){
     }
     cout << "-------------------------------------------"<< endl;
 }
-=======
-
-
-
->>>>>>> 5189b132244fdbd0a2595233159a3ca191907f90
-
 //คล้าย main เลย แต่ต้องพิมพ์ 1 ก่อน
 void admin(){
     int N,M,Ans1,mode1=0,mode2=0;
