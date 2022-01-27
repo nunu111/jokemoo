@@ -8,43 +8,66 @@
 #include<sstream>
 using namespace std;
 
-void SelectSeat(){
-    ifstream seats("thearter.txt");
+void SelectSeat(string filemovie,string time_movie){
+    ifstream seats(filemovie);
     string select;
     vector<string> T;
-    int cinema,r;
-    string keep[5][5];
-    string thearter;
-   
-    cout << "input your cinema: ";
-    cin >> cinema;
-
+    string cinema,text;
+    
     while(getline(seats,select)){
-        int start = select.find_first_of("1");
-        int y = select.find_first_of("2");
-        cout << select.substr(start+1,y-1);
+        T.push_back(select);
     }
+     seats.close();
     
-    //ยังไม่เสร็จอีก
+    //เลือกโรงหนัง จากเวลาหนัง
+    for(int i = 0;i < T.size();i++){
+        if(T.at(i) == time_movie){
+            for(int j = i+1;j < T.size();j++){
+                text += T.at(j);
+            }
+        }
+    }
 
-    //เลือกโรงหนังที่ต้องการ
-    for(int i = 0;i < ;i++){
-        if(T.at(i) == 0 |T.at(i) == " "){
-            string thearter += T.at(i);
-        }
-        if(T.at(i) != cinema) break;
-        }
-    
+    for(int k = 0;k < text.size();k++){
+        if(text[k] == ' ' || text[k] == '0'){
+            cinema += text[k];
+        }else{
+            break;
+        } 
+    }
+   
+    //หาหลัก
+    int M = 0;
+    for(int i = 0;i < cinema.size();i++){
+        if(cinema[i] == ' ') M++;
+    }
+  
+    //หาแถว
+    int N = 0;
+    for(int i = 0;i < cinema.size();i++){
+        if(i%M == 0) N++;
+    }
+
+
     //เก็บที่นั่งในkeep
+    string keep[N][M];
     int k = 0;
-    for(int i = 0;i < 5;i++){
-        for(int j = 0;j < 5;j++){
-            keep[i][j] = thearter[k];
+    for(int i = 0;i < N;i++){
+        for(int j = 0;j < M;j++){
+            keep[i][j] = cinema[k];
             k++;
         }
     }
-    //ยังไม่เสร็จ
 
+    for(int i = 0;i < N;i++){
+        for(int j = 0;j < M;j++){
+            cout << keep[i][j];
+        }
+        cout << "\n";
+    }
+
+    int r;
+    char c;
     int answer;
     do{  
         if(answer == 2){
@@ -98,20 +121,18 @@ void SelectSeat(){
      
 
     //โชว์โรงหนัง
-    for(int i = 0;i < 5;i++){
-        for(int j = 0;j < 5;j++){
+    for(int i = 0;i < N;i++){
+        for(int j = 0;j < M;j++){
             cout << keep[i][j];
         }
         cout << "\n";
     }
 
-    seats.close();
+   
 }
 
 int main(){
-    SelectSeat();
-
-    
+    SelectSeat("theater.txt","500");
     return 0;
 
 
