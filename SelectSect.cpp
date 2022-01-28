@@ -16,18 +16,18 @@ void SelectSeat(string name_movie,string time_movie){
     vector<string> T;
     vector<string> t;
     string cinema,text;
-    int total = 0,p = 0;
+    int p = 0;
     
     while(getline(seats,All)){
         T.push_back(All);
-        total++;
     }
     seats.close();
-
+    /////////////////////////////////////////////////////
     while(getline(seats_cinema,select)){
         if(select == time_movie) break;
         p++; //ตัวเริ่มต้นของหัวโรง
     }
+
 
     //เก็บที่นั่งของโรงที่ต้องการ
     if(select == time_movie){
@@ -40,7 +40,7 @@ void SelectSeat(string name_movie,string time_movie){
         }
     }
 
-    //เอาไปเก็บไว้ในstring cinema
+    //เอาไปเก็บไว้ในstring
     for(int  i = 0;i < t.size();i++){
         cinema += t.at(i);
     }
@@ -66,7 +66,9 @@ void SelectSeat(string name_movie,string time_movie){
             keep[i][j] = cinema[k];
             k++;
         }
-    }
+    } 
+
+    //show ที่นั่ง
     for(int i = 0;i < N;i++){
         for(int j = 0;j < M;j++){
             cout << keep[i][j];
@@ -128,20 +130,28 @@ void SelectSeat(string name_movie,string time_movie){
     }while(answer != 3);
      
 
-    //โชว์โรงหนัง
+     //โชว์โรงหนัง
     for(int i = 0;i < N;i++){
         for(int j = 0;j < M;j++){
             cout << keep[i][j];
         }
         cout << "\n";
     }
-
+    
+    //เก็บเข้าไฟล์เดิม
+    int o = 0;
+    for(int i = 0;i < N;i++){
+        for(int j = 0;j < M;j++){
+            t[o] = keep[i][j];
+            o++;
+        }
+    } 
     for(int j = 0;j < t.size();j++){
-        T[j+p] = t[j];
+        T[j+p+1] = t[j];
     }
-
-    seats_cinema.close();
-
+    for(int i = 0;i < T.size();i++){
+        cout << T[i];
+    }
     ofstream s(name_movie+file);
     for(int k = 0;k < T.size();k++){
         s << T[k] << endl;
@@ -152,6 +162,7 @@ void SelectSeat(string name_movie,string time_movie){
 
 int main(){
     SelectSeat("theater","500");
+
     return 0;
 
 
