@@ -8,43 +8,74 @@
 #include<sstream>
 using namespace std;
 
-void SelectSeat(){
-    ifstream seats("thearter.txt");
-    string select;
+void SelectSeat(string name_movie,string time_movie){
+    string file = ".txt";
+    ifstream seats(name_movie+file);
+    ifstream seats_cinema(name_movie+file);
+    string All,select;
     vector<string> T;
-    int cinema,r;
-    string keep[5][5];
-    string thearter;
-   
-    cout << "input your cinema: ";
-    cin >> cinema;
-
-    while(getline(seats,select)){
-        int start = select.find_first_of("1");
-        int y = select.find_first_of("2");
-        cout << select.substr(start+1,y-1);
+    vector<string> t;
+    string cinema,text;
+    int total = 0,p = 0;
+    
+    while(getline(seats,All)){
+        T.push_back(All);
+        total++;
     }
-    
-    //ยังไม่เสร็จอีก
+    seats.close();
 
-    //เลือกโรงหนังที่ต้องการ
-    for(int i = 0;i < ;i++){
-        if(T.at(i) == 0 |T.at(i) == " "){
-            string thearter += T.at(i);
+    while(getline(seats_cinema,select)){
+        if(select == time_movie) break;
+        p++; //ตัวเริ่มต้นของหัวโรง
+    }
+
+    //เก็บที่นั่งของโรงที่ต้องการ
+    if(select == time_movie){
+        for(int j = 0;getline(seats_cinema,select);j++){
+            if(select == "0" || select == " " || select == "X" ){
+                t.push_back(select);
+            }else{
+                break;
+            }
         }
-        if(T.at(i) != cinema) break;
-        }
-    
+    }
+
+    //เอาไปเก็บไว้ในstring cinema
+    for(int  i = 0;i < t.size();i++){
+        cinema += t.at(i);
+    }
+   
+    //หาหลัก
+    int M = 0;
+    for(int i = 0;i < cinema.size();i++){
+        if(cinema[i] == ' ') M++;
+    }
+  
+    //หาแถว
+    int N = 0;
+    for(int i = 0;i < cinema.size();i++){
+        if(i%M == 0) N++;
+    }
+
+
     //เก็บที่นั่งในkeep
+    string keep[N][M];
     int k = 0;
-    for(int i = 0;i < 5;i++){
-        for(int j = 0;j < 5;j++){
-            keep[i][j] = thearter[k];
+    for(int i = 0;i < N;i++){
+        for(int j = 0;j < M;j++){
+            keep[i][j] = cinema[k];
             k++;
         }
     }
-    //ยังไม่เสร็จ
+    for(int i = 0;i < N;i++){
+        for(int j = 0;j < M;j++){
+            cout << keep[i][j];
+        }
+        cout << "\n";
+    }
 
+    int r;
+    char c;
     int answer;
     do{  
         if(answer == 2){
@@ -98,20 +129,29 @@ void SelectSeat(){
      
 
     //โชว์โรงหนัง
-    for(int i = 0;i < 5;i++){
-        for(int j = 0;j < 5;j++){
+    for(int i = 0;i < N;i++){
+        for(int j = 0;j < M;j++){
             cout << keep[i][j];
         }
         cout << "\n";
     }
 
-    seats.close();
+    for(int j = 0;j < t.size();j++){
+        T[j+p] = t[j];
+    }
+
+    seats_cinema.close();
+
+    ofstream s(name_movie+file);
+    for(int k = 0;k < T.size();k++){
+        s << T[k] << endl;
+    }
+    s.close();
+    
 }
 
 int main(){
-    SelectSeat();
-
-    
+    SelectSeat("theater","500");
     return 0;
 
 
