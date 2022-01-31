@@ -81,6 +81,10 @@ void create_movieseat(string movie_name,string a[],int N,int M){
     seatmovie.close();
 }
 
+int timechange(int hr,int min){
+    return (hr*60)+min;
+}
+
 void seat(string a[],int N,int M){   
         for(int i=0;i<N*M;i++){
                 a[i] = ".";
@@ -243,6 +247,7 @@ void admin(int &room){
     vector<string> theater;
     ifstream time ("timemovie.txt");
     ifstream movie ("listmovie.txt");
+    ifstream theater ("theater.txt");
     string movietime;
     string moviename;
     vector<string> a;
@@ -250,7 +255,7 @@ void admin(int &room){
 
     while(1){
         //เลือกระบบที่ต้องการแก้ไข
-        cout << "Which system do you want to manage ?\n1 : Theater manage\n2 : Movie manage\n3 : Time manage\n0 : Go to Home page\nYour answer is ";
+        cout << "Which system do you want to manage ?\n1 : Theater manage\n2 : Movie manage\n3 : Time manage\n4 : Showing movie manage\n0 : Go to Home page\nYour answer is ";
         cin >> Ans1;
         if(Ans1==1){//ระบบจัดการโรงหนัง
             while(1){
@@ -302,6 +307,7 @@ void admin(int &room){
                     theater1 << endl;
                 }
             theater1.close();
+            theater.clear();
         }else if(Ans1==2){//ระบบจัดการรอบหนัง
             int Ans5,Ans2,Ans4;
             char Ans3;
@@ -377,6 +383,13 @@ void admin(int &room){
                     movielist1 << a[i] << endl;
                 }
             movielist1.close();
+            ofstream timemovie1 ("timemovie.txt");
+                for(int i=0;i<b.size();i++){
+                    timemovie1 << b[i] << endl;
+                }
+            timemovie1.close();
+            a.clear();
+            b.clear();
         }else if(Ans1==3){
             while(1){
                 char x;
@@ -384,7 +397,50 @@ void admin(int &room){
                 timesetting();
                 break;
             }
+        }else if(Ans1==4){
+            a.clear();
+            for(int i = 0;getline(movie,moviename);i++){
+                    a.push_back(moviename);
+                }
+            theater.clear();
+            while(1){
+                string name;
+                int N;
+                cout << "Movie program today :" <<endl;
+                for(unsigned int i=0;i<a.size();i++){
+                    cout << "- " << a[i] << endl;
+                }
+                cout << "what movie do want to manage ?" <<endl;
+                cin.ignore();
+                getline(cin,name);
+                cout << "How many " << name << " show ?" << endl;
+                cin >> N;
+                for(int i=0;i<N;i++){
+                    int hr,min;
+                    cout << "What time " << name << "show " << i+1 << "# ?"<< endl;
+                    cout << "Example : 8:00am ==> hr : 8" << endl;
+                    cout << "                     min : 0" << endl;
+                    cout << "          3:25pm ==> hr : 15" << endl;
+                    cout << "                     min : 25" << endl;
+                    while(1){
+                        cout << "Your anwser is :\nHr : " ;
+                        cin >> hr;
+                        cout << "Min : ";
+                        cin >> min;
+                        if(hr <= 0 && hr >=23 ){
+                            cout << "Hr is wrong !!! please try again.\n";
+                        }else if(min <= 0 && min >= 60){
+                            cout << "Min is wrong !!! please try again.\n";
+                        }else break;
+                    }
+                    int t=timechange(hr,min);
+                    
+                    //เดี๋ยวมาทำการใส่หนังในโรงต่อ
 
+                    create_movieseat(name+file,,N,t);
+                }
+
+            }
         }else if(Ans1==0) {//ออกไปหน้าหลัก(หน้าลูกค้า)
             break;
         }
