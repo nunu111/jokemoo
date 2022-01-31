@@ -80,24 +80,6 @@ void create_movieseat(string movie_name,string a[],int N,int M){
     }
     seatmovie.close();
 }
-//ยังไม่เสร็จ
-void check_seat(string movie_name,string a[]){
-    string name,num;
-    int i;
-    ifstream check (movie_name);
-    do
-    {
-       getline(check,name);
-       i++;
-       if (i >200) break;
-    } while (movie_name != name);
-    for(int i=0;getline(check,num);i++){
-        if( num == "0" )  a[i] = "O" ;
-        else if ( num == "1" ) a[i] = "X" ;
-        else;
-    }
-    check.close();
-}
 
 void seat(string a[],int N,int M){   
         for(int i=0;i<N*M;i++){
