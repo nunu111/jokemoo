@@ -420,7 +420,7 @@ void admin(int &room){
                 cout << "what movie do want to manage ?" <<endl;
                 getline(cin,name);
                 for(unsigned int i=0; i < a.size();i++){
-                    if(name==a[i]){
+                    if(toUpperStr(name)==toUpperStr(a[i])){
                         break;
                     }
                     else if (a.size() == i+1){
@@ -453,8 +453,6 @@ void admin(int &room){
                         }else break;
                     }
                     int t=timechange(hr,min);
-                    
-                    //เดี๋ยวมาทำการใส่หนังในโรงต่อ
 
                     cout << "which therter do you want for movie\n";
                     cin >> choose_therter;
