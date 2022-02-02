@@ -8,6 +8,30 @@
 #include<sstream>
 using namespace std;
 
+HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+
+void show(string a[],int N,int M){
+    cout << "          ";
+    for(int p=0;p<M;p++){
+        cout << char('A'+p);
+        cout << " ";
+    }
+    cout << endl;
+    for(int i=0;i<N;i++){
+        cout << "    ";
+        int A = i+1;
+        cout << setw(3) << left <<A;
+        cout << "|  " ;
+        for(int j=0;j<M;j++){
+            cout << a[j+(i*M)];
+            cout << " ";
+        }
+        cout << " |" <<endl; 
+    }
+    cout << endl;  
+}
+
+
 void SelectSeat(string name_movie,string time_movie){
     string file = ".txt";
     ifstream seats(name_movie+file);
@@ -67,23 +91,31 @@ void SelectSeat(string name_movie,string time_movie){
             k++;
         }
     } 
-
+     
+    
     //show ที่นั่ง
+    string Show[N*M];
+    int C = 0;
     for(int i = 0;i < N;i++){
         for(int j = 0;j < M;j++){
-            cout << keep[i][j];
+            Show[C] = keep[i][j] ;
+            C++;
         }
-        cout << "\n";
-    }
+    } 
+    show(Show,N,M);
 
+ 
     int r;
     char c;
     int answer;
     do{  
         if(answer == 2){
-           do{ 
+           do{  
+                SetConsoleTextAttribute(h,10);
                 cout << "input your seat that want cancelled: ";
                 cin >> c >> r ;
+
+                c = toupper(c);
 
                 //แปลงหลักเป็นเลข
                 int column;
@@ -95,11 +127,25 @@ void SelectSeat(string name_movie,string time_movie){
                 if(keep[r-1][column] == "0" || keep[r-1][column] == "X"){
                     keep[r-1][column] = "0";
                 }   
+                
+                SetConsoleTextAttribute(h,7);
+                //show ที่นั่ง
+                C = 0;
+                for(int i = 0;i < N;i++){
+                  for(int j = 0;j < M;j++){
+                    Show[C] = keep[i][j] ;
+                    C++;
+                  }
+                } 
+                show(Show,N,M);
+                
+                SetConsoleTextAttribute(h,6);
                 cout << "--------------------------------\n";
-                cout << "1. add seat\n" << "2. cancelled seat\n" << "3. Back to cinema\n"; 
+                cout << "1 : add seat\n" << "2 : cancelled seat\n" << "3 : DONE\n"; 
                 cout << "--------------------------------\n";
                 cout << "answer: ";
                 cin >> answer ; 
+                cout << "--------------------------------\n";
         
 
             }while(answer == 2);
@@ -107,8 +153,10 @@ void SelectSeat(string name_movie,string time_movie){
 
         if(answer == 3) break;
         
+        SetConsoleTextAttribute(h,10);
         cout << "input your seat: ";
         cin >> c >> r ;
+        c = toupper(c);
 
         //แปลงหลักเป็นเลข
         int column;
@@ -121,22 +169,36 @@ void SelectSeat(string name_movie,string time_movie){
             keep[r-1][column] = "X";
         }
 
+        SetConsoleTextAttribute(h,7);
+        C = 0;
+        for(int i = 0;i < N;i++){
+            for(int j = 0;j < M;j++){
+                Show[C] = keep[i][j] ;
+                C++;
+            }
+        } 
+        show(Show,N,M);
+   
+        SetConsoleTextAttribute(h,6);
         cout << "--------------------------------\n";
-        cout << "1. add seat\n" << "2. cancelled seat\n" << "3. Back to cinema\n"; 
+        cout << "1. : add seat\n" << "2. : cancelled seat\n" << "3. : DONE  \n"; 
         cout << "--------------------------------\n";
         cout << "answer: ";
         cin >> answer ; 
+        cout << "--------------------------------\n";
         
     }while(answer != 3);
-     
-
-     //โชว์โรงหนัง
+    
+    
+    C = 0;
     for(int i = 0;i < N;i++){
         for(int j = 0;j < M;j++){
-            cout << keep[i][j];
+            Show[C] = keep[i][j] ;
+            C++;
         }
-        cout << "\n";
-    }
+    } 
+    SetConsoleTextAttribute(h,7);
+    show(Show,N,M);
     
     //เก็บเข้าไฟล์เดิม
     int o = 0;
@@ -149,19 +211,17 @@ void SelectSeat(string name_movie,string time_movie){
     for(int j = 0;j < t.size();j++){
         T[j+p+1] = t[j];
     }
-    for(int i = 0;i < T.size();i++){
-        cout << T[i];
-    }
+
     ofstream s(name_movie+file);
     for(int k = 0;k < T.size();k++){
         s << T[k] << endl;
     }
-    s.close();
+    seats_cinema.close();
     
 }
 
 int main(){
-    SelectSeat("theater","500");
+    SelectSeat("theater","720");
 
     return 0;
 
