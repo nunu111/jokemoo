@@ -73,11 +73,12 @@ void remove_movie(string movie_name){
 }
 
 //สร้างไฟล์ขึ้นมาเพื่อจัดเก็บข้อมูลที่นั่ง * ย้ำว่าใช้สร้างเท่านั้นหากใช้ใหม่ข้อมูลเก่าจะหาย *
-void create_movieseat(string movie_name,string a[],int N,int M){
-    ofstream seatmovie (movie_name);
-    for(int i =0;i <N*M;i++){
-        seatmovie << a[i] << "\n";
-    }
+void create_movieseat(string movie_name,vector<string> a,int time){
+    ofstream seatmovie (movie_name,ios::app);
+        seatmovie << time << endl;
+        for(unsigned int j=0 ; j< a.size();j++){
+            seatmovie << a[j] << "\n";
+        }
     seatmovie.close();
 }
 
@@ -247,7 +248,8 @@ void admin(int &room){
     vector<string> theater;
     ifstream time ("timemovie.txt");
     ifstream movie ("listmovie.txt");
-    ifstream theater ("theater.txt");
+    ifstream theatera ("theater.txt");
+    string theatervec;
     string movietime;
     string moviename;
     vector<string> a;
@@ -257,6 +259,7 @@ void admin(int &room){
         //เลือกระบบที่ต้องการแก้ไข
         cout << "Which system do you want to manage ?\n1 : Theater manage\n2 : Movie manage\n3 : Time manage\n4 : Showing movie manage\n0 : Go to Home page\nYour answer is ";
         cin >> Ans1;
+        cin.ignore();
         if(Ans1==1){//ระบบจัดการโรงหนัง
             while(1){
                 int count=1;
@@ -323,6 +326,7 @@ void admin(int &room){
                 //เลือกเพิ่ม\ลบหนัง
                 cout << "What do you want to do ?\n1 : Add movie\n2 : Remove movie\n0 : Go to Admin setting\nYour answer is ";
                 cin >> Ans5;
+                cin.ignore();
                 if(Ans5 == 1){//ระบบเพิ่มหนัง
                     while(1){
                         int t;
@@ -398,23 +402,38 @@ void admin(int &room){
                 break;
             }
         }else if(Ans1==4){
+            int choose_therter;
             a.clear();
             for(int i = 0;getline(movie,moviename);i++){
                     a.push_back(moviename);
                 }
-            theater.clear();
+            for(int i = 0;getline(theatera,theatervec);i++){
+                    theater.push_back(theatervec);
+                }
             while(1){
-                string name;
+                string name,namecheck;
                 int N;
                 cout << "Movie program today :" <<endl;
                 for(unsigned int i=0;i<a.size();i++){
                     cout << "- " << a[i] << endl;
                 }
                 cout << "what movie do want to manage ?" <<endl;
-                cin.ignore();
                 getline(cin,name);
+                for(unsigned int i=0; i < a.size();i++){
+                    if(name==a[i]){
+                        break;
+                    }
+                    else if (a.size() == i+1){
+                        cout << "There have not movie "<<name<<" int the list try again\n\n";
+                        cout << "what movie do want to manage ?" <<endl;
+                        getline(cin,name);
+                        i=-1;
+                        continue;
+                    }
+                }
                 cout << "How many " << name << " show ?" << endl;
                 cin >> N;
+                cin.ignore();
                 for(int i=0;i<N;i++){
                     int hr,min;
                     cout << "What time " << name << "show " << i+1 << "# ?"<< endl;
@@ -427,9 +446,9 @@ void admin(int &room){
                         cin >> hr;
                         cout << "Min : ";
                         cin >> min;
-                        if(hr <= 0 && hr >=23 ){
+                        if(hr <= 0 || hr > 24 ){
                             cout << "Hr is wrong !!! please try again.\n";
-                        }else if(min <= 0 && min >= 60){
+                        }else if(min < 0 || min >= 60){
                             cout << "Min is wrong !!! please try again.\n";
                         }else break;
                     }
@@ -437,9 +456,33 @@ void admin(int &room){
                     
                     //เดี๋ยวมาทำการใส่หนังในโรงต่อ
 
-                    create_movieseat(name+file,,N,t);
+                    cout << "which therter do you want for movie\n";
+                    cin >> choose_therter;
+                    cin.ignore();
+                    vector<string> Cmovie;
+                    for(unsigned int i=0; i < theater.size();i++){
+                        if(choose_therter == atoi(theater[i].c_str())){
+                            for(int j=i+1; theater[j] == " "  || theater[j] == "0";j++){
+                                Cmovie.push_back(theater[j]);
+                            }
+                            break;
+                        }
+                    }
+                    create_movieseat(name+file,Cmovie,t);
                 }
-
+                string exit;
+                while (true){
+                cout << "Anything else????\nPress y to do it again  Press n to exit\n";
+                cin >> exit;
+                cin.ignore();
+                if(exit == "y");
+                else if (exit == "n") break;
+                else{
+                    cout << "There have not comman "<<exit<<" try again\n\n"; 
+                    continue;
+                    }
+                }
+                if (exit == "n") break;
             }
         }else if(Ans1==0) {//ออกไปหน้าหลัก(หน้าลูกค้า)
             break;
