@@ -556,6 +556,18 @@ void runprogram(){
     }
 }
 
+void showtime_movie(){
+    ifstream source;
+    source.open("movietime.txt");
+    string textline;
+    while(getline(source,textline))
+    cout << textline << "  ";
+}
+
+
+
+
+
 void settime(int &x,int &y,int &mx,int &my){
     cout << "START ";
     cin >> x;
@@ -596,17 +608,9 @@ void Line(int timeLong,int minnilong,int timeStart,int MinniStart,int timeend,in
 
 void showsetting(int x,int timeLong,int minnilong ,int timeStart,int MinniStart,int timeend,int MinTimeEnd,int &sum){
     sum = (timeLong*4)+(minnilong/15);
-    for(int i=0;i<x;i++){
-        cout << "Cienama " << i+1 << endl;
-        ifstream infile;
-        infile.open("listmovie.txt");
-        string textline;
-        while(getline(infile,textline)){
-            cout << textline << "  ";
-        }
+        cout << "Cienama Open - close"<< endl;
         cout << endl;
         Line(timeLong,minnilong,timeStart,MinniStart,timeend,MinTimeEnd,sum);
-    }
 }
 
 
@@ -635,9 +639,8 @@ void timesetting(){
         Outputfile << endl;    
     }
     Outputfile.close();
-    
-}
 
+}
 
 
 
