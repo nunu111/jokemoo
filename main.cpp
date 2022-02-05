@@ -8,71 +8,30 @@
 #include<sstream>
 #include<ctime>
 #include<cstdlib>
+#include"Password.h"
+#include"topupstr.h"
+#include"time_of_movie.h"
+#include"make_price.h"
 using namespace std;
 
 string  file= ".txt";
 HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 
 string password;
-int refac;
 int timeStart,timeLong,MinniStart,timeend,minnilong,MinTimeEnd,sum,room;
 string Ans;
 
 void timesetting(void);
 string checkAns(string &);
-
-string toUpperStr(string x){ //code เปลี่ยนตัวเป็นตัวใหญ่ทั้งหมด ของอาจารย์เห็นว่ามันใช้ได้
-    string y = x;
-    for(unsigned i = 0; i < x.size();i++) y[i] = toupper(x[i]);
-    return y;
-}
-
-string passwordcheck(){
-    string p;
-    ifstream isthatright ("Password");
-    getline(isthatright,p);
-    isthatright.close();
-    return p;
-}
-
-void passwordconfig(){
-    srand(time(0));
-    ifstream pass ("Password");
-    string p,bypass;
-    if(getline(pass,p)) {
-        refac=1;
-        pass.close();
-    }
-    else{
-        pass.close();
-        cout << "This is the first time you run this program please input your password" << endl;
-        cout <<">> ";
-        getline(cin,bypass);
-        ofstream by ("Password");
-        by << bypass;
-        by.close();
-
-    }
-}
+void runprogram();
 
 //ไม่เสร็จ
 void remove_movie(string movie_name){
     const char *str = movie_name.c_str();
     remove(str);
-    ifstream change ("listmovie.txt");
-    string check;
-    getline(change,check);
-    vector<string> a;
-    a.push_back(check);
-    change.close();
-    for (int i=0;i<a.size();i++){
-        if(movie_name == a[i]){
-            a[i] =" ";
-        }
-    }
 }
 
-//สร้างไฟล์ขึ้นมาเพื่อจัดเก็บข้อมูลที่นั่ง * ย้ำว่าใช้สร้างเท่านั้นหากใช้ใหม่ข้อมูลเก่าจะหาย *
+//สร้างไฟล์ขึ้นมาเพื่อจัดเก็บข้อมูลที่นั่ง สร้างต่อจากเดิม
 void create_movieseat(string movie_name,vector<string> a,int time){
     ofstream seatmovie (movie_name,ios::app);
         seatmovie << time << endl;
@@ -257,7 +216,7 @@ void admin(int &room){
 
     while(1){
         //เลือกระบบที่ต้องการแก้ไข
-        cout << "Which system do you want to manage ?\n1 : Theater manage\n2 : Movie manage\n3 : Time manage\n4 : Showing movie manage\n0 : Go to Home page\nYour answer is ";
+        cout << "Which system do you want to manage ?\n1 : Theater manage\n2 : Movie manage\n3 : Time manage\n4 : Showing movie manage\n5 : make price\n9 : Reset Password\n0 : Go to Home page\nYour answer is ";
         cin >> Ans1;
         cin.ignore();
         if(Ans1==1){//ระบบจัดการโรงหนัง
@@ -431,6 +390,7 @@ void admin(int &room){
                         continue;
                     }
                 }
+                remove_movie(name+file);
                 cout << "How many " << name << " show ?" << endl;
                 cin >> N;
                 cin.ignore();
@@ -453,7 +413,7 @@ void admin(int &room){
                         }else break;
                     }
                     int t=timechange(hr,min);
-
+                    
                     cout << "which therter do you want for movie\n";
                     cin >> choose_therter;
                     cin.ignore();
@@ -473,16 +433,25 @@ void admin(int &room){
                 cout << "Anything else????\nPress y to do it again  Press n to exit\n";
                 cin >> exit;
                 cin.ignore();
-                if(exit == "y");
-                else if (exit == "n") break;
+                if(toUpperStr(exit) == toUpperStr("y"))break;
+                else if (toUpperStr(exit) == toUpperStr("n")) break;
                 else{
                     cout << "There have not comman "<<exit<<" try again\n\n"; 
                     continue;
                     }
                 }
-                if (exit == "n") break;
+                if (exit == toUpperStr("n") || exit == toUpperStr("y")) break;
             }
+        }else if(Ans1 == 5){
+            a.clear();
+            for(int i = 0;getline(movie,moviename);i++){
+                    a.push_back(moviename);
+                }
+                check_decition(a);
+        }else if(Ans1 == 9){
+            reset_password();
         }else if(Ans1==0) {//ออกไปหน้าหลัก(หน้าลูกค้า)
+            runprogram();
             break;
         }
         else{
@@ -515,7 +484,7 @@ void runprogram(){
         }else{
             cout << "There are no movies on the list." << endl;
             cout << "Please Manage movie." << endl;
-            cout << "Press y to go to the Menu" << endl;
+            cout << "Press y to go setting" << endl;
             cout << ">> ";
             cin >> Ans;
             while(1){
@@ -524,7 +493,7 @@ void runprogram(){
                     input.close();
                     break;
                 }else{
-                    cout << "Press y to go to the Menu" << endl;
+                    cout << "Press y to go setting" << endl;
                     cout << ">> ";
                     cin >> Ans;
                 }
@@ -540,6 +509,7 @@ void runprogram(){
             break;
         }
         if(toUpperStr(moviename) == toUpperStr(a[i])){             // หาหนังแล้วเข้าหน้าเลือกที่นั่ง *ยังไม่เสร็จ*
+            check_time(moviename);
             j++;
         }
         else if(i== a.size()-1 && j ==0){
