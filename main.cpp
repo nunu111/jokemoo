@@ -9,7 +9,6 @@
 #include<ctime>
 #include<cstdlib>
 #include"Password.h"
-#include"time_of_movie.h"
 #include"make_price.h"
 using namespace std;
 
@@ -19,6 +18,35 @@ HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 string password;
 int timeStart,timeLong,MinniStart,timeend,minnilong,MinTimeEnd,sum,room;
 string Ans;
+
+int time_HR,time_min;
+
+void check_time(string movie){
+    string a;
+    vector<string> movie_time;
+    int number;
+    ifstream check_list (movie+file);
+    for (int i=0;getline(check_list,a);i++){
+        if(a != "0" && a != " "){
+            movie_time.push_back(a);
+        }
+    }
+    cout << "this movie have time ....\n";
+    for(int i=0; i<movie_time.size();i++){
+        cout << "[1]";
+        time_HR = atoi(movie_time[i].c_str())/60;
+        time_min = atoi(movie_time[i].c_str())-(time_HR*60);
+        if(time_min == 0){
+            cout << time_HR <<":"<<"00"<< "     ";
+        }
+        else{
+            cout << time_HR <<":"<<time_min<< "     ";
+        }
+    
+    }
+    cin >> number;
+    //SelectSeat(movie,atoi(movie_time[number].c_str()));
+}
 
 void timesetting(void);
 string checkAns(string &);
