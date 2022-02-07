@@ -17,7 +17,7 @@ void reset_password(){
     cout << ">>> ";
     cin >> newpassword;
     cin.ignore();
-    cout << newpassword << " is new password are you sure?\n[Y]Yes   [N]No\n";
+    cout << newpassword << " is your new password are you sure?\n[Y]Yes   [N]No\n";
     cin >> conf;
     if(conf == "y"){
         ofstream password ("Password");
