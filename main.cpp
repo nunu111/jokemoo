@@ -33,7 +33,7 @@ void check_time(string movie){
     }
     cout << "this movie have time ....\n";
     for(int i=0; i<movie_time.size();i++){
-        cout << "[1]";
+        cout << "["<<i+1<<"] ";
         time_HR = atoi(movie_time[i].c_str())/60;
         time_min = atoi(movie_time[i].c_str())-(time_HR*60);
         if(time_min == 0){
@@ -44,7 +44,9 @@ void check_time(string movie){
         }
     
     }
+    cout << endl<< ">>> ";
     cin >> number;
+    cin.ignore();
     //SelectSeat(movie,atoi(movie_time[number].c_str()));
 }
 
