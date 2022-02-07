@@ -300,7 +300,6 @@ void admin(int &room){
                         int t;
                         string name;
                         cout << "What movie do you to add ?" << endl << "Your answer is ";
-                        cin.ignore();
                         getline(cin,name);
                         cout << "How long this movie ? (minute unit)" << endl << "Your answer is ";
                         cin >> t;
@@ -321,6 +320,7 @@ void admin(int &room){
                         ShowListMovie(a);
                         cout << "Anything else ? (Yes = y or anything,No = n)"<< endl;
                         cin >> Ans3;
+                        cin.ignore();
                         if(Ans3 == 'n') break;
                     }
                 }else if(Ans5 == 2){//ระบบลบหนัง
