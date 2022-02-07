@@ -1,7 +1,13 @@
 #include<fstream>
 #include<iostream>
-#include"topupstr.h"
+
 using namespace std;
+
+string toUpperStr(string x){ //code เปลี่ยนตัวเป็นตัวใหญ่ทั้งหมด ของอาจารย์เห็นว่ามันใช้ได้
+    string y = x;
+    for(unsigned i = 0; i < x.size();i++) y[i] = toupper(x[i]);
+    return y;
+}
 
 int refac;
 
@@ -13,7 +19,7 @@ void reset_password(){
     cin.ignore();
     cout << newpassword << " is new password are you sure?\n[Y]Yes   [N]No\n";
     cin >> conf;
-    if(conf == toUpperStr("y")){
+    if(conf == "y"){
         ofstream password ("Password");
         password << newpassword;
         password.close();
