@@ -10,10 +10,10 @@
 #include<cstdlib>
 #include"Password.h"
 #include"make_price.h"
+#include"SelectSect.h"
 using namespace std;
 
 string  file= ".txt";
-HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 
 string password;
 int timeStart,timeLong,MinniStart,timeend,minnilong,MinTimeEnd,sum,room;
@@ -47,7 +47,7 @@ void check_time(string movie){
     cout << endl<< ">>> ";
     cin >> number;
     cin.ignore();
-    //SelectSeat(movie,atoi(movie_time[number].c_str()));
+    SelectSeat(movie,movie_time[number-1]);
 }
 
 void timesetting(void);
@@ -81,26 +81,6 @@ void seat(string a[],int N,int M){
 
 }
 
-void show(string a[],int N,int M){
-    cout << "          ";
-    for(int p=0;p<M;p++){
-        cout << char('A'+p);
-        cout << " ";
-    }
-    cout << endl;
-    for(int i=0;i<N;i++){
-        cout << "    ";
-        int A = i+1;
-        cout << setw(3) << left <<A;
-        cout << "|  " ;
-        for(int j=0;j<M;j++){
-            cout << a[j+(i*M)];
-            cout << " ";
-        }
-        cout << " |" <<endl; 
-    }
-    cout << endl;  
-}
 
 void walk(string a[],int x,int number,int M){
     for(int i=(x-1)*M;i<M*x;i++){
@@ -484,7 +464,7 @@ void admin(int &room){
             break;
         }
         else{
-            cout << "Not find system manage.\nPlease try again.";
+            cout << "Not find system manage.\nPlease try again.\n";
         }
     }
 }
