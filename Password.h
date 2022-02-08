@@ -13,16 +13,29 @@ int refac;
 
 void reset_password(){
     string newpassword,conf;
-    cout << "Input your new password\n";
-    cout << ">>> ";
-    cin >> newpassword;
-    cin.ignore();
-    cout << newpassword << " is your new password are you sure?\n[Y]Yes   [N]No\n";
-    cin >> conf;
-    if(conf == "y"){
-        ofstream password ("Password");
-        password << newpassword;
-        password.close();
+    while(1){
+        cout << "Input your new password\n";
+        cout << ">>> ";
+        cin >> newpassword;
+        cin.ignore();
+        cout << newpassword << " is your new password are you sure?\n[Y]Yes   [N]No\n";
+        while(true){
+            cout << ">>> ";
+            cin >> conf;
+            if(toUpperStr(conf) == "Y"){
+                ofstream password ("Password");
+                password << newpassword;
+                password.close();
+                break;
+            }
+            else if(toUpperStr(conf) == "N") break;
+            else{
+                cout << "You type worng command\n";
+                continue;
+            }
+        }
+        if(toUpperStr(conf) == "Y") break;
+        else if(toUpperStr(conf) == "N") continue;
     }
 
 }
@@ -37,19 +50,38 @@ string passwordcheck(){
 
 void passwordconfig(){
     ifstream pass ("Password");
-    string p,bypass;
+    string p,bypass,conf;
     if(getline(pass,p)) {
         refac=1;
         pass.close();
     }
     else{
-        pass.close();
-        cout << "This is the first time you run this program please input your password" << endl;
-        cout <<">> ";
-        getline(cin,bypass);
-        ofstream by ("Password");
-        by << bypass;
-        by.close();
-
+            pass.close();
+            ofstream by ("Password");
+            while(true){
+            cout << "This is the first time you run this program please input your password" << endl;
+            cout <<">>> ";
+            getline(cin,bypass);
+            cout << bypass << " is your new password are you sure?\n[Y]Yes   [N]No\n";
+            while(true){
+                cout << ">>> ";
+                cin >> conf;
+                cin.ignore();
+                if(toUpperStr(conf) == "Y"){
+                    ofstream password ("Password");
+                    password << bypass;
+                    password.close();
+                    break;
+                }
+                else if(toUpperStr(conf) == "N") break;
+                else{
+                    cout << "You type worng command\n";
+                    continue;
+                }
+            }
+            if(toUpperStr(conf) == "Y") break;
+            else if(toUpperStr(conf) == "N") continue;
+        }
     }
+
 }
