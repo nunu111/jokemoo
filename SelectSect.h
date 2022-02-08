@@ -11,7 +11,7 @@ using namespace std;
 
 HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 
-void show(vector<string> a,int N,int M){
+void show(vector<string> &a,int N,int M){
     cout << "          ";
     for(int p=0;p<M;p++){
         cout << char('A'+p);
@@ -193,9 +193,3 @@ void SelectSeat(string name_movie,string time_movie){
 
 
 
-int main(){
-    SelectSeat("theater","720");
-    
-    return 0;
-
-}

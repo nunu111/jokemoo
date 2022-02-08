@@ -74,21 +74,21 @@ int timechange(int hr,int min){
     return (hr*60)+min;
 }
 
-void seat(string a[],int N,int M){   
+void seat(vector<string> &a,int N,int M){   
         for(int i=0;i<N*M;i++){
-                a[i] = ".";
+                a.push_back(".");
         }
 
 }
 
 
-void walk(string a[],int x,int number,int M){
+void walk(vector<string> &a,int x,int number,int M){
     for(int i=(x-1)*M;i<M*x;i++){
-            a[i] = " ";
+        a[i] = " ";;
     }
 }
 
-void comferm_seat(string a[],int N,int M){
+void comferm_seat(vector<string> &a,int N,int M){
     for(int i=0;i<N*M;i++){
         if(a[i] == "."){
             a[i] = "0";
@@ -236,7 +236,7 @@ void admin(int &room){
                 theater.clear();
                 for(int i=0; i < room ;i++){
                     showEX1(N,M);
-                    string *block=new string[N*M];
+                    vector<string> block;
                     seat(block,N,M);
                     show(block,N,M);
                     int A;
@@ -245,17 +245,17 @@ void admin(int &room){
                     show(block,N,M);
                     comferm_seat(block,N,M);
                     showEX3(1);
-                    show(block ,N,M);
+                    show(block,N,M);
                     stringstream ss;
                     ss << count;
                     string s;
                     ss >> s;
                     theater.push_back(s);
                     for(int i=0 ; i<N*M ; i++){
-                        theater.push_back(*(block+i));
+                        theater.push_back(block[i]);
                     }
-                    delete [] block ;
                     count++;
+                    block.clear();
                 }
                 while(1){
                     checkAns(Ans);
