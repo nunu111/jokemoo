@@ -266,12 +266,6 @@ void SelectSeat(string name_movie,string time_movie){
 
 
 
-int main(){
-    SelectSeat("theater","720");
-    
-    return 0;
-
-}
 
 
 
