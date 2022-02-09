@@ -319,7 +319,7 @@ void admin(int &room){
                             }
                         }
                         ShowListMovie(a);
-                        cout << "Anything else ? (Yes = y or anything,No = n)"<< endl;
+                        cout << "Anything else ? (Yes = [Y] or anything,No = [N])"<< endl;
                         cin >> Ans3;
                         cin.ignore();
                         if(Ans3 == 'n') break;
