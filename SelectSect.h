@@ -11,7 +11,7 @@ using namespace std;
 
 HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 
-void show(vector<string> &a,int N,int M){
+void show(vector<string> a,int N,int M){
     cout << "          ";
     for(int p=0;p<M;p++){
         cout << char('A'+p);
@@ -77,109 +77,181 @@ void SelectSeat(string name_movie,string time_movie){
         if(i%M == 0) N++;
     }
 
-     
-    
-    //show ที่นั่ง
-    show(t,N,M);
  
-    string input;
     int r;
     char c;
-    int answer,column;
+    int answer = 0,column;
     do{  
         if(answer == 2){
            do{  
-                do{
-                   SetConsoleTextAttribute(h,10);
-                   cout << "input your seat that you want to cancelled(ex C 4):" << endl;
-                   cin >> c >> r;
-                   c = toupper(c);
-
-                   //ยังไม่เสร็จ
-        
-         
+                do{ 
+                    SetConsoleTextAttribute(h,7);
+                    show(t,N,M);
+ 
+                    SetConsoleTextAttribute(h,10);
+                    cout << "input your seat that you want to cancelled";
+                    SetConsoleTextAttribute(h,7);
+                    cout << "(ex) A1 = column: A , row: 1" << endl;
+                    SetConsoleTextAttribute(h,10);
+                    cout << "Column: ";
+                    SetConsoleTextAttribute(h,7);
+                    cin >> c ;
+                    SetConsoleTextAttribute(h,10);
+                    cout << "   Row: ";
+                    SetConsoleTextAttribute(h,7);
+                    cin >> r;
+                    cout << "\n";
+                    c = toupper(c);
+                    
+                    if(c >= 'A' && c < 'A'+ M){
+                        if(r >= 1 && r <= N){
+                            break;
+                        }else{
+                            SetConsoleTextAttribute(h,4);
+                            cout << "*|  Row: " << r << " do not have. |*" << endl;
+                            cout << "*|  Please select again. |*" << "\n";
+                        }
+                    }else{
+                        SetConsoleTextAttribute(h,4);
+                        cout << "*|  Column: " << c <<  " do not have. |*" << endl;
+                        cout << "*| Please select again. |*" << "\n";
+                    }
+                
                 }while(true);
 
                 //แปลงหลักเป็นเลข
-                   for(int i = 0;i < 26;i++){
-                      if(c == 'A'+i){
+                for(int i = 0;i < 26;i++){
+                    if(c == 'A'+i){
                         column = i;
                         break;
-                      }
                     }
+                }
                 
   
                 //ขึ้นสัญลักษณ์ ยกเลิก '0'; 
                 int point = column + M*(r-1);
-                if(t.at(point) == "X"){
+                if(t.at(point) == "S"){
                     t.at(point) = "0";
-                }else if(t.at(point) == "0") {
-                    cout << "lnvalid input." << endl;
+                    SetConsoleTextAttribute(h,7);
+                    show(t,N,M);
+                }else if(t.at(point) == "X" || t.at(point) == "0" || t.at(point) == " " ){
+                    SetConsoleTextAttribute(h,7);
+                    show(t,N,M);
+                    SetConsoleTextAttribute(h,4);
+                    cout << "* you can not cancelled this seat. *" << endl;
                 }
                 
-                SetConsoleTextAttribute(h,7);
-                //show ที่นั่ง
-                show(t,N,M);
- 
-                
+                do{
                 SetConsoleTextAttribute(h,6);
                 cout << "--------------------------------\n";
-                cout << "1 : add seat.\n" << "2 : cancelled seat.\n" << "3 : DONE.\n"; 
+                cout << "      1. : add seat.\n" << "      2. : cancelled seat.\n" <<   "      3. : DONE.  \n"; 
                 cout << "--------------------------------\n";
                 cout << "answer: ";
                 cin >> answer ; 
                 cout << "--------------------------------\n";
-        
+
+                if(answer == 1 || answer == 2 || answer == 3){
+                    break;
+                }else{
+                    SetConsoleTextAttribute(h,4);
+                    cout << answer << " do not have" << "\n";
+                }
+
+                }while(true);
 
             }while(answer == 2);
         }
 
         if(answer == 3) break;
+
+        SetConsoleTextAttribute(h,7);
+        show(t,N,M);
         
         do{
            SetConsoleTextAttribute(h,10);
-           cout << "input your seat. (ex C 4) : " << endl;
-           cin >> c >> r ;
+           cout << "input your seat.";
+           SetConsoleTextAttribute(h,7);
+           cout << "(ex) A1 = column: A , row: 1" << endl;
+           SetConsoleTextAttribute(h,10);
+           cout << "Column: ";
+           SetConsoleTextAttribute(h,7);
+           cin >> c ;
+           SetConsoleTextAttribute(h,10);
+           cout << "   Row: ";
+           SetConsoleTextAttribute(h,7);
+           cin >> r;
+           cout << "\n";
            c = toupper(c);
-           
-            //ยังไม่เสร็จ
-        
-
+ 
+           if(c >= 'A' && c < 'A'+ M){
+              if(r >= 1 && r <= N){
+                   break;
+              }else{
+                SetConsoleTextAttribute(h,4);
+                cout << "*|  Row: " << r << " do not have. |*" << endl;
+                cout << "*|  Please select again. |*" << "\n";
+            }
+            }else{
+                SetConsoleTextAttribute(h,4);
+                cout << "*|  Column: " << c <<  " do not have. |*" << endl;
+                cout << "*| Please select again. |*" << "\n";
+            }
         }while(true);
-
+      
+        //แปลงหลักเป็นเลข
+        for(int i = 0;i < 26;i++){
+            if(c == 'A'+i){
+                column = i;
+                break;
+            }
+        }
+           
     
         //ขึ้นสัญลักษณ์ จอง 'X'; 
         int point = column + M*(r-1);
         if(t.at(point) == "0"){
-            t.at(point) = "X";
-        }else if(t.at(point) == "X"){
-            cout << "This seat has been book." << endl;
-            cout << "Please select again." << endl;
+            t.at(point) = "S";
+            SetConsoleTextAttribute(h,7);
+            show(t,N,M);
+        }else if(t.at(point) == "X" || t.at(point) == "S" ){
+            SetConsoleTextAttribute(h,7);
+            show(t,N,M);
+            SetConsoleTextAttribute(h,4);
+            cout << "   * This seat has been book. *" << endl;
+            cout << "     * Please select again. * " << endl;
+        }else if(t.at(point) == " "){
+            cout << "* you can not cancelled this seat. *" << "\n";
         }
 
-        SetConsoleTextAttribute(h,7);
-        show(t,N,M);
+       
  
-   
+        do{
         SetConsoleTextAttribute(h,6);
         cout << "--------------------------------\n";
-        cout << "1. : add seat.\n" << "2. : cancelled seat.\n" << "3. : DONE.  \n"; 
+        cout << "      1. : add seat.\n" << "      2. : cancelled seat.\n" <<   "      3. : DONE.  \n"; 
         cout << "--------------------------------\n";
         cout << "answer: ";
         cin >> answer ; 
         cout << "--------------------------------\n";
+        if(answer == 1 || answer == 2 || answer == 3){
+            break;
+        }else{
+            SetConsoleTextAttribute(h,4);
+            cout << answer << " do not have" << "\n";
+        }
+        }while(true);
         
     }while(answer != 3);
     
     
-    
     SetConsoleTextAttribute(h,7);
     show(t,N,M);
- 
     
     //เก็บเข้าไฟล์เดิม
-
     for(int j = 0;j < t.size();j++){
+        if(t.at(j) == "S"){
+            t.at(j) = "X";
+        }
         T[j+p+1] = t[j];
     }
 
@@ -189,6 +261,16 @@ void SelectSeat(string name_movie,string time_movie){
     }
     seats_cinema.close();
     
+    
+}
+
+
+
+int main(){
+    SelectSeat("theater","720");
+    
+    return 0;
+
 }
 
 
