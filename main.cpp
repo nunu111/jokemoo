@@ -11,6 +11,7 @@
 #include"Password.h"
 #include"make_price.h"
 #include"SelectSect.h"
+#include"Payment.h"
 using namespace std;
 
 string  file= ".txt";
@@ -225,7 +226,7 @@ void admin(int &room){
 
     while(1){
         //เลือกระบบที่ต้องการแก้ไข
-        cout << "Which system do you want to manage ?\n1 : Theater manage\n2 : Movie manage\n3 : Time manage\n4 : Showing movie manage\n5 : make price\n9 : Reset Password\n0 : Go to Home page\nYour answer is ";
+        cout << "Which system do you want to manage ?\n1 : Theater manage\n2 : Movie manage\n3 : Time manage\n4 : Showing movie manage\n9 : Reset Password\n0 : Go to Home page\nYour answer is ";
         cin >> Ans1;
         cin.ignore();
         if(Ans1==1){//ระบบจัดการโรงหนัง
@@ -331,6 +332,7 @@ void admin(int &room){
                             cout << "Your answer is ";
                             cin >> Ans4;
                             if(Ans4 > 0 && Ans4 <= a.size()+1){
+                                remove_movie(a[Ans4-1]+file);
                                 a.erase(a.begin()+Ans4-1);
                                 b.erase(b.begin()+Ans4-1);
                                 break;
@@ -442,14 +444,14 @@ void admin(int &room){
                 cout << "Anything else????\nPress y to do it again  Press n to exit\n";
                 cin >> exit;
                 cin.ignore();
-                if(toUpperStr(exit) == toUpperStr("y"))break;
+                if(toUpperStr(exit) == "Y")break;
                 else if (toUpperStr(exit) == toUpperStr("n")) break;
                 else{
                     cout << "There have not comman "<<exit<<" try again\n\n"; 
                     continue;
                     }
                 }
-                if (toUpperStr(exit) == toUpperStr("n") || toUpperStr(exit) == toUpperStr("y")) break;
+                if (toUpperStr(exit) == "N" || toUpperStr(exit) == "Y") break;
             }
         }else if(Ans1 == 5){
             a.clear();
@@ -497,7 +499,7 @@ void runprogram(){
             cout << ">> ";
             cin >> Ans;
             while(1){
-                if(toUpperStr(Ans) == toUpperStr("y")){
+                if(toUpperStr(Ans) == "Y"){
                     admin(room);
                     input.close();
                     break;
