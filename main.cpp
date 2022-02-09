@@ -27,7 +27,7 @@ void check_time(string movie){
     int number;
     ifstream check_list (movie+file);
     for (int i=0;getline(check_list,a);i++){
-        if(a != "0" && a != " "){
+        if(a != "0" && a != " " && a != "X"){
             movie_time.push_back(a);
         }
     }
