@@ -200,7 +200,82 @@ void Calcu(int &x,int &y,int &mx,int &my,int &end){
     
 }
 
-
+void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater){
+    int choose_therter;
+    while(1){
+        string name,namecheck;
+        int N;
+        cout << "Movie program today :" <<endl;
+        for(unsigned int i=0;i<a.size();i++){
+            cout << "- " << a[i] << endl;
+        }
+         cout << "what movie do want to manage ?" <<endl;
+        getline(cin,name);
+        for(unsigned int i=0; i < a.size();i++){
+            if(toUpperStr(name)==toUpperStr(a[i])){
+                break;
+            }
+            else if (a.size() == i+1){
+                cout << "There have not movie "<<name<<" int the list try again\n\n";
+                cout << "what movie do want to manage ?" <<endl;
+                getline(cin,name);
+                i=-1;
+                continue;
+            }
+        }
+        remove_movie(name+file);
+        cout << "How many " << name << " show ?" << endl;
+        cin >> N;
+        cin.ignore();
+        for(int i=0;i<N;i++){
+            int hr,min;
+            cout << "What time " << name << "show " << i+1 << "# ?"<< endl;
+            cout << "Example : 8:00am ==> hr : 8" << endl;
+            cout << "                     min : 0" << endl;
+            cout << "          3:25pm ==> hr : 15" << endl;
+            cout << "                     min : 25" << endl;
+            while(1){
+                cout << "Your anwser is :\nHr : " ;
+                cin >> hr;
+                cout << "Min : ";
+                cin >> min;
+                if(hr <= 0 || hr > 24 ){
+                    cout << "Hr is wrong !!! please try again.\n";
+                }else if(min < 0 || min >= 60){
+                    cout << "Min is wrong !!! please try again.\n";
+                }else break;
+            }
+            int t=timechange(hr,min);
+            
+            cout << "which therter do you want for movie\n";
+            cin >> choose_therter;
+            cin.ignore();
+            vector<string> Cmovie;
+            for(unsigned int i=0; i < theater.size();i++){
+                if(choose_therter == atoi(theater[i].c_str())){
+                    for(int j=i+1; theater[j] == " "  || theater[j] == "0";j++){
+                        Cmovie.push_back(theater[j]);
+                    }
+                    break;
+                }
+            }
+            create_movieseat(name+file,Cmovie,t);
+        }
+        string exit;
+        while (true){
+            cout << "Anything else????\nPress y to do it again  Press n to exit\n";
+            cin >> exit;
+            cin.ignore();
+            if(toUpperStr(exit) == "Y")break;
+            else if (toUpperStr(exit) == toUpperStr("n")) break;
+            else{
+                cout << "There have not comman "<<exit<<" try again\n\n"; 
+                continue;
+            }
+        }
+        if (toUpperStr(exit) == "N" || toUpperStr(exit) == "Y") break;
+    }
+}
 
 void ShowListMovie(vector<string> a){
     cout << "This is your listmovie."<< endl;
@@ -292,6 +367,9 @@ void admin(int &room){
                 for(int i =0;getline(time,movietime);i++){
                     b.push_back(stoi(movietime));
                 }
+                for(int i =0;getline(theatera,theatervec);i++){
+                    theater.push_back(theatervec);
+                }
                 //เลือกเพิ่ม\ลบหนัง
                 cout << "What do you want to do ?\n1 : Add movie\n2 : Remove movie\n0 : Go to Admin setting\nYour answer is ";
                 cin >> Ans5;
@@ -318,6 +396,7 @@ void admin(int &room){
                                 cout << "Wrong!!! Please try again."<< endl;
                             }
                         }
+                        movie_theater(a,b,theater);
                         ShowListMovie(a);
                         cout << "Anything else ? (Yes = [Y] or anything,No = [N])"<< endl;
                         cin >> Ans3;
@@ -371,88 +450,7 @@ void admin(int &room){
                 timesetting();
                 break;
             }
-        }else if(Ans1==4){
-            int choose_therter;
-            a.clear();
-            for(int i = 0;getline(movie,moviename);i++){
-                    a.push_back(moviename);
-                }
-            for(int i = 0;getline(theatera,theatervec);i++){
-                    theater.push_back(theatervec);
-                }
-            while(1){
-                string name,namecheck;
-                int N;
-                cout << "Movie program today :" <<endl;
-                for(unsigned int i=0;i<a.size();i++){
-                    cout << "- " << a[i] << endl;
-                }
-                cout << "what movie do want to manage ?" <<endl;
-                getline(cin,name);
-                for(unsigned int i=0; i < a.size();i++){
-                    if(toUpperStr(name)==toUpperStr(a[i])){
-                        break;
-                    }
-                    else if (a.size() == i+1){
-                        cout << "There have not movie "<<name<<" int the list try again\n\n";
-                        cout << "what movie do want to manage ?" <<endl;
-                        getline(cin,name);
-                        i=-1;
-                        continue;
-                    }
-                }
-                remove_movie(name+file);
-                cout << "How many " << name << " show ?" << endl;
-                cin >> N;
-                cin.ignore();
-                for(int i=0;i<N;i++){
-                    int hr,min;
-                    cout << "What time " << name << "show " << i+1 << "# ?"<< endl;
-                    cout << "Example : 8:00am ==> hr : 8" << endl;
-                    cout << "                     min : 0" << endl;
-                    cout << "          3:25pm ==> hr : 15" << endl;
-                    cout << "                     min : 25" << endl;
-                    while(1){
-                        cout << "Your anwser is :\nHr : " ;
-                        cin >> hr;
-                        cout << "Min : ";
-                        cin >> min;
-                        if(hr <= 0 || hr > 24 ){
-                            cout << "Hr is wrong !!! please try again.\n";
-                        }else if(min < 0 || min >= 60){
-                            cout << "Min is wrong !!! please try again.\n";
-                        }else break;
-                    }
-                    int t=timechange(hr,min);
-                    
-                    cout << "which therter do you want for movie\n";
-                    cin >> choose_therter;
-                    cin.ignore();
-                    vector<string> Cmovie;
-                    for(unsigned int i=0; i < theater.size();i++){
-                        if(choose_therter == atoi(theater[i].c_str())){
-                            for(int j=i+1; theater[j] == " "  || theater[j] == "0";j++){
-                                Cmovie.push_back(theater[j]);
-                            }
-                            break;
-                        }
-                    }
-                    create_movieseat(name+file,Cmovie,t);
-                }
-                string exit;
-                while (true){
-                cout << "Anything else????\nPress y to do it again  Press n to exit\n";
-                cin >> exit;
-                cin.ignore();
-                if(toUpperStr(exit) == "Y")break;
-                else if (toUpperStr(exit) == toUpperStr("n")) break;
-                else{
-                    cout << "There have not comman "<<exit<<" try again\n\n"; 
-                    continue;
-                    }
-                }
-                if (toUpperStr(exit) == "N" || toUpperStr(exit) == "Y") break;
-            }
+        
         }else if(Ans1 == 5){
             a.clear();
             for(int i = 0;getline(movie,moviename);i++){
@@ -628,3 +626,81 @@ int main(){
     runprogram();
     return 0;
 }
+
+
+// void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater){
+//     int choose_therter;
+//     while(1){
+//         string name,namecheck;
+//         int N;
+//         cout << "Movie program today :" <<endl;
+//         for(unsigned int i=0;i<a.size();i++){
+//             cout << "- " << a[i] << endl;
+//         }
+//          cout << "what movie do want to manage ?" <<endl;
+//         getline(cin,name);
+//         for(unsigned int i=0; i < a.size();i++){
+//             if(toUpperStr(name)==toUpperStr(a[i])){
+//                 break;
+//             }
+//             else if (a.size() == i+1){
+//                 cout << "There have not movie "<<name<<" int the list try again\n\n";
+//                 cout << "what movie do want to manage ?" <<endl;
+//                 getline(cin,name);
+//                 i=-1;
+//                 continue;
+//             }
+//         }
+//         remove_movie(name+file);
+//         cout << "How many " << name << " show ?" << endl;
+//         cin >> N;
+//         cin.ignore();
+//         for(int i=0;i<N;i++){
+//             int hr,min;
+//             cout << "What time " << name << "show " << i+1 << "# ?"<< endl;
+//             cout << "Example : 8:00am ==> hr : 8" << endl;
+//             cout << "                     min : 0" << endl;
+//             cout << "          3:25pm ==> hr : 15" << endl;
+//             cout << "                     min : 25" << endl;
+//             while(1){
+//                 cout << "Your anwser is :\nHr : " ;
+//                 cin >> hr;
+//                 cout << "Min : ";
+//                 cin >> min;
+//                 if(hr <= 0 || hr > 24 ){
+//                     cout << "Hr is wrong !!! please try again.\n";
+//                 }else if(min < 0 || min >= 60){
+//                     cout << "Min is wrong !!! please try again.\n";
+//                 }else break;
+//             }
+//             int t=timechange(hr,min);
+            
+//             cout << "which therter do you want for movie\n";
+//             cin >> choose_therter;
+//             cin.ignore();
+//             vector<string> Cmovie;
+//             for(unsigned int i=0; i < theater.size();i++){
+//                 if(choose_therter == atoi(theater[i].c_str())){
+//                     for(int j=i+1; theater[j] == " "  || theater[j] == "0";j++){
+//                         Cmovie.push_back(theater[j]);
+//                     }
+//                     break;
+//                 }
+//             }
+//             create_movieseat(name+file,Cmovie,t);
+//         }
+//         string exit;
+//         while (true){
+//             cout << "Anything else????\nPress y to do it again  Press n to exit\n";
+//             cin >> exit;
+//             cin.ignore();
+//             if(toUpperStr(exit) == "Y")break;
+//             else if (toUpperStr(exit) == toUpperStr("n")) break;
+//             else{
+//                 cout << "There have not comman "<<exit<<" try again\n\n"; 
+//                 continue;
+//             }
+//         }
+//         if (toUpperStr(exit) == "N" || toUpperStr(exit) == "Y") break;
+//     }
+// }
