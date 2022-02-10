@@ -15,7 +15,7 @@ int timeend=0;
 int MinTimeEnd;
 int sum;
 int Ans2;
-int x =3;
+int room;
 int dotCal =0;
 int dotEnd = 0;
 int dotspace = 0;
@@ -96,11 +96,11 @@ void timesetting(){
     do{
     settime(timeStart,timeLong,MinniStart,minnilong);
     Calcu(timeStart,timeLong,MinniStart,minnilong,timeend,MinTimeEnd);
-    showsetting(x,timeLong,minnilong,timeStart,MinniStart,timeend,MinTimeEnd,sum);
+    showsetting(room,timeLong,minnilong,timeStart,MinniStart,timeend,MinTimeEnd,sum);
     checkAns(Ans);
         }while(Ans != "y");
         ofstream Outputfile("Timeline.txt");
-        for(int j=0;j<x;j++){   
+        for(int j=0;j<room;j++){   
             for(int i=0;i<sum;i++){
                 Outputfile << "-";
             }
@@ -316,7 +316,7 @@ void ComfermOrder(){
     ifstream input;
     input.open("Order.txt");
     string textline;
-        for(int j=0;j<x;j++){
+        for(int j=0;j<room;j++){
             getline(input, textline);
             cout << endl;
             for(int i =0;i<textline.size();i++){
@@ -372,7 +372,7 @@ dot(timeStart,MinniStart);
 setBreak(Break);
 addMtive2Vec();
 addline2Vec();
-    for(int i = 0;i<x;i++){
+    for(int i = 0;i<room;i++){
         do{
         numbercini(i);
         movieBar();
