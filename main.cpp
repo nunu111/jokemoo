@@ -11,7 +11,6 @@
 #include"Password.h"
 #include"make_price.h"
 #include"SelectSect.h"
-#include"Payment.h"
 using namespace std;
 
 string  file= ".txt";

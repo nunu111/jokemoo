@@ -7,6 +7,7 @@
 #include<vector>
 #include<stdlib.h>
 #include<sstream>
+#include"Payment.h"
 using namespace std;
 
 HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -220,8 +221,7 @@ void SelectSeat(string name_movie,string time_movie){
             cout << "   * This seat has been book. *" << endl;
             cout << "     * Please select again. * " << endl;
         }else if(t.at(point) == " "){
-            SetConsoleTextAttribute(h,4);
-            cout << "* you can not select this seat. *" << "\n";
+            cout << "* you can not cancelled this seat. *" << "\n";
         }
 
        
@@ -247,9 +247,6 @@ void SelectSeat(string name_movie,string time_movie){
     
     SetConsoleTextAttribute(h,7);
     show(t,N,M);
-    cout << "\n";
-
-    Payment1(name_movie,time_movie,t);
     
     //เก็บเข้าไฟล์เดิม
     for(int j = 0;j < t.size();j++){
@@ -267,4 +264,9 @@ void SelectSeat(string name_movie,string time_movie){
     
     
 }
+
+
+
+
+
 
