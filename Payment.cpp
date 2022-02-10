@@ -1,54 +1,23 @@
 
-void Payment1(string name_movie,string time_movie){
+void Payment1(string name_movie,string time_movie,vector<string> R){
     string file = ".txt";
     ifstream seats(name_movie+file);
     ifstream pay("payment1.txt");
     string select,get,X;
-    vector<string> R;
     vector<string> m;
     
-
-     //เก็บโรง
-    while(getline(seats,select)){
-        if(select == time_movie) break;
-    }
-    
-    if(select == time_movie){
-        for(int j = 0;getline(seats,select);j++){
-            if(select == "0" || select == " " || select == "X" ){
-                R.push_back(select);
-            }else{
-                break;
-            }
-        }
-    }
-
-    //เอาไปเก็บไว้ในstring
-    for(int  i = 0;i < R.size();i++){
-        X += R.at(i);
-    }
-   
     //หาหลัก
     int M = 0;
-    for(int i = 0;i < X.size();i++){
-        if(X[i] == ' ') M++;
+    for(int i = 0;i < R.size();i++){
+        if(R.at(i) == " ") M++;
     }
   
     //หาแถว
     int N = 0;
-    for(int i = 0;i < X.size();i++){
+    for(int i = 0;i < R.size();i++){
         if(i%M == 0) N++;
     }
 
-    //เก็บที่นั่งในkeep
-    string keep[N][M];
-    int k = 0;
-    for(int i = 0;i < N;i++){
-        for(int j = 0;j < M;j++){
-            keep[i][j] = X[k];
-            k++;
-        }
-    } 
     ///////////////////////////////////////////////////
     string type,start,add;
      //เก็บประเภท ราคาเริ่มต้น ราคาที่เพิ่ม
@@ -68,9 +37,6 @@ void Payment1(string name_movie,string time_movie){
         start = m.at(1);
         add = m.at(2);
     }
-
-   
-
     //แปลงstring เป็น int
         int s = stoi(start.c_str());
         int a = stoi(add.c_str());
@@ -78,20 +44,56 @@ void Payment1(string name_movie,string time_movie){
     /////////////////////////////////////////////////////
     
     //คิดตังค์//
-    
     int total = 0,count = 0;
-    for(int l = 0;l < N;l++){
-        for(int o = 0;o < M;o++){
-            if(keep[l][o] == "X"){
-                count++;
-                total += s + a*l;
-            }else if(keep[l][o] == " "){
-                total += s*0;
-                if(o == M) l--;
+    for(int i = 0;i < N;i++){
+        for(int j = 0;j < M;j++){
+            int p = j + M*i;
+            if(R.at(p) == "S"){
+               count++; //จำนวนเก้าอี้ที่จอง
+               total += s + a*i;
+            }else if(R.at(i) == " "){
+               total += s + a*0;
+               if(j == M) i--;
             }
         }
+
     }
-  
-    cout << total;
-    
+
+    string seat;
+    stringstream ss;
+    int r,k = 0;
+    for(int i = 0;i < N;i++){
+        r = i+1;
+        for(int j = 0;j < M;j++){
+            int p = j + M*i;
+            if(R.at(p) == "S"){
+               seat += 'A'+j;
+               //แปลง int เป็น string
+               ss << r ;
+               string newint = ss.str();
+               /////////////
+               seat += newint[k];
+               k++;
+               seat += " ";
+               //////////////////////////แปลง r กลับมาเป็น int;
+            }
+        }  
+    }
+   
+    cout << "                RECEIPT" << endl;
+    cout << "_________________________________________" << "\n";
+    cout << "\n";
+    cout <<  type << " theater." << endl;
+    cout << "MOVIE: " << name_movie << "\n";
+    cout << "Seat NO :" << "\n";
+    for(int i = 0;i < seat.size();i++){
+        cout << seat[i]; 
+        if(i == 14) cout << "\n";
+    }
+    cout << "\n";
+    cout << "one seat : " << s << " BAHT." << endl;
+    cout << "   total : " << total << " BAHT" << endl;
+    cout << "______________________________________________" << "\n";
 }
+
+

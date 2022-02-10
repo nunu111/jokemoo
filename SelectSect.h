@@ -7,6 +7,7 @@
 #include<vector>
 #include<stdlib.h>
 #include<sstream>
+#include"Payment.h"
 using namespace std;
 
 HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
