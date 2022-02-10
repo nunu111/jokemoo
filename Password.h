@@ -18,24 +18,24 @@ void reset_password(){
         cout << ">>> ";
         cin >> newpassword;
         cin.ignore();
-        cout << newpassword << " is your new password are you sure?\n[Y]Yes   [N]No\n";
+        cout << newpassword << " is your new password are you sure?\nInput your password again to confirm\n";
         while(true){
             cout << ">>> ";
             cin >> conf;
-            if(toUpperStr(conf) == "Y"){
+            if(conf == newpassword){
                 ofstream password ("Password");
                 password << newpassword;
                 password.close();
                 break;
             }
-            else if(toUpperStr(conf) == "N") break;
+            else if(conf != newpassword) break;
             else{
-                cout << "You type worng command\n";
+                cout << "You worng password confrim\n";
                 continue;
             }
         }
-        if(toUpperStr(conf) == "Y") break;
-        else if(toUpperStr(conf) == "N") continue;
+        if(conf == newpassword) break;
+        else if(conf != newpassword) continue;
     }
 
 }
