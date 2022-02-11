@@ -11,368 +11,16 @@
 #include"Password.h"
 #include"make_price.h"
 #include"SelectSect.h"
+
 using namespace std;
 
 string  file= ".txt";
 
 string password;
+int timeStart,timeLong,MinniStart,timeend,minnilong,MinTimeEnd,sum,room;
 string Ans;
+
 int time_HR,time_min;
-int timeStart,timeLong,MinniStart;
-int minnilong=0;
-int timeend=0;
-int MinTimeEnd;
-int sum;
-int Ans2;
-int room;
-int dotCal =0;
-int dotEnd = 0;
-int dotspace = 0;
-int Run = 0;
-int Round = 0;
-int Break = 0;
-int Haze = 0;
-string Ans3;
-vector<int> Mtime;
-vector<string> line;
-vector<string> order;
-vector<int> close;
-
-void settime(int &x,int &y,int &mx,int &my){
-    cout << "START ";
-    cin >> x;
-    cout << x << ":";
-    cin >> mx;
-    cout << "howlong ";
-    cin >> y;
-    cout << y << ":";
-    cin >> my;
-}
-
-void Calcu(int &x,int &y,int &mx,int &my,int &end,int &mend){
-    int sum = 0;
-    sum = mx + my;
-        if(sum > 60 || sum == 60){
-            y += 1;
-            sum = sum - 60;
-        }
-    cout << "star " << x << ":" << mx << endl;
-    cout << "End " << x+y << ":" << sum << endl;
-    end = x+y;
-    mend = sum;
-    
-}
-
-void Line(int timeLong,int minnilong,int timeStart,int MinniStart,int timeend,int MinTimeEnd,int sum){
-    for(int i = 0;i<sum;i++){
-        cout << "-" ;
-    }
-    cout << endl;
-    cout << timeStart << ":" << MinniStart;
-        for(int i=0;i<sum - 8;i++){
-            cout << " ";
-        } 
-        cout << timeend << ":" << MinTimeEnd << endl;
-
-}  
-
-void showsetting(int x,int timeLong,int minnilong ,int timeStart,int MinniStart,int timeend,int MinTimeEnd,int &sum){
-    sum = 0;
-    sum += (timeLong*12);
-    sum += (minnilong/5);
-    cout << "Open - Close" << endl;
-        Line(timeLong,minnilong,timeStart,MinniStart,timeend,MinTimeEnd,sum);
-}
-
-void checkAnsBOBA(string &Ans){
-    string sum;
-    cout << "                                    right or No" << endl;
-    cout << "                                    (Yes = y,No = n)" << endl;
-    cout << "                                    Your Answer is ";
-    cin >> sum;
-    Ans = sum;
-}
-
-string checkAns3(string &Ans3){
-return Ans3;
-}
-
-
-
-void timesetting1(){
-    do{
-    settime(timeStart,timeLong,MinniStart,minnilong);
-    Calcu(timeStart,timeLong,MinniStart,minnilong,timeend,MinTimeEnd);
-    showsetting(room,timeLong,minnilong,timeStart,MinniStart,timeend,MinTimeEnd,sum);
-    checkAnsBOBA(Ans);
-        }while(Ans != "y");
-        ofstream Outputfile("Timeline.txt");
-        for(int j=0;j<room;j++){   
-            for(int i=0;i<sum;i++){
-                Outputfile << "-";
-            }
-        Outputfile << endl;    
-        }
-        Outputfile.close();
-}
-
-void dot(int timeStart,int MinniStart){
-    dotCal = (timeStart*60)+(MinniStart);
-    dotEnd = (timeend*60)+MinTimeEnd;
-    dotspace = dotEnd - dotCal;
-}
-
-void addMtive2Vec(){
-    ifstream input;
-    input.open("movietime.txt");
-    string textline;
-    int sum;
-    while(getline(input, textline)){
-        sum = stoi(textline);
-        Mtime.push_back(sum+Break);
-    }
-}
-
-void addline2Vec(){
-    ifstream input;
-    input.open("Timeline.txt");
-    string textline;
-    while(getline(input, textline)){
-        line.push_back(textline);
-    }
-}
-
-void dot2int(int dot){
-    int Hsum = 0;
-    int sum = 0;
-    while(dot >= 60){
-        dot -= 60;
-        Hsum++;
-    }sum = dot;
-     for(int i;i<Run;i++){
-        cout << " ";
-    }
-    cout << Hsum << ":" << sum;
-}
-
-void dotspace2int(int dot){
-    for(int i;i<(dot/5);i++){
-        cout << " ";
-    }
-}
-
-
-void Timebar(int dotCal,int dotEnd,int dotspace){
-    dot2int(dotCal);
-    dotspace2int(dotspace);
-    if(Round == 0){
-    dot2int(dotEnd);
-    Round = 1;
-    }
-}
-
-void movieBar(){
-    ifstream input;
-    input.open("listmovie.txt");
-    string textline;
-    ifstream input2;
-    input2.open("movietime.txt");
-    string textline2;
-    while(getline(input, textline)){
-        getline(input2, textline2);
-        int sum = stoi(textline2);
-        sum = sum +Break;
-        cout << textline << " "<< sum << " ";
-        }
-    cout << endl;
-}
-
-void Askadd(){
-    cout << endl;
-    cout << "what movie do you add" << endl;
-    cout << "your answer is ";
-}
-
-void Editline(int Ans,int i,int &Run){
-    int sum = Mtime[Ans];
-    int dod = 0;
-    int stan = dotEnd;
-    dod += sum;
-    dotCal = dotCal+dod;;
-        if(dotCal >= dotEnd){
-            dotCal = dotCal - dotEnd;
-            dod = sum/5;
-                for(int l=0;l<line[0].size();l++){
-                    line[i][l] = '*';
-                }
-                    for(int k=0;k<(dotCal/5);k++){
-                        line[i].push_back('*');
-                    }
-                dotCal = stan+(dotCal/5)*5;
-        }else{
-            dod = sum/5;
-            for(int j=0;j<dod;j++){
-                line[i][j+Run] = '*';
-            }
-        }
-    Run += sum/5;
-    cout << line[i] << endl;
-
-}
-
-void Continew(){
-    cout << endl << "Continew " << endl;
-    cout << "                                    right or No" << endl;
-    cout << "                                    (Yes = y,No = n)" << endl;
-    cout << "                                    Your Answer is ";
-}
-
-void SetZero(){
-dot(timeStart,MinniStart);
-Run = 0;
-}
-
-void numbercini(int i){
-    cout << endl << "CIneMA " << i+1 << endl;
-}
-
-void pushOrder(int x){
-    string sum = to_string(x);
-    order.push_back(sum);
-}
-
-void pushOrderNew(){
-    order.push_back("\n");
-
-}
-
-void setBreak(int &Break){
-    cout << "How many time Break Betaween Movie" << endl;
-        while(1){
-            cin >> Break;
-            if(Break %5 == 0){
-                break;
-            }else{
-            cout << "plse cout 5/5 = 1" << endl;;
-            }
-        }
-}
-
-
-void addOrder2text(){
-    ofstream dest;
-    dest.open("Order.txt");
-    for(int i=0;i<order.size();i++){
-        dest << order[i];
-        Haze++;
-    }
-    dest.close();
-}
-
-void Overtime(int dotCal,int dotEnd){
-    int BreakCal,BreakEnd;
-    int Hour = 0;
-    BreakCal =dotCal;
-    BreakEnd=dotEnd;
-    int sum = BreakCal-BreakEnd;
-        while(sum >= 60){
-            sum -=60;
-            Hour++;
-        }
-    cout << Hour << ":" << sum;
-    close.push_back(sum);
-}
-void Runtime(int x){
-    int sum = 0;
-    sum = (Mtime[x]/5)-(Break/5);
-    SetConsoleTextAttribute(h,11);
-        for(int i=0;i<sum;i++){
-            cout << "*";
-        }
-    SetConsoleTextAttribute(h,7);
-}
-   
-void RunBreak(){
-    int sum = Break/5;
-    SetConsoleTextAttribute(h,14);
-    for(int i=0;i<sum;i++){
-        cout << "*";
-    }
-    SetConsoleTextAttribute(h,7);
-}
-
-void RunBreakTime(){
-    int sum = Break/5;
-        for(int i=0;i<sum;i++){
-        cout << " ";}
-}
-
-void Timbar(int x,int y){
-    int hours = 0;
-    while(x >= 60){
-        x -= 60;
-        hours++;
-    }
-    cout << hours << ":" << x << "[" << y << "]";
-}
-
-
-void ComfermOrder(){
-    int sum = 0;
-    string y;
-    ifstream input;
-    input.open("Order.txt");
-    string textline;
-        for(int j=0;j<room;j++){
-            getline(input, textline);
-            cout << endl;
-            for(int i =0;i<textline.size();i++){
-                y = textline[i];
-                sum = stoi(y);
-                RunBreak();
-                Runtime(sum-1);
-            }
-        cout << endl;
-        cout << "TimeLine  ";
-            for(int k=0;k<textline.size();k++){
-                RunBreakTime();
-                Timbar(dotCal,sum);
-                dotCal += (Mtime[sum-1] + Break);
-            }
-            dotCal = (timeStart*60)+(MinniStart);
-        }
-}
-
-void checkAns2(){
-    int aum;
-    while(1){
-        cin >> aum;
-        if(aum > Mtime.size() || aum <= 0){
-            Askadd();
-            cout << "Try again" << endl;
-            continue;
-        }else{
-            break;
-        }
-    }
-    Ans2 = aum;
-}
-
-void checkAns3_1(){
-    string aum;
-    while(1){
-        cin >> aum;
-        if(aum == "n" || aum == "y"){
-            break;
-        }else{
-            cout << endl << "Try again" << endl;
-            cout << "Continew " << endl << "Your Ans ";
-            continue;
-        }
-    }
-    Ans3 = aum;
-}
-
 
 void check_time(string movie){
     string a;
@@ -527,8 +175,112 @@ void checkAns2(string &Ans){
     Ans = sum;
 }
 
+void settime(int &x,int &y,int &mx,int &my,int &end){
+    cout << "Your answer is ( XX hr. : xx m.) ";
+    cin >> x;
+    cout << x << ":";
+    cin >> mx;
+    cout << "How long do you want to your cinema open ?" << endl;
+    cout << "Your answer is ( XX hr. : XX m.) ";
+    cin >> y;
+    cout << y << ":";
+    cin >> my;
+}
 
+void Calcu(int &x,int &y,int &mx,int &my,int &end){
+    int sum;
+    sum = mx + my;
+        if(sum > 60 || sum == 60){
+            y += 1;
+            sum = sum - 60;
+        }
+    cout << "Open => " << x << ":" << mx << endl;
+    cout << "Close => " << x+y << ":" << sum << endl;
+    
+    
+}
 
+void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int mode,string name1){
+    int choose_therter;
+    do{
+        string name = name1;
+        int N;
+        if(mode == 0){
+            cout << "Movie program today :" <<endl;
+            for(unsigned int i=0;i<a.size();i++){
+                cout << "- " << a[i] << endl;
+            }
+             cout << "what movie do want to manage ?" <<endl;
+            getline(cin,name);
+            for(unsigned int i=0; i < a.size();i++){
+                if(toUpperStr(name)==toUpperStr(a[i])){
+                    name = a[i];
+                    break;
+                }
+                else if (a.size() == i+1){
+                    cout << "There have not movie "<<name<<" int the list try again\n\n";
+                    cout << "what movie do want to manage ?" <<endl;
+                    getline(cin,name);
+                    i=-1;
+                    continue;
+                }
+            }
+            remove_movie(name+file);
+        }
+        cout << "How many " << name << " show ?" << endl;
+        cin >> N;
+        cin.ignore();
+        for(int i=0;i<N;i++){
+            int hr,min;
+            cout << "What time " << name << "show " << i+1 << "# ?"<< endl;
+            cout << "Example : 8:00am ==> hr : 8" << endl;
+            cout << "                     min : 0" << endl;
+            cout << "          3:25pm ==> hr : 15" << endl;
+            cout << "                     min : 25" << endl;
+            while(1){
+                cout << "Your anwser is :\nHr : " ;
+                cin >> hr;
+                cout << "Min : ";
+                cin >> min;
+                if(hr <= 0 || hr > 24 ){
+                    cout << "Hr is wrong !!! please try again.\n";
+                }else if(min < 0 || min >= 60){
+                    cout << "Min is wrong !!! please try again.\n";
+                }else break;
+            }
+            int t=timechange(hr,min);
+            
+            cout << "which therter do you want for movie\n";
+            cin >> choose_therter;
+            cin.ignore();
+            vector<string> Cmovie;
+            for(unsigned int i=0; i < theater.size();i++){
+                if(choose_therter == atoi(theater[i].c_str())){
+                    for(int j=i+1; theater[j] == " "  || theater[j] == "0";j++){
+                        Cmovie.push_back(theater[j]);
+                    }
+                    break;
+                }
+            }
+            create_movieseat(name+file,Cmovie,t);
+        }
+        if(mode == 0){
+            string exit;
+            while (true){
+                cout << "Anything else????\nPress y to do it again  Press n to exit\n";
+                cin >> exit;
+                cin.ignore();
+                if(toUpperStr(exit) == "Y")break;
+                else if (toUpperStr(exit) == toUpperStr("n")) break;
+                else{
+                    cout << "There have not comman "<<exit<<" try again\n\n"; 
+                    continue;
+                }
+            }
+            if (toUpperStr(exit) == "N" || toUpperStr(exit) == "Y") break;
+        }
+    }while(mode == 0);
+}
 
 void ShowListMovie(vector<string> a){
     cout << "This is your listmovie."<< endl;
@@ -554,7 +306,7 @@ void admin(int &room){
 
     while(1){
         //เลือกระบบที่ต้องการแก้ไข
-        cout << "Which system do you want to manage ?\n1 : Theater manage\n2 : Movie manage\n3 : Time manage\n4 : Showing movie manage\n9 : Reset Password\n0 : Go to Home page\nYour answer is ";
+        cout << "Which system do you want to manage ?\n1 : Theater manage\n2 : Movie manage\n3 : Showing movie manage\n9 : Reset Password\n0 : Go to Home page\nYour answer is ";
         cin >> Ans1;
         cin.ignore();
         if(Ans1==1){//ระบบจัดการโรงหนัง
@@ -620,6 +372,9 @@ void admin(int &room){
                 for(int i =0;getline(time,movietime);i++){
                     b.push_back(stoi(movietime));
                 }
+                for(int i =0;getline(theatera,theatervec);i++){
+                    theater.push_back(theatervec);
+                }
                 //เลือกเพิ่ม\ลบหนัง
                 cout << "What do you want to do ?\n1 : Add movie\n2 : Remove movie\n0 : Go to Admin setting\nYour answer is ";
                 cin >> Ans5;
@@ -647,6 +402,7 @@ void admin(int &room){
                             }
                         }
                         ShowListMovie(a);
+                        movie_theater(a,b,theater,1,name);
                         cout << "Anything else ? (Yes = [Y] or anything,No = [N])"<< endl;
                         cin >> Ans3;
                         cin.ignore();
@@ -692,130 +448,17 @@ void admin(int &room){
             timemovie1.close();
             a.clear();
             b.clear();
-        }else if(Ans1==3){
-            while(1){
-                char x;
-                cout << "What time do you want to your cinema open ?" << endl;
-                timesetting1();
-                    dot(timeStart,MinniStart);
-                    setBreak(Break);
-                    addMtive2Vec();
-                    addline2Vec();
-                        for(int i = 0;i<room;i++){
-                            do{
-                            numbercini(i);
-                            movieBar();
-                            cout << line[i] << endl;
-                            Timebar(dotCal,dotEnd,dotspace);
-                            Askadd();
-                            checkAns2();
-                            pushOrder(Ans2);
-                            Editline(Ans2-1,i,Run);
-                            Timebar(dotCal,dotEnd,dotspace);
-                                if(dotCal > dotEnd){
-                                    cout << endl << "Overtime" << endl;
-                                    Overtime(dotCal,dotEnd);
-                                    SetZero();
-                                    break;
-                                }
-                                Continew();
-                                checkAns3_1();
-                                if(checkAns3(Ans3) == "n"){
-                                    SetZero();
-                                    close.push_back(dotCal);
-                                    break;
-                                }else if(checkAns3(Ans3) == "y"){
-                                    continue;
-                                }
-                            }while(true);
-                        pushOrderNew();
-                        }
-                    addOrder2text();
-                    ComfermOrder();
-                break;
-            }
-        }else if(Ans1==4){
-            int choose_therter;
-            a.clear();
-            for(int i = 0;getline(movie,moviename);i++){
+        }else if(Ans1 ==3){
+            for(int i =0;getline(movie,moviename);i++){
                     a.push_back(moviename);
                 }
-            for(int i = 0;getline(theatera,theatervec);i++){
+                for(int i =0;getline(time,movietime);i++){
+                    b.push_back(stoi(movietime));
+                }
+                for(int i =0;getline(theatera,theatervec);i++){
                     theater.push_back(theatervec);
                 }
-            while(1){
-                string name,namecheck;
-                int N;
-                cout << "Movie program today :" <<endl;
-                for(unsigned int i=0;i<a.size();i++){
-                    cout << "- " << a[i] << endl;
-                }
-                cout << "what movie do want to manage ?" <<endl;
-                getline(cin,name);
-                for(unsigned int i=0; i < a.size();i++){
-                    if(toUpperStr(name)==toUpperStr(a[i])){
-                        break;
-                    }
-                    else if (a.size() == i+1){
-                        cout << "There have not movie "<<name<<" int the list try again\n\n";
-                        cout << "what movie do want to manage ?" <<endl;
-                        getline(cin,name);
-                        i=-1;
-                        continue;
-                    }
-                }
-                remove_movie(name+file);
-                cout << "How many " << name << " show ?" << endl;
-                cin >> N;
-                cin.ignore();
-                for(int i=0;i<N;i++){
-                    int hr,min;
-                    cout << "What time " << name << "show " << i+1 << "# ?"<< endl;
-                    cout << "Example : 8:00am ==> hr : 8" << endl;
-                    cout << "                     min : 0" << endl;
-                    cout << "          3:25pm ==> hr : 15" << endl;
-                    cout << "                     min : 25" << endl;
-                    while(1){
-                        cout << "Your anwser is :\nHr : " ;
-                        cin >> hr;
-                        cout << "Min : ";
-                        cin >> min;
-                        if(hr <= 0 || hr > 24 ){
-                            cout << "Hr is wrong !!! please try again.\n";
-                        }else if(min < 0 || min >= 60){
-                            cout << "Min is wrong !!! please try again.\n";
-                        }else break;
-                    }
-                    int t=timechange(hr,min);
-                    
-                    cout << "which therter do you want for movie\n";
-                    cin >> choose_therter;
-                    cin.ignore();
-                    vector<string> Cmovie;
-                    for(unsigned int i=0; i < theater.size();i++){
-                        if(choose_therter == atoi(theater[i].c_str())){
-                            for(int j=i+1; theater[j] == " "  || theater[j] == "0";j++){
-                                Cmovie.push_back(theater[j]);
-                            }
-                            break;
-                        }
-                    }
-                    create_movieseat(name+file,Cmovie,t);
-                }
-                string exit;
-                while (true){
-                cout << "Anything else????\nPress y to do it again  Press n to exit\n";
-                cin >> exit;
-                cin.ignore();
-                if(toUpperStr(exit) == "Y")break;
-                else if (toUpperStr(exit) == toUpperStr("n")) break;
-                else{
-                    cout << "There have not comman "<<exit<<" try again\n\n"; 
-                    continue;
-                    }
-                }
-                if (toUpperStr(exit) == "N" || toUpperStr(exit) == "Y") break;
-            }
+            movie_theater(a,b,theater,0,"name");
         }else if(Ans1 == 5){
             a.clear();
             for(int i = 0;getline(movie,moviename);i++){
@@ -898,13 +541,6 @@ void runprogram(){
     }
 }
 
-void showtime_movie(){
-    ifstream source;
-    source.open("movietime.txt");
-    string textline;
-    while(getline(source,textline))
-    cout << textline << "  ";
-}
 
 
 int main(){
@@ -912,3 +548,4 @@ int main(){
     runprogram();
     return 0;
 }
+
