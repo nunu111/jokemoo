@@ -11,7 +11,7 @@
 #include"Password.h"
 #include"make_price.h"
 #include"SelectSect.h"
-#include"Payment.h"
+
 using namespace std;
 
 string  file= ".txt";
@@ -200,33 +200,30 @@ void Calcu(int &x,int &y,int &mx,int &my,int &end){
     
 }
 
-
-void Edit_movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int mode,string name1){
+void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater){
     int choose_therter;
-    do{
-        string name=name1;
+    while(1){
+        string name,namecheck;
         int N;
-        if(mode == 0){
-            cout << "Movie program today :" <<endl;
-            for(unsigned int i=0;i<a.size();i++){
-                cout << "- " << a[i] << endl;
-            }
-            cout << "what movie do want to manage ?" <<endl;
-            getline(cin,name);
-            for(unsigned int i=0; i < a.size();i++){
-                if(toUpperStr(name)==toUpperStr(a[i])){
-                    break;
-                }
-                else if (a.size() == i+1){
-                    cout << "There have not movie "<<name<<" int the list try again\n\n";
-                    cout << "what movie do want to manage ?" <<endl;
-                    getline(cin,name);
-                    i=-1;
-                    continue;
-                }
-            }
-            remove_movie(name+file);
+        cout << "Movie program today :" <<endl;
+        for(unsigned int i=0;i<a.size();i++){
+            cout << "- " << a[i] << endl;
         }
+         cout << "what movie do want to manage ?" <<endl;
+        getline(cin,name);
+        for(unsigned int i=0; i < a.size();i++){
+            if(toUpperStr(name)==toUpperStr(a[i])){
+                break;
+            }
+            else if (a.size() == i+1){
+                cout << "There have not movie "<<name<<" int the list try again\n\n";
+                cout << "what movie do want to manage ?" <<endl;
+                getline(cin,name);
+                i=-1;
+                continue;
+            }
+        }
+        remove_movie(name+file);
         cout << "How many " << name << " show ?" << endl;
         cin >> N;
         cin.ignore();
@@ -264,22 +261,20 @@ void Edit_movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater
             }
             create_movieseat(name+file,Cmovie,t);
         }
-        if(mode == 0){
-            string exit;
-            while (true){
-                cout << "Anything else????\nPress y to do it again  Press n to exit\n";
-                cin >> exit;
-                cin.ignore();
-                if(toUpperStr(exit) == "Y")break;
-                else if (toUpperStr(exit) == toUpperStr("n")) break;
-                else{
-                    cout << "There have not comman "<<exit<<" try again\n\n"; 
-                    continue;
-                }
+        string exit;
+        while (true){
+            cout << "Anything else????\nPress y to do it again  Press n to exit\n";
+            cin >> exit;
+            cin.ignore();
+            if(toUpperStr(exit) == "Y")break;
+            else if (toUpperStr(exit) == toUpperStr("n")) break;
+            else{
+                cout << "There have not comman "<<exit<<" try again\n\n"; 
+                continue;
             }
-            if (toUpperStr(exit) == "N" || toUpperStr(exit) == "Y") break;
         }
-    }while(mode == 0);
+        if (toUpperStr(exit) == "N" || toUpperStr(exit) == "Y") break;
+    }
 }
 
 void ShowListMovie(vector<string> a){
@@ -290,7 +285,6 @@ void ShowListMovie(vector<string> a){
     }
     cout << "-------------------------------------------"<< endl;
 }
-
 //คล้าย main เลย แต่ต้องพิมพ์ 1 ก่อน
 void admin(int &room){
     int N,M,Ans1,mode1=0,mode2=0;
@@ -402,8 +396,8 @@ void admin(int &room){
                                 cout << "Wrong!!! Please try again."<< endl;
                             }
                         }
+                        movie_theater(a,b,theater);
                         ShowListMovie(a);
-                        Edit_movie_theater(a,b,theater,1,name);
                         cout << "Anything else ? (Yes = [Y] or anything,No = [N])"<< endl;
                         cin >> Ans3;
                         cin.ignore();
@@ -456,18 +450,7 @@ void admin(int &room){
                 timesetting();
                 break;
             }
-        }else if(Ans1 == 4){
-            for(int i =0;getline(movie,moviename);i++){
-                a.push_back(moviename);
-            }
-            for(int i =0;getline(time,movietime);i++){
-                b.push_back(stoi(movietime));
-            }
-            for(int i =0;getline(theatera,theatervec);i++){
-                theater.push_back(theatervec);
-            }
-            cout << a[1];
-            Edit_movie_theater(a,b,theater,0,"name");
+        
         }else if(Ans1 == 5){
             a.clear();
             for(int i = 0;getline(movie,moviename);i++){
@@ -706,18 +689,18 @@ int main(){
 //             }
 //             create_movieseat(name+file,Cmovie,t);
 //         }
-        // string exit;
-        // while (true){
-        //     cout << "Anything else????\nPress y to do it again  Press n to exit\n";
-        //     cin >> exit;
-        //     cin.ignore();
-        //     if(toUpperStr(exit) == "Y")break;
-        //     else if (toUpperStr(exit) == toUpperStr("n")) break;
-        //     else{
-        //         cout << "There have not comman "<<exit<<" try again\n\n"; 
-        //         continue;
-        //     }
-        // }
-        // if (toUpperStr(exit) == "N" || toUpperStr(exit) == "Y") break;
+//         string exit;
+//         while (true){
+//             cout << "Anything else????\nPress y to do it again  Press n to exit\n";
+//             cin >> exit;
+//             cin.ignore();
+//             if(toUpperStr(exit) == "Y")break;
+//             else if (toUpperStr(exit) == toUpperStr("n")) break;
+//             else{
+//                 cout << "There have not comman "<<exit<<" try again\n\n"; 
+//                 continue;
+//             }
+//         }
+//         if (toUpperStr(exit) == "N" || toUpperStr(exit) == "Y") break;
 //     }
 // }

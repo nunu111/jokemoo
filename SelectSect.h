@@ -7,7 +7,6 @@
 #include<vector>
 #include<stdlib.h>
 #include<sstream>
-#include"Payment.h"
 using namespace std;
 
 HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -224,7 +223,6 @@ void SelectSeat(string name_movie,string time_movie){
             cout << "* you can not cancelled this seat. *" << "\n";
         }
 
-       
  
         do{
         SetConsoleTextAttribute(h,6);
