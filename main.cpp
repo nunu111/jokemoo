@@ -80,9 +80,12 @@ void seat(vector<string> &a,int N,int M){
 }
 
 void walk(vector<string> &a,int x,int number,int M){
-    for(int i=(x-1)*M;i<M*x;i++){
-        a[i] = " ";;
+    if(x != 0){
+        for(int i=(x-1)*M;i<M*x;i++){
+            a[i] = " ";
+        }
     }
+    else;
 }
 
 void comferm_seat(vector<string> &a,int N,int M){
