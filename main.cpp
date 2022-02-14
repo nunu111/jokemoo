@@ -11,6 +11,7 @@
 #include"Password.h"
 #include"make_price.h"
 #include"SelectSect.h"
+#include"create_payment.h"
 
 using namespace std;
 
@@ -237,6 +238,12 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
                 }
             }
             create_movieseat(name+file,Cmovie,t);
+            double price;
+            cout << "what cost of this movie\n";
+            cout << ">>> ";
+            cin >> price;
+            cin.ignore();
+            create_payment(directfile + name , price , t);
         }
         if(mode == 0){
             string exit;

@@ -11,27 +11,6 @@ using namespace std;
 
 HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 
-void show(vector<string> a,int N,int M){
-    cout << "          ";
-    for(int p=0;p<M;p++){
-        cout << char('A'+p);
-        cout << " ";
-    }
-    cout << endl;
-    for(int i=0;i<N;i++){
-        cout << "    ";
-        int A = i+1;
-        cout << setw(3) << left <<A;
-        cout << "|  " ;
-        for(int j=0;j<M;j++){
-            cout << a[j+(i*M)];
-            cout << " ";
-        }
-        cout << " |" <<endl; 
-    }
-    cout << endl;  
-}
-
 void Payment1(string name_movie,string time_movie,vector<string> R){
     string file = ".txt";
     ifstream seats(name_movie+file);

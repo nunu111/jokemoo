@@ -7,9 +7,8 @@
 #include<vector>
 #include<stdlib.h>
 #include<sstream>
+#include"Payment.h"
 using namespace std;
-
-HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 
 void show(vector<string> a,int N,int M){
     cout << "          ";
@@ -260,7 +259,7 @@ void SelectSeat(string name_movie,string time_movie){
     }
     seats_cinema.close();
     
-    
+    Payment1(name_movie,time_movie,t);
 }
 
 
