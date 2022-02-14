@@ -1,5 +1,6 @@
 #include<fstream>
 #include<iostream>
+#include<direct.h>
 
 using namespace std;
 
@@ -10,6 +11,17 @@ string toUpperStr(string x){ //code เปลี่ยนตัวเป็น�
 }
 
 int refac;
+
+void make_file(){
+    bool a=mkdir("all movie");
+    bool b=mkdir("all Theater");
+    if(!a && !b){
+        cout << "create file complete\n";
+    }
+    else{
+        cout << "ERROR cannot create all file (you can make it manual)\n";
+    }
+}
 
 void reset_password(){
     string newpassword,conf;
@@ -82,6 +94,7 @@ void passwordconfig(){
             if(toUpperStr(conf) == "Y") break;
             else if(toUpperStr(conf) == "N") continue;
         }
+        make_file();
     }
 
 }
