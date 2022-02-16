@@ -116,7 +116,7 @@ void Payment1(string name_movie,string time_movie,vector<string> R){
     for(int i = 0;i < seat.size();i++){
         SetConsoleTextAttribute(h,14);
         cout << seat[i];
-        if(i % 20 == 0 && i > 1) cout << "\n";
+        if(i % 40 == 0 && i > 1) cout << "\n";
     }
     SetConsoleTextAttribute(h,7);
     cout << "\n";
@@ -132,5 +132,10 @@ void Payment1(string name_movie,string time_movie,vector<string> R){
     SetConsoleTextAttribute(h,14);
     cout << "  hope you have a wonderful experience" << endl;
     SetConsoleTextAttribute(h,7);
+    cout << "-----------------------------------------" << endl;
     cout << "_________________________________________" << "\n";
 }
+
+
+
+
