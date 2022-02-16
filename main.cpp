@@ -182,11 +182,15 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
         string name = name1;
         int N;
         if(mode == 0){
+            SetConsoleTextAttribute(h,14);
             cout << "Movie program today :" <<endl;
+            SetConsoleTextAttribute(h,11);
             for(unsigned int i=0;i<a.size();i++){
                 cout << "- " << a[i] << endl;
             }
+            SetConsoleTextAttribute(h,6);
              cout << "what movie do want to manage ?" <<endl;
+             SetConsoleTextAttribute(h,11);
             getline(cin,name);
             for(unsigned int i=0; i < a.size();i++){
                 if(toUpperStr(name)==toUpperStr(a[i])){
@@ -194,14 +198,22 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
                     break;
                 }
                 else if (a.size() == i+1){
-                    cout << setw(10) <<  "There have not movie "<<name<<" in the list try again\n\n";
+                    SetConsoleTextAttribute(h,4);
+                    cout << setw(10) <<  "There have not movie ";
+                    SetConsoleTextAttribute(h,10);
+                    cout <<name;
+                    SetConsoleTextAttribute(h,4);
+                    cout <<" in the list try again\n\n";
+                    SetConsoleTextAttribute(h,11);
                     cout << "what movie do want to manage ?" <<endl;
                     getline(cin,name);
                     i=-1;
+                    system("CLS");
                     continue;
                 }
             }
             remove_movie(directfile+name+file);
+            system("CLS");
         }
         SetConsoleTextAttribute(h,6);
         cout << "How many " << name << " show ?" << endl;
@@ -233,7 +245,7 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
                 }else break;
             }
             int t=timechange(hr,min);
-            
+            SetConsoleTextAttribute(h,6);
             cout << "which therter do you want for movie\n";
             cin >> choose_therter;
             cin.ignore();
@@ -243,6 +255,7 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
                     for(int j=i+1; theater[j] == " "  || theater[j] == "0";j++){
                         Cmovie.push_back(theater[j]);
                     }
+                    system("CLS");
                     break;
                 }
             }
@@ -252,16 +265,26 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
             string exit;
             while (true){
                 cout << "Anything else????\nPress y to do it again  Press n to exit\n";
+                SetConsoleTextAttribute(h,11);
                 cin >> exit;
                 cin.ignore();
+                system("CLS");
                 if(toUpperStr(exit) == "Y")break;
                 else if (toUpperStr(exit) == toUpperStr("n")) break;
                 else{
-                    cout << "There have not comman "<<exit<<" try again\n\n"; 
+                    SetConsoleTextAttribute(h,4);
+                    cout << "There have not comman ";
+                    SetConsoleTextAttribute(h,11);
+                    cout <<exit;
+                    SetConsoleTextAttribute(h,6);
+                    cout <<" try again\n\n"; 
                     continue;
                 }
             }
-            if (toUpperStr(exit) == "N" || toUpperStr(exit) == "Y") break;
+            if (toUpperStr(exit) == "N" || toUpperStr(exit) == "Y") {
+                system("CLS");
+            }
+            break;
         }
     }while(mode == 0);
 }
@@ -269,7 +292,7 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
 void ShowListMovie(vector<string> a){
     SetConsoleTextAttribute(h,14);
     cout << "This is your listmovie."<< endl;
-    SetConsoleTextAttribute(h,13);
+    SetConsoleTextAttribute(h,10);
     cout << "-------------------------------------------"<< endl;
     for(int i =0;i<a.size();i++){
         cout << a[i] << "   <--- " << i+1 << endl;

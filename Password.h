@@ -3,7 +3,7 @@
 #include<direct.h>
 
 using namespace std;
-
+    HANDLE t = GetStdHandle(STD_OUTPUT_HANDLE);
 string toUpperStr(string x){ //code เปลี่ยนตัวเป็นตัวใหญ่ทั้งหมด ของอาจารย์เห็นว่ามันใช้ได้
     string y = x;
     for(unsigned i = 0; i < x.size();i++) y[i] = toupper(x[i]);
@@ -26,12 +26,17 @@ void make_file(){
 void reset_password(){
     string newpassword,conf;
     while(1){
+        SetConsoleTextAttribute(t,6);
         cout << "Input your new password\n";
+        SetConsoleTextAttribute(t,11);
         cout << ">>> ";
         cin >> newpassword;
         cin.ignore();
-        cout << newpassword << " is your new password are you sure?\nInput your password again to confirm\n";
+        cout << newpassword;
+        SetConsoleTextAttribute(t,6);
+        cout << " is your new password are you sure?\nInput your password again to confirm\n";
         while(true){
+            SetConsoleTextAttribute(t,11);
             cout << ">>> ";
             cin >> conf;
             if(conf == newpassword){
@@ -42,11 +47,16 @@ void reset_password(){
             }
             else if(conf != newpassword) break;
             else{
+                SetConsoleTextAttribute(t,4);
                 cout << "You worng password confrim\n";
                 continue;
             }
         }
-        if(conf == newpassword) break;
+        if(conf == newpassword) {
+            system("CLS");
+            SetConsoleTextAttribute(t,6);
+            break;
+        }
         else if(conf != newpassword) continue;
     }
 
