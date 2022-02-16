@@ -105,8 +105,8 @@ void seat(vector<string> &a,int N,int M){
 
 }
 
-void walk(vector<string> &a,int x,int number,int M){
-    if(x > 0 && x<M){
+void walk(vector<string> &a,int x,int N,int M){
+    if(x > 0 && x <= N){
         for(int i=(x-1)*M;i<M*x;i++){
             a[i] = " ";
         }
@@ -468,7 +468,7 @@ void admin(){
                     show(block,N,M);
                     int A;
                     showEX2(A);
-                    walk(block,A,N*M,M);
+                    walk(block,A,N,M);
                     show(block,N,M);
                     comferm_seat(block,N,M);
                     showEX3(1);
