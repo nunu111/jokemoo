@@ -32,6 +32,7 @@ void show(vector<string> a,int N,int M){
 }
 
 
+
 void SelectSeat(string name_movie,string time_movie){
     string file = ".txt";
     ifstream seats(name_movie+file);
@@ -87,21 +88,23 @@ void SelectSeat(string name_movie,string time_movie){
                     SetConsoleTextAttribute(h,7);
                     show(t,N,M);
  
-                    SetConsoleTextAttribute(h,10);
+                    SetConsoleTextAttribute(h,9);
                     cout << "input your seat that you want to cancelled";
                     SetConsoleTextAttribute(h,7);
                     cout << "(ex) A1 = column: A , row: 1" << endl;
-                    SetConsoleTextAttribute(h,10);
+                    SetConsoleTextAttribute(h,9);
                     cout << "Column: ";
                     SetConsoleTextAttribute(h,7);
                     cin >> c ;
-                    SetConsoleTextAttribute(h,10);
+                    SetConsoleTextAttribute(h,9);
                     cout << "   Row: ";
                     SetConsoleTextAttribute(h,7);
                     cin >> r;
                     cout << "\n";
                     c = toupper(c);
-                    
+
+                    system("CLS");
+
                     if(c >= 'A' && c < 'A'+ M){
                         if(r >= 1 && r <= N){
                             break;
@@ -115,6 +118,8 @@ void SelectSeat(string name_movie,string time_movie){
                         cout << "*|  Column: " << c <<  " do not have. |*" << endl;
                         cout << "*| Please select again. |*" << "\n";
                     }
+
+                    
                 
                 }while(true);
 
@@ -131,9 +136,11 @@ void SelectSeat(string name_movie,string time_movie){
                 int point = column + M*(r-1);
                 if(t.at(point) == "S"){
                     t.at(point) = "0";
+                    system("CLS");
                     SetConsoleTextAttribute(h,7);
                     show(t,N,M);
                 }else if(t.at(point) == "X" || t.at(point) == "0" || t.at(point) == " " ){
+                    system("CLS");
                     SetConsoleTextAttribute(h,7);
                     show(t,N,M);
                     SetConsoleTextAttribute(h,4);
@@ -148,12 +155,14 @@ void SelectSeat(string name_movie,string time_movie){
                 cout << "answer: ";
                 cin >> answer ; 
                 cout << "--------------------------------\n";
-
+                system("CLS");
                 if(answer == 1 || answer == 2 || answer == 3){
                     break;
                 }else{
                     SetConsoleTextAttribute(h,4);
                     cout << answer << " do not have" << "\n";
+                    SetConsoleTextAttribute(h,7);
+                    show(t,N,M);
                 }
 
                 }while(true);
@@ -162,26 +171,31 @@ void SelectSeat(string name_movie,string time_movie){
         }
 
         if(answer == 3) break;
-
-        SetConsoleTextAttribute(h,7);
-        show(t,N,M);
         
+
+
         do{
-           SetConsoleTextAttribute(h,10);
+            SetConsoleTextAttribute(h,7);
+            show(t,N,M);
+          
+
+           SetConsoleTextAttribute(h,9);
            cout << "input your seat.";
            SetConsoleTextAttribute(h,7);
            cout << "(ex) A1 = column: A , row: 1" << endl;
-           SetConsoleTextAttribute(h,10);
+           SetConsoleTextAttribute(h,9);
            cout << "Column: ";
            SetConsoleTextAttribute(h,7);
            cin >> c ;
-           SetConsoleTextAttribute(h,10);
+           SetConsoleTextAttribute(h,9);
            cout << "   Row: ";
            SetConsoleTextAttribute(h,7);
            cin >> r;
            cout << "\n";
            c = toupper(c);
- 
+           
+           system("CLS");
+
            if(c >= 'A' && c < 'A'+ M){
               if(r >= 1 && r <= N){
                    break;
@@ -195,6 +209,8 @@ void SelectSeat(string name_movie,string time_movie){
                 cout << "*|  Column: " << c <<  " do not have. |*" << endl;
                 cout << "*| Please select again. |*" << "\n";
             }
+
+
         }while(true);
       
         //แปลงหลักเป็นเลข
@@ -210,20 +226,28 @@ void SelectSeat(string name_movie,string time_movie){
         int point = column + M*(r-1);
         if(t.at(point) == "0"){
             t.at(point) = "S";
+            system("CLS");
             SetConsoleTextAttribute(h,7);
             show(t,N,M);
         }else if(t.at(point) == "X" || t.at(point) == "S" ){
+            system("CLS");
             SetConsoleTextAttribute(h,7);
             show(t,N,M);
             SetConsoleTextAttribute(h,4);
             cout << "   * This seat has been book. *" << endl;
             cout << "     * Please select again. * " << endl;
         }else if(t.at(point) == " "){
-            cout << "* you can not cancelled this seat. *" << "\n";
+            system("CLS");
+            SetConsoleTextAttribute(h,7);
+            show(t,N,M);
+            SetConsoleTextAttribute(h,4);
+            cout << "* you can not select this seat. *" << "\n";
         }
 
+       
  
         do{
+        
         SetConsoleTextAttribute(h,6);
         cout << "--------------------------------\n";
         cout << "      1. : add seat.\n" << "      2. : cancelled seat.\n" <<   "      3. : DONE.  \n"; 
@@ -231,19 +255,26 @@ void SelectSeat(string name_movie,string time_movie){
         cout << "answer: ";
         cin >> answer ; 
         cout << "--------------------------------\n";
+        system("CLS");
         if(answer == 1 || answer == 2 || answer == 3){
             break;
         }else{
             SetConsoleTextAttribute(h,4);
             cout << answer << " do not have" << "\n";
+            SetConsoleTextAttribute(h,7);
+            show(t,N,M);
         }
         }while(true);
-        
+        system("CLS");
+    
     }while(answer != 3);
     
     
     SetConsoleTextAttribute(h,7);
     show(t,N,M);
+    cout << "\n";
+
+    Payment1(name_movie,time_movie,t);
     
     //เก็บเข้าไฟล์เดิม
     for(int j = 0;j < t.size();j++){
@@ -259,11 +290,6 @@ void SelectSeat(string name_movie,string time_movie){
     }
     seats_cinema.close();
     
-    Payment1(name_movie,time_movie,t);
+    
 }
-
-
-
-
-
 
