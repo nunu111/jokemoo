@@ -11,11 +11,13 @@ using namespace std;
 
 HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 
+string dfile_price = "all price_movie/";
+
 void Payment1(string name_movie,string time_movie,vector<string> R){
     string file = ".txt";
     string p_file = "_price.txt";
-    ifstream seats(name_movie+file);
-    ifstream pay(name_movie+p_file);
+    ifstream seats(dfile_price +name_movie+file);
+    ifstream pay(dfile_price +name_movie+p_file);
     string select,get,X;
     vector<string> m;
     
@@ -49,8 +51,7 @@ void Payment1(string name_movie,string time_movie,vector<string> R){
         start = m.at(0);
     }
     //แปลงstring เป็น int
-        int s = stoi(start.c_str());
-   
+        int s = atoi(start.c_str());
     /////////////////////////////////////////////////////
     
     //คิดตังค์//
@@ -85,7 +86,7 @@ void Payment1(string name_movie,string time_movie,vector<string> R){
 
     //คำนวณเวลา
     int hr,min=0,time;
-    time = stoi(time_movie.c_str());
+    time = atoi(time_movie.c_str());
     int tc = time;
     if(time >= 60){
         for(hr = 0;time >= 60;hr++){
@@ -134,6 +135,8 @@ void Payment1(string name_movie,string time_movie,vector<string> R){
     SetConsoleTextAttribute(h,7);
     cout << "-----------------------------------------" << endl;
     cout << "_________________________________________" << "\n";
+    system("pause");
+    system("CLS");
 }
 
 

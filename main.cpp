@@ -9,23 +9,24 @@
 #include<ctime>
 #include<cstdlib>
 #include"Password.h"
-#include"make_price.h"
+#include"create_payment.h"
 #include"SelectSect.h"
 
 using namespace std;
 
-string  file= ".txt",directfile = "all movie/";
+string  file= ".txt",directfile_movie = "all movie/",directfile_price = "all price_movie/";
 
 string password;
 string Ans;
 
 int time_HR,time_min;
+void runprogram();
 
 void check_time(string movie){
     string a;
     vector<string> movie_time;
     int number;
-    ifstream check_list (directfile+movie+file);
+    ifstream check_list (directfile_movie+movie+file);
     for (int i=0;getline(check_list,a);i++){
         if(a != "0" && a != " " && a != "X"){
             movie_time.push_back(a);
@@ -47,7 +48,8 @@ void check_time(string movie){
     cout << endl<< ">>> ";
     cin >> number;
     cin.ignore();
-    SelectSeat(directfile+movie ,movie_time[number-1]);
+    SelectSeat(movie,movie_time[number-1]);
+    runprogram();
 }
 
 string checkAns(string &);
@@ -60,7 +62,7 @@ void remove_movie(string movie_name){
 
 //สร้างไฟล์ขึ้นมาเพื่อจัดเก็บข้อมูลที่นั่ง สร้างต่อจากเดิม
 void create_movieseat(string movie_name,vector<string> a,int time){
-    ofstream seatmovie (directfile +movie_name,ios::app);
+    ofstream seatmovie (directfile_movie +movie_name,ios::app);
         seatmovie << time << endl;
         for(unsigned int j=0 ; j< a.size();j++){
             seatmovie << a[j] << "\n";
@@ -80,7 +82,7 @@ void seat(vector<string> &a,int N,int M){
 }
 
 void walk(vector<string> &a,int x,int number,int M){
-    if(x != 0){
+    if(x > 0 && x<M){
         for(int i=(x-1)*M;i<M*x;i++){
             a[i] = " ";
         }
@@ -212,7 +214,7 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
                     continue;
                 }
             }
-            remove_movie(directfile+name+file);
+            remove_movie(directfile_movie+name+file);
             system("CLS");
         }
         SetConsoleTextAttribute(h,6);
@@ -249,6 +251,9 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
             cout << "which therter do you want for movie\n";
             cin >> choose_therter;
             cin.ignore();
+            double price=0;
+            cout << "How cost do you want to make\n";
+            cin >> price;
             vector<string> Cmovie;
             for(unsigned int i=0; i < theater.size();i++){
                 if(choose_therter == atoi(theater[i].c_str())){
@@ -260,6 +265,7 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
                 }
             }
             create_movieseat(name+file,Cmovie,t);
+            create_payment(directfile_price+name,price,t);
         }
         if(mode == 0){
             string exit;
@@ -458,7 +464,7 @@ void admin(){
                             cout << "Your answer is ";
                             cin >> Ans4;
                             if(Ans4 > 0 && Ans4 <= a.size()+1){
-                                remove_movie(directfile+a[Ans4-1]+file);
+                                remove_movie(directfile_movie+a[Ans4-1]+file);
                                 a.erase(a.begin()+Ans4-1);
                                 b.erase(b.begin()+Ans4-1);
                                 system("CLS");
@@ -497,8 +503,6 @@ void admin(){
             timemovie1.close();
         }else if(Ans1 ==3){
             movie_theater(a,b,theater,0,"name");
-        }else if(Ans1 == 5){
-                check_decition(a);
         }else if(Ans1 == 9){
             reset_password();
         }else if(Ans1==0) {//ออกไปหน้าหลัก(หน้าลูกค้า)
@@ -517,7 +521,6 @@ void admin(){
 }
 
 
-
 void runprogram(){
     ifstream movie ("listmovie.txt");
     string moviename;
@@ -529,11 +532,12 @@ void runprogram(){
         input.open("listmovie.txt");
         if((getline(input,textline))){
             SetConsoleTextAttribute(h,6);
-            cout <<endl<<setw(80) <<"\\|-*-*-*- Hello, please choose your movie -*-*-*-|/\n\n";
+
+            cout <<endl<<right<<setw(100) <<"\\|-*-*-*- Hello, please choose your movie -*-*-*-|/\n\n";
             for(int i =1;getline(movie,moviename);i++){
                 a.push_back(moviename);
                 SetConsoleTextAttribute(h,10);
-                cout <<setw(10)<<"|* " <<setw(20)<<left << a[i-1] <<setw(25)<< right <<" *|" ;
+                cout <<setw(10)<<"|* " <<setw(20)<<left << a[i-1] <<setw(40)<< right <<" *|" ;
                 if(i != 0 && i%2 == 0) cout << endl << endl;
             }
             break;

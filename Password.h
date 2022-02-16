@@ -15,7 +15,8 @@ int refac;
 void make_file(){
     bool a=mkdir("all movie");
     bool b=mkdir("all Theater");
-    if(!a && !b){
+    bool c=mkdir("all price_movie");
+    if(!a && !b && !c){
         cout << "create file complete\n";
     }
     else{

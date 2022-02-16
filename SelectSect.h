@@ -10,6 +10,8 @@
 #include"Payment.h"
 using namespace std;
 
+string difile = "all movie/";
+
 void show(vector<string> a,int N,int M){
     cout << "          ";
     for(int p=0;p<M;p++){
@@ -35,8 +37,8 @@ void show(vector<string> a,int N,int M){
 
 void SelectSeat(string name_movie,string time_movie){
     string file = ".txt";
-    ifstream seats(name_movie+file);
-    ifstream seats_cinema(name_movie+file);
+    ifstream seats(difile +name_movie+file);
+    ifstream seats_cinema(difile+name_movie+file);
     string All,select;
     vector<string> T;
     vector<string> t;
@@ -154,6 +156,7 @@ void SelectSeat(string name_movie,string time_movie){
                 cout << "--------------------------------\n";
                 cout << "answer: ";
                 cin >> answer ; 
+                cin.ignore();
                 cout << "--------------------------------\n";
                 system("CLS");
                 if(answer == 1 || answer == 2 || answer == 3){
@@ -220,8 +223,7 @@ void SelectSeat(string name_movie,string time_movie){
                 break;
             }
         }
-           
-    
+           cin.ignore();
         //ขึ้นสัญลักษณ์ จอง 'X'; 
         int point = column + M*(r-1);
         if(t.at(point) == "0"){
@@ -254,6 +256,7 @@ void SelectSeat(string name_movie,string time_movie){
         cout << "--------------------------------\n";
         cout << "answer: ";
         cin >> answer ; 
+        cin.ignore();
         cout << "--------------------------------\n";
         system("CLS");
         if(answer == 1 || answer == 2 || answer == 3){
@@ -275,7 +278,7 @@ void SelectSeat(string name_movie,string time_movie){
     cout << "\n";
 
     Payment1(name_movie,time_movie,t);
-    
+
     //เก็บเข้าไฟล์เดิม
     for(int j = 0;j < t.size();j++){
         if(t.at(j) == "S"){
@@ -284,7 +287,7 @@ void SelectSeat(string name_movie,string time_movie){
         T[j+p+1] = t[j];
     }
 
-    ofstream s(name_movie+file);
+    ofstream s(difile + name_movie+file);
     for(int k = 0;k < T.size();k++){
         s << T[k] << endl;
     }
