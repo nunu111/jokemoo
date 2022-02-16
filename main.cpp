@@ -14,10 +14,17 @@
 
 using namespace std;
 
-string  file= ".txt",directfile_movie = "all movie/",directfile_price = "all price_movie/";
+string  file= ".txt",directfile_movie = "all movie/",directfile_price = "all price_movie/",directfile1 = "all Theater/",th= "theater";
 
 string password;
 string Ans;
+
+struct showing
+{
+    string name;
+    int time1;
+    int time2;
+};
 
 int time_HR,time_min;
 void runprogram();
@@ -74,6 +81,23 @@ int timechange(int hr,int min){
     return (hr*60)+min;
 }
 
+void timechange1(int t){
+    int hr = t/60;
+    int min = t%60;
+    if(hr ==0){
+        cout << "00:";
+    }else{
+        cout << hr << ":";
+    }
+    if(min ==0){
+        cout << "00";
+    }else if(min < 10){
+        cout << "0" << min;
+    }else{
+        cout << min;
+    }
+}
+
 void seat(vector<string> &a,int N,int M){   
         for(int i=0;i<N*M;i++){
                 a.push_back(".");
@@ -120,16 +144,16 @@ void showEX1(int &N,int &M){
     SetConsoleTextAttribute(h,07);
     cout << "    2 |  . . . . .  |";
     SetConsoleTextAttribute(h,06);
-    cout << "        Number_of_seat =  line X column" << endl;
+    cout << "        Number_of_seat =  column X line" << endl;
     SetConsoleTextAttribute(h,07);
     cout << "    3 |  . . . . .  |" << endl << endl;
     SetConsoleTextAttribute(h,04);
-    cout << "         ^ ^ ^ ^ ^ ";
+    cout << "    ^              ";
     SetConsoleTextAttribute(h,11);
     cout << "                 column = ";
     cin >> M;
     SetConsoleTextAttribute(h,04);
-    cout << "            line";
+    cout << "   line         ";
     SetConsoleTextAttribute(h,11);
     cout << "                    line = ";
     cin >> N;
@@ -178,11 +202,75 @@ void checkAns2(string &Ans){
     Ans = sum;
 }
 
-void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int mode,string name1){
+void showing_theater(string name_theater,string name_movie,int time,int l){
+     ofstream seatmovie (name_theater,ios::app);
+        seatmovie << name_movie << ":" << time << "," << l << endl;
+    seatmovie.close();
+}
+
+void show_movietheater(int r){
+    for(int i = 1;i <= r ; i++){
+        string b;
+        stringstream ss;
+            ss << i;
+            string s;
+            ss >> s;
+        ifstream a (directfile1+th+s);
+        cout << "Theater " << i << " :\n";
+        while(getline(a,b)){
+            char c[30];
+            int n1,n2;
+            sscanf(b.c_str(),"%[^:]:%d,%d",c,&n1,&n2);
+            
+            cout << c << "  =>  " ;
+            timechange1(n1);
+            cout << " - ";
+            timechange1(n1+n2);
+            cout << endl;
+        }
+    }
+}
+bool check_movietheater(int r,int t ,int tl,vector<showing> x){
+    bool ans=true;
+        string b;
+        stringstream ss;
+            ss << r;
+            string s;
+            ss >> s;
+        ifstream a (directfile1+th+s);
+        while(getline(a,b)){
+            string s;
+            char c[30];
+            int n1,n2;
+            sscanf(b.c_str(),"%[^:]:%d,%d",c,&n1,&n2);
+            s=c;
+            x.push_back({s,n1,n2});
+        }
+    for(unsigned int i=0 ; i < x.size() ; i++){
+        if(t >= x[i].time1){
+            if((x[i].time1+x[i].time2)>t){
+            ans= false;
+            break;
+            }else if(t == x[i].time1){
+                return false;
+            }
+        }else if(t<x[i].time1){
+            if((t+tl)>x[i].time1){
+            ans = false;
+            break;
+            }
+        }
+    }
+    return ans;
+}
+
+
+void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int mode,string name1,int time1,int room){
+    vector<showing> x;
     int choose_therter;
     do{
         string name = name1;
-        int N;
+        int N,time = time1;
         if(mode == 0){
             SetConsoleTextAttribute(h,14);
             cout << "Movie program today :" <<endl;
@@ -197,6 +285,7 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
             for(unsigned int i=0; i < a.size();i++){
                 if(toUpperStr(name)==toUpperStr(a[i])){
                     name = a[i];
+                    time = b[i];
                     break;
                 }
                 else if (a.size() == i+1){
@@ -223,35 +312,48 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
         cin >> N;
         cin.ignore();
         for(int i=0;i<N;i++){
-            int hr,min;
-            SetConsoleTextAttribute(h,6);
-            cout << "What time " << name << "show " << i+1 << "# ?"<< endl;
-            cout << "Example : 8:00am ==> hr : 8" << endl;
-            cout << "                     min : 0" << endl;
-            cout << "          3:25pm ==> hr : 15" << endl;
-            cout << "                     min : 25" << endl;
+            int hr,min,t;
             while(1){
-                SetConsoleTextAttribute(h,11);
-                cout << "Your anwser is :\nHr : " ;
-                cin >> hr;
-                cout << "Min : ";
-                cin >> min;
-                if(hr <= 0 || hr > 24 ){
-                    SetConsoleTextAttribute(h,4);
-                    cout << "Hr is wrong !!! please try again.\n";
+                SetConsoleTextAttribute(h,10);
+                show_movietheater(room);
+                SetConsoleTextAttribute(h,6);
+                cout << "What time " << name << " show " << i+1 << "# ?"<< endl;
+                cout << "Example : 8:00am ==> hr : 8" << endl;
+                cout << "                     min : 0" << endl;
+                cout << "          3:25pm ==> hr : 15" << endl;
+                cout << "                     min : 25" << endl;
+                while(1){
                     SetConsoleTextAttribute(h,11);
-                }else if(min < 0 || min >= 60){
+                    cout << "Your anwser is :\nHr : " ;
+                    cin >> hr;
+                    cout << "Min : ";
+                    cin >> min;
+                    if(hr <= 0 || hr > 24 ){
+                        SetConsoleTextAttribute(h,4);
+                        cout << "Hr is wrong !!! please try again.\n";
+                        SetConsoleTextAttribute(h,11);
+                    }else if(min < 0 || min >= 60){
+                        SetConsoleTextAttribute(h,4);
+                        cout << "Min is wrong !!! please try again.\n";
+                        SetConsoleTextAttribute(h,11);
+                    }else break;
+                }
+                t=timechange(hr,min);
+                SetConsoleTextAttribute(h,6);
+                cout << "which therter do you want for movie\n";
+                cin >> choose_therter;
+                cin.ignore();
+                if(check_movietheater(choose_therter,t,time,x)){
+                    break;
+                }else {
                     SetConsoleTextAttribute(h,4);
-                    cout << "Min is wrong !!! please try again.\n";
-                    SetConsoleTextAttribute(h,11);
-                }else break;
+                    cout << "This movie overlaps another movie.Please try again."<< endl;
+                    system("pause");
+                }
+            
             }
-            int t=timechange(hr,min);
-            SetConsoleTextAttribute(h,6);
-            cout << "which therter do you want for movie\n";
-            cin >> choose_therter;
-            cin.ignore();
             double price=0;
+            SetConsoleTextAttribute(h,6);
             cout << "How cost do you want to make\n";
             cin >> price;
             vector<string> Cmovie;
@@ -266,6 +368,11 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
             }
             create_movieseat(name+file,Cmovie,t);
             create_payment(directfile_price+name,price,t);
+            stringstream ss;
+            ss << choose_therter;
+            string s;
+            ss >> s;
+            showing_theater(directfile1+th+s,name,t,time);
         }
         if(mode == 0){
             string exit;
@@ -318,6 +425,7 @@ void admin(){
     string moviename;
     vector<string> a;
     vector<int> b;
+    int r=0;
 
     while(getline(movie,moviename)){
         a.push_back(moviename);
@@ -327,6 +435,10 @@ void admin(){
     }
     for(int i =0;getline(theatera,theatervec);i++){
         theater.push_back(theatervec);
+        if(theatervec != "0" && theatervec != " "){
+            r++;
+        }
+
     }
     while(1){
         //เลือกระบบที่ต้องการแก้ไข
@@ -347,6 +459,7 @@ void admin(){
                 SetConsoleTextAttribute(h,11);
                 cout << "\nYour answer is ";
                 cin >> room;
+                r = room;
                 theater.clear();
                 for(int i=0; i < room ;i++){
                     showEX1(N,M);
@@ -448,7 +561,7 @@ void admin(){
                             }
                         }
                         ShowListMovie(a);
-                        movie_theater(a,b,theater,1,name);
+                        movie_theater(a,b,theater,1,name,t,r);
                         cout << "Anything else ? (Yes = [Y] or anything,No = [N])"<< endl;
                         cin >> Ans3;
                         cin.ignore();
@@ -502,7 +615,7 @@ void admin(){
                 }
             timemovie1.close();
         }else if(Ans1 ==3){
-            movie_theater(a,b,theater,0,"name");
+            movie_theater(a,b,theater,0,"name",0,r);
         }else if(Ans1 == 9){
             reset_password();
         }else if(Ans1==0) {//ออกไปหน้าหลัก(หน้าลูกค้า)
