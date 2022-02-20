@@ -32,7 +32,7 @@ void runprogram();
 void check_time(string movie){
     string a;
     vector<string> movie_time;
-    int number;
+    int number,i=0;
     ifstream check_list (directfile_movie+movie+file);
     for (int i=0;getline(check_list,a);i++){
         if(a != "0" && a != " " && a != "X"){
@@ -52,11 +52,26 @@ void check_time(string movie){
         }
     
     }
+    cout <<"[0] go to home screen";
+    while(true){
     cout << endl<< ">>> ";
     cin >> number;
     cin.ignore();
-    SelectSeat(movie,movie_time[number-1]);
-    runprogram();
+        if(number ==0) {
+            system("CLS");
+            runprogram();
+        }
+        else if (number <= movie_time.size() &&  number > 0){
+            SelectSeat(movie,movie_time[number-1]);
+            system("CLS");
+            runprogram();
+        }
+        else{
+            SetConsoleTextAttribute(h,6);
+            cout << "Worng command pleses type again";
+            SetConsoleTextAttribute(h,11);
+        }
+    }
 }
 
 string checkAns(string &);
@@ -304,6 +319,7 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
                 }
             }
             remove_movie(directfile_movie+name+file);
+            remove_movie(directfile_price+name+p+file);
             system("CLS");
         }
         SetConsoleTextAttribute(h,6);
@@ -578,6 +594,7 @@ void admin(){
                             cin >> Ans4;
                             if(Ans4 > 0 && Ans4 <= a.size()+1){
                                 remove_movie(directfile_movie+a[Ans4-1]+file);
+                                remove_movie(directfile_price+a[Ans4-1]+p+file);
                                 a.erase(a.begin()+Ans4-1);
                                 b.erase(b.begin()+Ans4-1);
                                 system("CLS");
@@ -590,7 +607,7 @@ void admin(){
                         }
                         ShowListMovie(a);
                         SetConsoleTextAttribute(h,6);
-                        cout << "Anything else ? (Yes = y or anything,No = n)"<< endl;
+                        cout << "Anything else ? (Yes = [Y] or anything,No = [N])"<< endl;
                         SetConsoleTextAttribute(h,11);
                         cin >> Ans3;
                         system("CLS");
@@ -672,7 +689,7 @@ void runprogram(){
                     system("CLS");
                 }else{
                     SetConsoleTextAttribute(h,4);
-                    cout << "Press y to go setting" << endl;
+                    cout << "Press [Y] to go setting" << endl;
                     SetConsoleTextAttribute(h,11);
                     cout << ">> ";
                     cin >> Ans;
@@ -681,10 +698,10 @@ void runprogram(){
             }
         }
     }
-    SetConsoleTextAttribute(h,15);
-    cout <<"\n>>> ";
-    getline(cin,moviename);
     for(int i=0,j=0;i<a.size();i++){
+        SetConsoleTextAttribute(h,15);
+        cout <<"\n>>> ";
+        getline(cin,moviename);
         if(moviename == passwordcheck()) {
             admin(); // ถ้าพิมพ์ 1 จะทำการสร้างโรง เหมือน main เมื่อก่อน
             break;
@@ -693,12 +710,10 @@ void runprogram(){
             check_time(moviename);
             j++;
         }
-        else if(i== a.size()-1 && j ==0){
+        else if(i == a.size()-1 && j==0){
             SetConsoleTextAttribute(h,04);
             cout << "We cannot found movie please try again\n"; //กรณีหาหนังไม่เจอ
             SetConsoleTextAttribute(h,15);
-            cout << ">>> ";
-            getline(cin,moviename);
             i = -1;
             continue;
         }

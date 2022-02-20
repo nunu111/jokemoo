@@ -3,6 +3,9 @@
 #include<direct.h>
 
 using namespace std;
+
+string passwordcheck();
+
     HANDLE t = GetStdHandle(STD_OUTPUT_HANDLE);
 string toUpperStr(string x){ //code เปลี่ยนตัวเป็นตัวใหญ่ทั้งหมด ของอาจารย์เห็นว่ามันใช้ได้
     string y = x;
@@ -27,15 +30,16 @@ void make_file(){
 void reset_password(){
     string newpassword,conf;
     while(1){
+        cout << passwordcheck();
         SetConsoleTextAttribute(t,6);
-        cout << "Input your new password\n";
+        cout << " is your old password\nInput your new password\n";
         SetConsoleTextAttribute(t,11);
         cout << ">>> ";
         cin >> newpassword;
         cin.ignore();
         cout << newpassword;
         SetConsoleTextAttribute(t,6);
-        cout << " is your new password are you sure?\nInput your password again to confirm\n";
+        cout << " is your new password are you sure?\nInput your password again to confirm(to unconfirm type anything)\n";
         while(true){
             SetConsoleTextAttribute(t,11);
             cout << ">>> ";
