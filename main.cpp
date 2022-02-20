@@ -217,7 +217,7 @@ void checkAns2(string &Ans){
     Ans = sum;
 }
 
-void showing_theater(string name_theater,string name_movie,int time,int l){
+void create_movietheater(string name_theater,string name_movie,int time,int l){
      ofstream seatmovie (name_theater,ios::app);
         seatmovie << name_movie << ":" << time << "," << l << endl;
     seatmovie.close();
@@ -245,6 +245,7 @@ void show_movietheater(int r){
         }
     }
 }
+
 bool check_movietheater(int r,int t ,int tl,vector<showing> x){
     bool ans=true;
         string b;
@@ -279,6 +280,34 @@ bool check_movietheater(int r,int t ,int tl,vector<showing> x){
     return ans;
 }
 
+void remove_movietheater(int r,vector<showing> x,string name){
+    for(int i = 1;i <= r ; i++){
+        string b;
+        stringstream ss;
+            ss << i;
+            string s;
+            ss >> s;
+        ifstream a (directfile1+th+s);
+        while(getline(a,b)){
+            char c[30];
+            int n1,n2;
+            sscanf(b.c_str(),"%[^:]:%d,%d",c,&n1,&n2);
+            
+            x.push_back({c,n1,n2});  
+        }
+        a.close();
+        for(unsigned int j=0;j<x.size();j++){
+            if(toUpperStr(name) == toUpperStr(x[j].name)){
+                x.erase(x.begin()+j);
+            }
+        }
+        ofstream d (directfile1+th+s);
+        for(unsigned int j=0;j<x.size();j++){
+            d << x[j].name << ":" << x[j].time1 << "," << x[j].time2 << endl;
+        }
+        d.close();
+    }
+}
 
 void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int mode,string name1,int time1,int room){
     vector<showing> x;
@@ -318,6 +347,7 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
                     continue;
                 }
             }
+            remove_movietheater(room,x,name);
             remove_movie(directfile_movie+name+file);
             remove_movie(directfile_price+name+p+file);
             system("CLS");
@@ -388,7 +418,7 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
             ss << choose_therter;
             string s;
             ss >> s;
-            showing_theater(directfile1+th+s,name,t,time);
+            create_movietheater(directfile1+th+s,name,t,time);
         }
         if(mode == 0){
             string exit;
