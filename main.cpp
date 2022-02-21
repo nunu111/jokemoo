@@ -247,6 +247,7 @@ void show_movietheater(int r){
 }
 
 bool check_movietheater(int r,int t ,int tl,vector<showing> x){
+    x.clear();
     bool ans=true;
         string b;
         stringstream ss;
@@ -281,8 +282,10 @@ bool check_movietheater(int r,int t ,int tl,vector<showing> x){
 }
 
 void remove_movietheater(int r,vector<showing> x,string name){
+    x.clear();
     for(int i = 1;i <= r ; i++){
         string b;
+        unsigned int count=0;
         stringstream ss;
             ss << i;
             string s;
@@ -293,16 +296,17 @@ void remove_movietheater(int r,vector<showing> x,string name){
             int n1,n2;
             sscanf(b.c_str(),"%[^:]:%d,%d",c,&n1,&n2);
             
-            x.push_back({c,n1,n2});  
+            x.push_back({c,n1,n2});
+            count++;
         }
         a.close();
-        for(unsigned int j=0;j<x.size();j++){
+        for(unsigned int j=0;j<count;j++){
             if(toUpperStr(name) == toUpperStr(x[j].name)){
                 x.erase(x.begin()+j);
             }
         }
         ofstream d (directfile1+th+s);
-        for(unsigned int j=0;j<x.size();j++){
+        for(unsigned int j=0;j<count;j++){
             d << x[j].name << ":" << x[j].time1 << "," << x[j].time2 << endl;
         }
         d.close();
@@ -389,6 +393,13 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
                 cout << "which therter do you want for movie\n";
                 cin >> choose_therter;
                 cin.ignore();
+                if(choose_therter>0&&choose_therter<room){
+                    break;
+                }else{
+                    SetConsoleTextAttribute(h,4);
+                    cout << "Can not this theater.Please try again."<< endl;
+                    system("pause");
+                }
                 if(check_movietheater(choose_therter,t,time,x)){
                     break;
                 }else {
