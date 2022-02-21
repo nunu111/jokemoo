@@ -393,7 +393,7 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
                 cout << "which therter do you want for movie\n";
                 cin >> choose_therter;
                 cin.ignore();
-                if(choose_therter>0&&choose_therter<room){
+                if(choose_therter>0&&choose_therter<=room){
                     break;
                 }else{
                     SetConsoleTextAttribute(h,4);
