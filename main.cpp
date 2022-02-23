@@ -764,7 +764,7 @@ void runprogram(){
 
 
 int main(){
-    if(refac == 0) passwordconfig();
+    passwordconfig();
     runprogram();
     return 0;
 }

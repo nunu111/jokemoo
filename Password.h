@@ -13,8 +13,6 @@ string toUpperStr(string x){ //code เปลี่ยนตัวเป็น�
     return y;
 }
 
-int refac;
-
 void make_file(){
     bool a=mkdir("all movie");
     bool b=mkdir("all Theater");
@@ -79,7 +77,6 @@ void passwordconfig(){
     ifstream pass ("Password");
     string p,bypass,conf;
     if(getline(pass,p)) {
-        refac=1;
         pass.close();
     }
     else{
