@@ -246,8 +246,8 @@ void show_movietheater(int r){
     }
 }
 
-bool check_movietheater(int r,int t ,int tl,vector<showing> x){
-    x.clear();
+bool check_movietheater(int r,int t ,int tl){
+    vector<showing> x;
     bool ans=true;
         string b;
         stringstream ss;
@@ -281,11 +281,13 @@ bool check_movietheater(int r,int t ,int tl,vector<showing> x){
     return ans;
 }
 
-void remove_movietheater(int r,vector<showing> x,string name){
-    x.clear();
+void remove_movietheater(int r,string name){
+    vector<string> x;
+    vector<int> y;
+    vector<int> z;
     for(int i = 1;i <= r ; i++){
         string b;
-        unsigned int count=0;
+        int count=0;
         stringstream ss;
             ss << i;
             string s;
@@ -296,25 +298,26 @@ void remove_movietheater(int r,vector<showing> x,string name){
             int n1,n2;
             sscanf(b.c_str(),"%[^:]:%d,%d",c,&n1,&n2);
             
-            x.push_back({c,n1,n2});
+            x.push_back(c);
+            y.push_back(n1);
+            z.push_back(n2);
             count++;
         }
         a.close();
-        for(unsigned int j=0;j<count;j++){
-            if(toUpperStr(name) == toUpperStr(x[j].name)){
-                x.erase(x.begin()+j);
+        ofstream d (directfile1+th+s);
+        for(int j=0;j<count;j++){
+            if(toUpperStr(name) != toUpperStr(x[j])){
+                d << x[j] << ":" << y[j] << "," << z[j] << endl;
             }
         }
-        ofstream d (directfile1+th+s);
-        for(unsigned int j=0;j<count;j++){
-            d << x[j].name << ":" << x[j].time1 << "," << x[j].time2 << endl;
-        }
         d.close();
+        x.clear();
+        y.clear();
+        z.clear();
     }
 }
 
 void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int mode,string name1,int time1,int room){
-    vector<showing> x;
     int choose_therter;
     do{
         string name = name1;
@@ -351,7 +354,7 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
                     continue;
                 }
             }
-            remove_movietheater(room,x,name);
+            remove_movietheater(room,name);
             remove_movie(directfile_movie+name+file);
             remove_movie(directfile_price+name+p+file);
             system("CLS");
@@ -390,17 +393,22 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
                 }
                 t=timechange(hr,min);
                 SetConsoleTextAttribute(h,6);
-                cout << "which therter do you want for movie\n";
-                cin >> choose_therter;
-                cin.ignore();
-                if(choose_therter>0&&choose_therter<=room){
-                    break;
-                }else{
-                    SetConsoleTextAttribute(h,4);
-                    cout << "Can not this theater.Please try again."<< endl;
-                    system("pause");
+                while (1)
+                {
+                    SetConsoleTextAttribute(h,6);
+                    cout << "which therter do you want for movie\n";
+                    cin >> choose_therter;
+                    cin.ignore();
+                    if(choose_therter>0&&choose_therter<=room){
+                        break;
+                    }else{
+                        SetConsoleTextAttribute(h,4);
+                        cout << "Can not find this theater.Please try again."<< endl;
+                        system("pause");
+                    }
                 }
-                if(check_movietheater(choose_therter,t,time,x)){
+            
+                if(check_movietheater(choose_therter,t,time)){
                     break;
                 }else {
                     SetConsoleTextAttribute(h,4);
@@ -636,6 +644,7 @@ void admin(){
                             if(Ans4 > 0 && Ans4 <= a.size()+1){
                                 remove_movie(directfile_movie+a[Ans4-1]+file);
                                 remove_movie(directfile_price+a[Ans4-1]+p+file);
+                                remove_movietheater(r,a[Ans4-1]);
                                 a.erase(a.begin()+Ans4-1);
                                 b.erase(b.begin()+Ans4-1);
                                 system("CLS");
