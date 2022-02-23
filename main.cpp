@@ -28,6 +28,7 @@ struct showing
 
 int time_HR,time_min;
 void runprogram();
+void showEX2(int &);
 
 void check_time(string movie){
     string a;
@@ -120,13 +121,21 @@ void seat(vector<string> &a,int N,int M){
 
 }
 
-void walk(vector<string> &a,int x,int N,int M){
-    if(x > 0 && x <= N){
-        for(int i=(x-1)*M;i<M*x;i++){
-            a[i] = " ";
+void walk(vector<string> &a,int &x,int N,int M){
+    while(true){
+        if(x > 0 && x <= N){
+            for(int i=(x-1)*M;i<M*x;i++){
+                a[i] = " ";
+            }
+            break;
+        }
+        else{
+            SetConsoleTextAttribute(h,04);
+            cout << "You need to add aisle\n";
+            SetConsoleTextAttribute(h,14);
+            showEX2(x);
         }
     }
-    else;
 }
 
 void comferm_seat(vector<string> &a,int N,int M){
@@ -565,6 +574,14 @@ void admin(){
                 }
             theater1.close();
         }else if(Ans1==2){//ระบบจัดการรอบหนัง
+            if(theater.size() ==0) {
+                SetConsoleTextAttribute(h,4);
+                cout << "you don't have theater pleses config theater first\n";
+                SetConsoleTextAttribute(h,6);
+                system("pause");
+                system("CLS");
+                break;
+            }
             int Ans5,Ans2,Ans4;
             char Ans3;
             while(1){
@@ -588,7 +605,7 @@ void admin(){
                         int t;
                         string name;
                         SetConsoleTextAttribute(h,6);
-                        cout << "What movie do you to add ?" << endl;
+                        cout << "What movie do you want to add ?" << endl;
                         SetConsoleTextAttribute(h,11);
                         cout << "Your answer is ";
                         getline(cin,name);
