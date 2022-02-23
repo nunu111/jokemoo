@@ -6,7 +6,7 @@ using namespace std;
 
 string passwordcheck();
 
-    HANDLE t = GetStdHandle(STD_OUTPUT_HANDLE);
+HANDLE t = GetStdHandle(STD_OUTPUT_HANDLE);
 string toUpperStr(string x){ //code เปลี่ยนตัวเป็นตัวใหญ่ทั้งหมด ของอาจารย์เห็นว่ามันใช้ได้
     string y = x;
     for(unsigned i = 0; i < x.size();i++) y[i] = toupper(x[i]);
@@ -106,6 +106,10 @@ void passwordconfig(){
             if(toUpperStr(conf) == "Y") break;
             else if(toUpperStr(conf) == "N") continue;
         }
+        SetConsoleTextAttribute(t,4);
+        cout << "To enter to admin system you need to type [ admin ] in home page\n";
+        SetConsoleTextAttribute(t,14);
+        system("pause");
         make_file();
     }
 

@@ -743,9 +743,24 @@ void runprogram(){
         SetConsoleTextAttribute(h,15);
         cout <<"\n>>> ";
         getline(cin,moviename);
-        if(moviename == passwordcheck()) {
-            admin(); // ถ้าพิมพ์ 1 จะทำการสร้างโรง เหมือน main เมื่อก่อน
-            break;
+        if(toUpperStr(moviename) == "ADMIN") {
+            cout << "Please input your password\n";
+            cout << ">>> ";
+            string passf;
+            getline(cin,passf);
+            if(passwordcheck() == passf){
+                system("CLS");
+                admin(); // ถ้าพิมพ์ 1 จะทำการสร้างโรง เหมือน main เมื่อก่อน
+                break;
+            }
+            else{
+                SetConsoleTextAttribute(h,4);
+                cout << "Worng password try again\n";
+                SetConsoleTextAttribute(h,14);
+                system("pause");
+                system("CLS");
+                runprogram();
+            }
         }
         if(toUpperStr(moviename) == toUpperStr(a[i])){             // หาหนังแล้วเข้าหน้าเลือกที่นั่ง *ยังไม่เสร็จ*
             check_time(moviename);
@@ -753,7 +768,7 @@ void runprogram(){
         }
         else if(i == a.size()-1 && j==0){
             SetConsoleTextAttribute(h,04);
-            cout << "We cannot found movie please try again\n"; //กรณีหาหนังไม่เจอ
+            cout << "We cannot found movie please try again"; //กรณีหาหนังไม่เจอ
             SetConsoleTextAttribute(h,15);
             i = -1;
             continue;
@@ -764,6 +779,7 @@ void runprogram(){
 
 
 int main(){
+    system("CLS");
     passwordconfig();
     runprogram();
     return 0;
