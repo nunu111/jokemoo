@@ -42,6 +42,7 @@ void reset_password(){
             SetConsoleTextAttribute(t,11);
             cout << ">>> ";
             cin >> conf;
+            cin.ignore();
             if(conf == newpassword){
                 ofstream password ("Password");
                 password << newpassword;

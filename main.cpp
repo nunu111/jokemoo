@@ -747,6 +747,7 @@ void runprogram(){
             SetConsoleTextAttribute(h,11);
             cout  << ">> ";
             cin >> Ans;
+            cin.ignore();
             system("CLS");
             while(1){
                 if(toUpperStr(Ans) == "Y"){
@@ -760,15 +761,16 @@ void runprogram(){
                     SetConsoleTextAttribute(h,11);
                     cout << ">> ";
                     cin >> Ans;
+                    cin.ignore();
                     system("CLS");
                 }
             }
         }
     }
+    SetConsoleTextAttribute(h,15);
+    cout <<"\n>>> ";
+    getline(cin,moviename);
     for(int i=0,j=0;i<a.size();i++){
-        SetConsoleTextAttribute(h,15);
-        cout <<"\n>>> ";
-        getline(cin,moviename);
         if(toUpperStr(moviename) == "ADMIN") {
             cout << "Please input your password\n";
             cout << ">>> ";
@@ -796,6 +798,8 @@ void runprogram(){
             SetConsoleTextAttribute(h,04);
             cout << "We cannot found movie please try again"; //กรณีหาหนังไม่เจอ
             SetConsoleTextAttribute(h,15);
+            cout <<"\n>>> ";
+            getline(cin,moviename);
             i = -1;
             continue;
         }
