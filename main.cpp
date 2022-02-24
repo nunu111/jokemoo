@@ -82,7 +82,6 @@ void check_time(string movie){
 }
 
 string checkAns(string &);
-void runprogram();
 
 void remove_movie(string movie_name){
     const char *str = movie_name.c_str();
@@ -436,6 +435,7 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
             SetConsoleTextAttribute(h,6);
             cout << "How cost do you want to make\n";
             cin >> price;
+            cin.ignore();
             vector<string> Cmovie;
             for(unsigned int i=0; i < theater.size();i++){
                 if(choose_therter == atoi(theater[i].c_str())){
@@ -494,8 +494,8 @@ void ShowListMovie(vector<string> a){
 }
 //คล้าย main เลย แต่ต้องพิมพ์ 1 ก่อน
 void admin(){
-    int N,M,Ans1,mode1=0,mode2=0;
-    string Ans;
+    int N,M,mode1=0,mode2=0;
+    string Ans,Ans1,AN1;
     vector<string> theater;
     ifstream time ("timemovie.txt");
     ifstream movie ("listmovie.txt");
@@ -533,39 +533,55 @@ void admin(){
         cout << "\nYour answer is ";
         cin >> Ans1;
         cin.ignore();
+        stringstream ss;
+        ss << Ans1;
+        int s;
+        ss >> s;
         system("CLS");
-        if(Ans1==1){//ระบบจัดการโรงหนัง
+        if(s==1){//ระบบจัดการโรงหนัง
             while(1){
                 int count=1,room;
                 SetConsoleTextAttribute(h,14);
                 cout << "How many theater do you want ?";
                 SetConsoleTextAttribute(h,11);
                 cout << "\nYour answer is ";
-                cin >> room;
-                r = room;
-                theater.clear();
-                for(int i=0; i < room ;i++){
-                    showEX1(N,M);
-                    vector<string> block;
-                    seat(block,N,M);
-                    show(block,N,M);
-                    int A;
-                    showEX2(A);
-                    walk(block,A,N,M);
-                    show(block,N,M);
-                    comferm_seat(block,N,M);
-                    showEX3(1);
-                    show(block,N,M);
-                    stringstream ss;
-                    ss << count;
-                    string s;
-                    ss >> s;
-                    theater.push_back(s);
-                    for(int i=0 ; i<N*M ; i++){
-                        theater.push_back(block[i]);
+                cin >> AN1;
+                stringstream ss;
+                ss << AN1;
+                ss >> room;
+                if(room >0){
+                    r = room;
+                    theater.clear();
+                    for(int i=0; i < room ;i++){
+                        showEX1(N,M);
+                        vector<string> block;
+                        seat(block,N,M);
+                        show(block,N,M);
+                        int A;
+                        showEX2(A);
+                        walk(block,A,N,M);
+                        show(block,N,M);
+                        comferm_seat(block,N,M);
+                        showEX3(1);
+                        show(block,N,M);
+                        stringstream ss;
+                        ss << count;
+                        string s;
+                        ss >> s;
+                        theater.push_back(s);
+                        for(int i=0 ; i<N*M ; i++){
+                            theater.push_back(block[i]);
+                        }
+                        count++;
+                        block.clear();
                     }
-                    count++;
-                    block.clear();
+                }
+                else{
+                    SetConsoleTextAttribute(h,4);
+                    cout << "theater connot be 0 or string please try again\n";
+                    system("pause");
+                    system("CLS");
+                    continue;
                 }
                 while(1){
                     checkAns(Ans);
@@ -590,7 +606,7 @@ void admin(){
                     theater1 << endl;
                 }
             theater1.close();
-        }else if(Ans1==2){//ระบบจัดการรอบหนัง
+        }else if(s==2){//ระบบจัดการรอบหนัง
             if(theater.size() ==0) {
                 SetConsoleTextAttribute(h,4);
                 cout << "you don't have theater pleses config theater first\n";
@@ -641,6 +657,7 @@ void admin(){
                             SetConsoleTextAttribute(h,11);
                             cout << "Your answer is ";
                             cin >> Ans2;
+                            cin.ignore();
                             if(Ans2 > 0 && Ans2 <= a.size()+1){
                                 a.insert(a.begin()+Ans2-1,name);
                                 b.insert(b.begin()+Ans2-1,t);
@@ -707,13 +724,14 @@ void admin(){
                     timemovie1 << b[i] << endl;
                 }
             timemovie1.close();
-        }else if(Ans1 ==3){
+        }else if(s ==3){
             movie_theater(a,b,theater,0,"name",0,r);
-        }else if(Ans1 == 4){
+        }else if(s == 4){
             string check;
             SetConsoleTextAttribute(h,4);
             cout << "Are you you want to delete all movie?" << endl << "[Y] Yes   [N] No\n>>> " ;
             cin >> check;
+            cin.ignore();
             while(true){
                 if(toUpperStr(check) == "Y"){
                     int ai=a.size();
@@ -748,9 +766,9 @@ void admin(){
                 }
             }
             SetConsoleTextAttribute(h,7);
-        }else if(Ans1 == 9){
+        }else if(s == 9){
             reset_password();
-        }else if(Ans1==0) {//ออกไปหน้าหลัก(หน้าลูกค้า)
+        }else if(Ans1 == "0") {//ออกไปหน้าหลัก(หน้าลูกค้า)
             a.clear();
             b.clear();
             theater.clear();
@@ -841,6 +859,7 @@ void runprogram(){
         if(toUpperStr(moviename) == toUpperStr(a[i])){             // หาหนังแล้วเข้าหน้าเลือกที่นั่ง *ยังไม่เสร็จ*
             check_time(moviename);
             j++;
+            break;
         }
         else if(i == a.size()-1 && j==0){
             SetConsoleTextAttribute(h,04);

@@ -112,7 +112,6 @@ void SelectSeat(string name_movie,string time_movie){
            do{  
                 do{ 
                     SetConsoleTextAttribute(h,7);
-                    /*cout << "Price per Seat : " << endl;*/
                     SetConsoleTextAttribute(h,7);
                     //คำนวณจำนวนเงินทั้งหมด
                     int count_seat = 0;
@@ -128,7 +127,7 @@ void SelectSeat(string name_movie,string time_movie){
                     cout << "------------------------------" << endl;
                     SetConsoleTextAttribute(h,7);
                     show(t,N,M);
- 
+                    cout << "[0] in Column to go to home page\n";
                     SetConsoleTextAttribute(h,9);
                     cout << "input your seat that you want to cancelled";
                     SetConsoleTextAttribute(h,7);
@@ -137,10 +136,12 @@ void SelectSeat(string name_movie,string time_movie){
                     cout << "Column: ";
                     SetConsoleTextAttribute(h,7);
                     cin >> c ;
+                    cin.ignore();
                     SetConsoleTextAttribute(h,9);
                     cout << "   Row: ";
                     SetConsoleTextAttribute(h,7);
                     cin >> r;
+                    cin.ignore();
                     cout << "\n";
                     c = toupper(c);
 
@@ -217,7 +218,6 @@ void SelectSeat(string name_movie,string time_movie){
 
         do{
             SetConsoleTextAttribute(h,7);
-            /*cout << "Price per Seat : " << endl;*/
             SetConsoleTextAttribute(h,7);
             //คำนวณจำนวนเงินทั้งหมด
             int count_seat = 0;
@@ -235,7 +235,7 @@ void SelectSeat(string name_movie,string time_movie){
              
             show(t,N,M);
           
-
+           cout << "[0] in Column to go to home page\n";
            SetConsoleTextAttribute(h,9);
            cout << "input your seat.";
            SetConsoleTextAttribute(h,7);
@@ -248,6 +248,7 @@ void SelectSeat(string name_movie,string time_movie){
            cout << "   Row: ";
            SetConsoleTextAttribute(h,7);
            cin >> r;
+           cin.ignore();
            cout << "\n";
            c = toupper(c);
            
@@ -277,7 +278,6 @@ void SelectSeat(string name_movie,string time_movie){
                 break;
             }
         }
-           cin.ignore();
         //ขึ้นสัญลักษณ์ จอง 'X'; 
         int point = column + M*(r-1);
         if(t.at(point) == "0"){
