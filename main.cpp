@@ -153,51 +153,82 @@ void comferm_seat(vector<string> &a,int N,int M){
 }
 
 void showEX1(int &N,int &M){
-    SetConsoleTextAttribute(h,06);
-    cout << "Please fill in the number of row seats in  the movie theather (including aisle) " << endl;
-    SetConsoleTextAttribute(h,06);
-    cout << "* Example *" << endl;
-    SetConsoleTextAttribute(h,07);
-    cout << "        ";
-        for(int i=0;i<5;i++){
-            cout << " ";
-            cout << char('A'+i); 
-        }
+    while(1){
+        string sN,sM;
+        SetConsoleTextAttribute(h,06);
+        cout << "Please fill in the number of row seats in  the movie theather (including aisle) " << endl;
+        SetConsoleTextAttribute(h,06);
+        cout << "* Example *" << endl;
+        SetConsoleTextAttribute(h,07);
+        cout << "        ";
+            for(int i=0;i<5;i++){
+                cout << " ";
+                cout << char('A'+i); 
+            }
+            SetConsoleTextAttribute(h,04);
+            cout << "   << column";
+            SetConsoleTextAttribute(h,7);
+        cout << endl;
+        cout << "    1 |  . . . . .  |";
+        SetConsoleTextAttribute(h,06);
+        cout << "               Equation" << endl;
+        SetConsoleTextAttribute(h,07);
+        cout << "    2 |  . . . . .  |";
+        SetConsoleTextAttribute(h,06);
+        cout << "        Number_of_seat =  column X line" << endl;
+        SetConsoleTextAttribute(h,07);
+        cout << "    3 |  . . . . .  |" << endl << endl;
         SetConsoleTextAttribute(h,04);
-        cout << "   << column";
-        SetConsoleTextAttribute(h,7);
-    cout << endl;
-    cout << "    1 |  . . . . .  |";
-    SetConsoleTextAttribute(h,06);
-    cout << "               Equation" << endl;
-    SetConsoleTextAttribute(h,07);
-    cout << "    2 |  . . . . .  |";
-    SetConsoleTextAttribute(h,06);
-    cout << "        Number_of_seat =  column X line" << endl;
-    SetConsoleTextAttribute(h,07);
-    cout << "    3 |  . . . . .  |" << endl << endl;
-    SetConsoleTextAttribute(h,04);
-    cout << "    ^              ";
-    SetConsoleTextAttribute(h,11);
-    cout << "                 column = ";
-    cin >> M;
-    SetConsoleTextAttribute(h,04);
-    cout << "   line         ";
-    SetConsoleTextAttribute(h,11);
-    cout << "                    line = ";
-    cin >> N;
-    cout << endl;
-    SetConsoleTextAttribute(h,07);
-    system("CLS");
+        cout << "    ^              ";
+        SetConsoleTextAttribute(h,11);
+        cout << "                 column = ";
+        cin >> sM;
+        cin.ignore();
+        stringstream ab;
+        ab << sM;
+        ab >> M;
+        SetConsoleTextAttribute(h,04);
+        cout << "   line         ";
+        SetConsoleTextAttribute(h,11);
+        cout << "                    line = ";
+        cin >> sN;
+        cin.ignore();
+        stringstream abs;
+        abs << sN;
+        abs >> N;
+        cout << endl;
+        if(M != 0 && N != 0){
+            break;
+        }else{
+            SetConsoleTextAttribute(h,4);
+            cout << "Column/Line of seat cannot be lower than 1 or character.\n";
+        }
+        SetConsoleTextAttribute(h,07);
+        system("pause");
+        system("CLS");
+    }    
 }
 
 void showEX2(int &A){
-    SetConsoleTextAttribute(h,06);
-    cout << "                                    Where is your aisle?" << endl;
-    SetConsoleTextAttribute(h,11);
-    cout << "                                    column = ";
-    cin >> A;
-    SetConsoleTextAttribute(h,07);
+    while(1){
+        string sA;
+        SetConsoleTextAttribute(h,06);
+        cout << "                                    Where is your aisle?" << endl;
+        SetConsoleTextAttribute(h,11);
+        cout << "                                    column = ";
+        cin >> sA;
+        cin.ignore();
+        stringstream abs;
+        abs << sA;
+        abs >> A;
+        if(A != 0){
+            break;
+        }else{
+            SetConsoleTextAttribute(h,4);
+            cout << "Line of aisle cannot be lower than 1 or character.\n";
+        }
+        SetConsoleTextAttribute(h,07);
+    }
 }
 
 void showEX3(int x){
@@ -630,7 +661,7 @@ void admin(){
                 }
                 else{
                     SetConsoleTextAttribute(h,4);
-                    cout << "theater connot be 0 or string please try again\n";
+                    cout << "Theater connot be lower than 1 or string please try again\n";
                     system("pause");
                     system("CLS");
                     continue;
