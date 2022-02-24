@@ -334,7 +334,12 @@ void remove_movietheater(int r,string name){
 void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int mode,string name1,int time1,int room){
     int choose_therter;
     do{
-        string name = name1;
+        if(a.size() == 0){
+            SetConsoleTextAttribute(h,4);
+            cout << "you have no movie to manage\n";
+            break;
+        }
+        string sN,name = name1;
         int N,time = time1;
         if(mode == 0){
             SetConsoleTextAttribute(h,14);
@@ -364,7 +369,6 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
                     cout << "What movie do want to manage ?" <<endl;
                     getline(cin,name);
                     i=-1;
-                    system("CLS");
                     continue;
                 }
             }
@@ -373,11 +377,22 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
             remove_movie(directfile_price+name+p+file);
             system("CLS");
         }
-        SetConsoleTextAttribute(h,6);
-        cout << "How many " << name << " show ?" << endl;
-        SetConsoleTextAttribute(h,11);
-        cin >> N;
-        cin.ignore();
+        while(true){
+            SetConsoleTextAttribute(h,6);
+            cout << "How many [ " << name << " ] show ?" << endl;
+            SetConsoleTextAttribute(h,11);
+            cin >> sN;
+            stringstream ab;
+            ab << sN;
+            ab >> N;
+            cin.ignore();
+            if(N == 0){
+                SetConsoleTextAttribute(h,4);
+                cout << "show cannot be lower than 1 or character\n";
+                continue;
+            }
+            else break;
+        }
         for(int i=0;i<N;i++){
             int hr,min,t;
             while(1){
@@ -457,7 +472,7 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
         if(mode == 0){
             string exit;
             while (true){
-                cout << "Anything else????\nPress y to do it again  Press n to exit\n";
+                cout << "Anything else?\nPress [Y] to do it again  Press [N] to exit\n";
                 SetConsoleTextAttribute(h,11);
                 cin >> exit;
                 cin.ignore();
@@ -615,7 +630,8 @@ void admin(){
                 system("CLS");
                 break;
             }
-            int Ans5,Ans2,Ans4;
+            string Ans5,st,sAns2,sAns4;
+            int Ans2,Ans4;
             char Ans3;
             while(1){
                 SetConsoleTextAttribute(h,14);
@@ -633,7 +649,7 @@ void admin(){
                 cin >> Ans5;
                 cin.ignore();
                 system("CLS");
-                if(Ans5 == 1){//ระบบเพิ่มหนัง
+                if(Ans5 == "1"){//ระบบเพิ่มหนัง
                     while(1){
                         int t;
                         string name;
@@ -642,22 +658,45 @@ void admin(){
                         SetConsoleTextAttribute(h,11);
                         cout << "Your answer is ";
                         getline(cin,name);
-                        SetConsoleTextAttribute(h,6);
-                        cout << "How long this movie ?";
-                        SetConsoleTextAttribute(h,4);
-                        cout << "(minute unit)" << endl; 
-                        SetConsoleTextAttribute(h,11);
-                        cout << "Your answer is ";
-                        cin >> t;
-                        while(1){
+                        while(true){
                             SetConsoleTextAttribute(h,6);
-                            cout << "Where do you want to insert movie in the list ?" << endl;
-                            SetConsoleTextAttribute(h,13);
-                            ShowListMovie(a);
+                            cout << "How long this movie ?";
+                            SetConsoleTextAttribute(h,4);
+                            cout << "(minute unit)" << endl; 
                             SetConsoleTextAttribute(h,11);
                             cout << "Your answer is ";
-                            cin >> Ans2;
+                            cin >> st;
                             cin.ignore();
+                            stringstream ab;
+                            ab << st;
+                            ab >> t;
+                            if(t <= 0){
+                                SetConsoleTextAttribute(h,4);
+                                cout << "Time of movie cannot be character or lower 0 \n";
+                                continue;
+                            }
+                            else break;
+                        }
+                        while(1){
+                            while(true){
+                                SetConsoleTextAttribute(h,6);
+                                cout << "Where do you want to insert movie in the list ?" << endl << "To insert movie you should type number upper 0" << endl;
+                                SetConsoleTextAttribute(h,13);
+                                ShowListMovie(a);
+                                SetConsoleTextAttribute(h,11);
+                                cout << "Your answer is ";
+                                cin >> sAns2;
+                                cin.ignore();
+                                stringstream ab;
+                                ab << sAns2;
+                                ab >> Ans2;
+                                if(Ans2 <= 0){
+                                    SetConsoleTextAttribute(h,4);
+                                    cout << "To insert movie you should type number upper 0\n";
+                                    continue;
+                                }
+                                else break;
+                            }
                             if(Ans2 > 0 && Ans2 <= a.size()+1){
                                 a.insert(a.begin()+Ans2-1,name);
                                 b.insert(b.begin()+Ans2-1,t);
@@ -670,27 +709,55 @@ void admin(){
                         }
                         ShowListMovie(a);
                         movie_theater(a,b,theater,1,name,t,r);
+                        ofstream movielist1 ("listmovie.txt");
+                        for(int i=0;i<a.size();i++){
+                            movielist1 << a[i] << endl;
+                        }
+                        movielist1.close();
+                        ofstream timemovie1 ("timemovie.txt");
+                        for(int i=0;i<b.size();i++){
+                            timemovie1 << b[i] << endl;
+                        }
+                        timemovie1.close();
                         cout << "Anything else ? (Yes = [Y] or anything,No = [N])"<< endl;
                         cin >> Ans3;
                         cin.ignore();
                         if(Ans3 == 'n') break;
                     }
-                }else if(Ans5 == 2){//ระบบลบหนัง
+                }else if(Ans5 == "2"){//ระบบลบหนัง
                     while(1){
+                        if(a.size() == 0){
+                        SetConsoleTextAttribute(h,4);
+                        cout << "you have no movie to remove\n";
+                        break;
+                        }
                         while(1){    
                             SetConsoleTextAttribute(h,6);
                             cout << "Which movie do you to delete ?" << endl ;
                             ShowListMovie(a);
                             SetConsoleTextAttribute(h,11);
                             cout << "Your answer is ";
-                            cin >> Ans4;
-                            if(Ans4 > 0 && Ans4 <= a.size()+1){
+                            cin >> sAns4;
+                            stringstream ab;
+                            ab << sAns4;
+                            ab >> Ans4;
+                            if(Ans4 > 0 && Ans4 <= a.size()){
                                 remove_movie(directfile_movie+a[Ans4-1]+file);
                                 remove_movie(directfile_price+a[Ans4-1]+p+file);
                                 remove_movietheater(r,a[Ans4-1]);
                                 a.erase(a.begin()+Ans4-1);
                                 b.erase(b.begin()+Ans4-1);
                                 system("CLS");
+                                ofstream movielist1 ("listmovie.txt");
+                                for(int i=0;i<a.size();i++){
+                                    movielist1 << a[i] << endl;
+                                }
+                                movielist1.close();
+                                ofstream timemovie1 ("timemovie.txt");
+                                for(int i=0;i<b.size();i++){
+                                    timemovie1 << b[i] << endl;
+                                }
+                                timemovie1.close();
                                 break;
                             }
                             else{
@@ -700,6 +767,10 @@ void admin(){
                         }
                         ShowListMovie(a);
                         SetConsoleTextAttribute(h,6);
+                        if(a.size() == 0) {
+                            system("CLS");
+                            break;
+                        }
                         cout << "Anything else ? (Yes = [Y] or anything,No = [N])"<< endl;
                         SetConsoleTextAttribute(h,11);
                         cin >> Ans3;
@@ -707,11 +778,11 @@ void admin(){
                         if(Ans3 == 'n') break;
                         
                     }
-                }else if(Ans5 == 0){
+                }else if(Ans5 == "0"){
                     break;
                 }else {
                     SetConsoleTextAttribute(h,4);
-                    cout << "Not find system manage.\nPlease try again.";
+                    cout << "Not find system manage.\nPlease try again.\n";
                 }
             }
             ofstream movielist1 ("listmovie.txt");
@@ -763,6 +834,7 @@ void admin(){
                 else {
                     cout << "worng command please try again\n>>>";
                     cin >> check;
+                    cin.ignore();
                     continue;
                 }
             }
@@ -810,7 +882,7 @@ void runprogram(){
             cout  << "There are no movies on the list." << endl;
             cout  << "Please Manage movie." << endl;
             SetConsoleTextAttribute(h,6);
-            cout  << "Press y to go setting" << endl;
+            cout  << "Press [Y] to go setting" << endl;
             SetConsoleTextAttribute(h,11);
             cout  << ">> ";
             cin >> Ans;
