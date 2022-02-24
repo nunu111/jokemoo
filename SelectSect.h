@@ -106,12 +106,13 @@ void SelectSeat(string name_movie,string time_movie){
  
     int r;
     char c;
-    int answer = 100,column;
+    int answer = 100,column,yn;
     do{  
         if(answer == 2){
            do{  
                 do{ 
                     SetConsoleTextAttribute(h,7);
+                    /*cout << "Price per Seat : " << endl;*/
                     SetConsoleTextAttribute(h,7);
                     //คำนวณจำนวนเงินทั้งหมด
                     int count_seat = 0;
@@ -127,7 +128,7 @@ void SelectSeat(string name_movie,string time_movie){
                     cout << "------------------------------" << endl;
                     SetConsoleTextAttribute(h,7);
                     show(t,N,M);
-                    cout << "[0] in Column to go to home page\n";
+ 
                     SetConsoleTextAttribute(h,9);
                     cout << "input your seat that you want to cancelled";
                     SetConsoleTextAttribute(h,7);
@@ -136,12 +137,10 @@ void SelectSeat(string name_movie,string time_movie){
                     cout << "Column: ";
                     SetConsoleTextAttribute(h,7);
                     cin >> c ;
-                    cin.ignore();
                     SetConsoleTextAttribute(h,9);
                     cout << "   Row: ";
                     SetConsoleTextAttribute(h,7);
                     cin >> r;
-                    cin.ignore();
                     cout << "\n";
                     c = toupper(c);
 
@@ -212,12 +211,36 @@ void SelectSeat(string name_movie,string time_movie){
 
             }while(answer == 2);
         }
-
-        if(answer == 0 || answer == 3) break;
+        
+      
+        if(answer == 0){
+            do{
+              SetConsoleTextAttribute(h,9);
+              cout << "Leave this page that seat will be not Reserve." << endl;
+              cout << "Do you want to leave ([1] : yes , [2] : no) : ";
+              SetConsoleTextAttribute(h,7);
+              cin >> yn;
+              cout << "\n";
+              if(yn == 1 || yn == 2){
+                   break;
+              }else{
+                   SetConsoleTextAttribute(h,4);
+                   cout << yn << " do not have" << endl;
+              }
+            }while(true);
+            if(yn == 1){ 
+                break;
+            }else if(yn == 2){
+                SetConsoleTextAttribute(h,7);
+                 cout << "continue.." << endl;
+            }
+            answer = 1;
+        }else if(answer == 3) break;
         
 
         do{
             SetConsoleTextAttribute(h,7);
+            /*cout << "Price per Seat : " << endl;*/
             SetConsoleTextAttribute(h,7);
             //คำนวณจำนวนเงินทั้งหมด
             int count_seat = 0;
@@ -235,7 +258,7 @@ void SelectSeat(string name_movie,string time_movie){
              
             show(t,N,M);
           
-           cout << "[0] in Column to go to home page\n";
+
            SetConsoleTextAttribute(h,9);
            cout << "input your seat.";
            SetConsoleTextAttribute(h,7);
@@ -248,7 +271,6 @@ void SelectSeat(string name_movie,string time_movie){
            cout << "   Row: ";
            SetConsoleTextAttribute(h,7);
            cin >> r;
-           cin.ignore();
            cout << "\n";
            c = toupper(c);
            
@@ -278,6 +300,7 @@ void SelectSeat(string name_movie,string time_movie){
                 break;
             }
         }
+           cin.ignore();
         //ขึ้นสัญลักษณ์ จอง 'X'; 
         int point = column + M*(r-1);
         if(t.at(point) == "0"){
@@ -324,6 +347,29 @@ void SelectSeat(string name_movie,string time_movie){
         }while(true);
         system("CLS");
 
+        if(answer == 0){
+            do{
+              SetConsoleTextAttribute(h,9);
+              cout << "Leave this page that seat will be not Reserve." << endl;
+              cout << "Do you want to leave ([1] : yes , [2] : no) : ";
+              SetConsoleTextAttribute(h,7);
+              cin >> yn;
+              cout << "\n";
+              if(yn == 1 || yn == 2){
+                   break;
+              }else{
+                   SetConsoleTextAttribute(h,4);
+                   cout << yn << " do not have." << endl;
+              }
+            }while(true);
+            if(yn == 1){ 
+                break;
+            }else if(yn == 2){
+                SetConsoleTextAttribute(h,7);
+                 cout << "continue.." << endl;
+            }
+            answer = 1;
+        }
     
     }while(answer != 3 && answer != 0);
     
@@ -355,5 +401,3 @@ void SelectSeat(string name_movie,string time_movie){
     
     
 }
-
-
