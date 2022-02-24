@@ -690,7 +690,11 @@ void admin(){
                 }
             theater1.close();
         }else if(s==2){//ระบบจัดการรอบหนัง
-            if(theater.size() ==0) {
+            string Ans5,st,sAns2,sAns4;
+            int Ans2,Ans4;
+            char Ans3;
+            while(1){
+                if(theater.size() ==0) {
                 SetConsoleTextAttribute(h,4);
                 cout << "You don't have theater pleses config theater first\n";
                 SetConsoleTextAttribute(h,6);
@@ -698,10 +702,6 @@ void admin(){
                 system("CLS");
                 break;
             }
-            string Ans5,st,sAns2,sAns4;
-            int Ans2,Ans4;
-            char Ans3;
-            while(1){
                 SetConsoleTextAttribute(h,14);
                 cout << "Movie program today" << endl;//แสดงโปรแกรมหนังวันนี้
                 for(int i =0;i <a.size();i++){
