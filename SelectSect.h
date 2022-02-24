@@ -105,7 +105,7 @@ void SelectSeat(string name_movie,string time_movie){
 
     int r,column;
     char c;
-    string ANS,answer;
+    string ANS,answer,sr;
 
     do{
          
@@ -128,6 +128,7 @@ void SelectSeat(string name_movie,string time_movie){
             SetConsoleTextAttribute(h,7);
             cout << " [Answer] : ";
             cin >> ANS; 
+            cin.ignore();
             cout <<"\n";
             
             if(toUpper(ANS) == "H" ||toUpper(ANS) == "C" ){
@@ -171,7 +172,9 @@ void SelectSeat(string name_movie,string time_movie){
                           SetConsoleTextAttribute(h,9);
                           cout << "   Row: ";
                           SetConsoleTextAttribute(h,7);
-                          cin >> r;
+                          stringstream z;
+                          z << sr;
+                          z >> r;
                           cout << "\n";
                           c = toupper(c);
 
@@ -273,7 +276,10 @@ void SelectSeat(string name_movie,string time_movie){
                     SetConsoleTextAttribute(h,9);
                     cout << "   Row: ";
                     SetConsoleTextAttribute(h,7);
-                    cin >> r;
+                    cin >> sr;
+                    stringstream aa;
+                    aa << sr;
+                    aa >> r;
                     cout << "\n";
                     c = toupper(c);
            
@@ -285,11 +291,13 @@ void SelectSeat(string name_movie,string time_movie){
                            SetConsoleTextAttribute(h,4);
                            cout << "*|  Row: " << r << " do not have. |*" << endl;
                            cout << "*|  Please select again. |*" << "\n";
+                           system("pause");
                         }
                     }else{
                         SetConsoleTextAttribute(h,4);
                         cout << "*|  Column: " << c <<  " do not have. |*" << endl;
                         cout << "*| Please select again. |*" << "\n";
+                        system("pause");
                     }
                 }while(true);
 
@@ -300,7 +308,6 @@ void SelectSeat(string name_movie,string time_movie){
                        break;
                     }
                 }
-                cin.ignore();
                 //ขึ้นสัญลักษณ์ จอง 'X'; 
                 int point = column + M*(r-1);
                 if(t.at(point) == "0"){
