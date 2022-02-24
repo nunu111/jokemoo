@@ -39,7 +39,9 @@ void SelectSeat(string name_movie,string time_movie){
     string file = ".txt";
     ifstream seats(difile +name_movie+file);
     ifstream seats_cinema(difile+name_movie+file);
-    string All,select;
+    string p_file = "_price.txt";
+    ifstream pay(dfile_price +name_movie+p_file);
+    string All,select,get;
     vector<string> T;
     vector<string> t;
     string cinema,text;
@@ -79,14 +81,51 @@ void SelectSeat(string name_movie,string time_movie){
         if(i%M == 0) N++;
     }
 
+     //เพิ่มการโชว์รายจ่ายของโรง
+    string type,start,add;
+    while(getline(pay,get)){
+        if(get == time_movie) break;
+    }
+    if(get == time_movie){
+        for(int j = 0;getline(pay,get);j++){
+            if(get == " "){
+                break;
+            }else{
+                start = get;
+            }
+        }
+    }
+    //แปลงstring เป็น int
+        int money = atoi(start.c_str());
+        SetConsoleTextAttribute(h,6);
+        cout << "-----------------------------------------" << endl;
+        cout << "  | PRICE RATE | One seat : " << money << " BAHT." << endl;
+        cout << "-----------------------------------------" << endl;
+        
+
  
     int r;
     char c;
-    int answer = 0,column;
+    int answer = 100,column;
     do{  
         if(answer == 2){
            do{  
                 do{ 
+                    SetConsoleTextAttribute(h,7);
+                    /*cout << "Price per Seat : " << endl;*/
+                    SetConsoleTextAttribute(h,7);
+                    //คำนวณจำนวนเงินทั้งหมด
+                    int count_seat = 0;
+                    for(int i = 0;i < t.size();i++){
+                        if(t.at(i) == "S"){
+                            count_seat++;
+                        }
+                    }
+    
+                    SetConsoleTextAttribute(h,6);
+                    cout << "------------------------------" << endl;
+                    cout << "    Total Amount " << money*count_seat <<" THB." << endl;
+                    cout << "------------------------------" << endl;
                     SetConsoleTextAttribute(h,7);
                     show(t,N,M);
  
@@ -152,14 +191,14 @@ void SelectSeat(string name_movie,string time_movie){
                 do{
                 SetConsoleTextAttribute(h,6);
                 cout << "--------------------------------\n";
-                cout << "      1. : add seat.\n" << "      2. : cancelled seat.\n" <<   "      3. : DONE.  \n"; 
+                cout << "      0. : BACK.\n" << "      1. : add seat.\n" << "      2. : cancelled seat.\n" <<   "      3. : COMPLETE.  \n"; 
                 cout << "--------------------------------\n";
                 cout << "answer: ";
                 cin >> answer ; 
                 cin.ignore();
                 cout << "--------------------------------\n";
                 system("CLS");
-                if(answer == 1 || answer == 2 || answer == 3){
+                if(answer == 1 || answer == 2 || answer == 3 || answer == 0){
                     break;
                 }else{
                     SetConsoleTextAttribute(h,4);
@@ -173,13 +212,27 @@ void SelectSeat(string name_movie,string time_movie){
             }while(answer == 2);
         }
 
-        if(answer == 3) break;
+        if(answer == 0 || answer == 3) break;
         
-
 
         do{
             SetConsoleTextAttribute(h,7);
             /*cout << "Price per Seat : " << endl;*/
+            SetConsoleTextAttribute(h,7);
+            //คำนวณจำนวนเงินทั้งหมด
+            int count_seat = 0;
+            for(int i = 0;i < t.size();i++){
+            if(t.at(i) == "S"){
+                count_seat++;
+                }
+            }
+    
+            SetConsoleTextAttribute(h,6);
+            cout << "------------------------------" << endl;
+            cout << "    Total Amount " << money*count_seat <<" THB." << endl;
+            cout << "------------------------------" << endl;
+            SetConsoleTextAttribute(h,7);
+             
             show(t,N,M);
           
 
@@ -253,14 +306,14 @@ void SelectSeat(string name_movie,string time_movie){
         
         SetConsoleTextAttribute(h,6);
         cout << "--------------------------------\n";
-        cout << "      1. : add seat.\n" << "      2. : cancelled seat.\n" <<   "      3. : DONE.  \n"; 
+        cout << "      0. : BACK.\n" << "      1. : add seat.\n" << "      2. : cancelled seat.\n" <<   "      3. : COMPLETE.  \n"; 
         cout << "--------------------------------\n";
         cout << "answer: ";
         cin >> answer ; 
         cin.ignore();
         cout << "--------------------------------\n";
         system("CLS");
-        if(answer == 1 || answer == 2 || answer == 3){
+        if(answer == 1 || answer == 2 || answer == 3 || answer == 0){
             break;
         }else{
             SetConsoleTextAttribute(h,4);
@@ -270,32 +323,37 @@ void SelectSeat(string name_movie,string time_movie){
         }
         }while(true);
         system("CLS");
-    
-    }while(answer != 3);
-    
-    
-    SetConsoleTextAttribute(h,7);
-    show(t,N,M);
-    cout << "\n";
 
-    Payment1(name_movie,time_movie,t);
+    
+    }while(answer != 3 && answer != 0);
+    
+    
+    if(answer == 3){
+       SetConsoleTextAttribute(h,7);
+       show(t,N,M);
+       cout << "\n";
 
-    //เก็บเข้าไฟล์เดิม
-    for(int j = 0;j < t.size();j++){
-        if(t.at(j) == "S"){
-            t.at(j) = "X";
+       Payment1(name_movie,time_movie,t);
+
+       //เก็บเข้าไฟล์เดิม
+       for(int j = 0;j < t.size();j++){
+          if(t.at(j) == "S"){
+             t.at(j) = "X";
+          }
+          T[j+p+1] = t[j];
         }
-        T[j+p+1] = t[j];
-    }
 
-    ofstream s(difile + name_movie+file);
-    for(int k = 0;k < T.size();k++){
+        ofstream s(difile + name_movie+file);
+        for(int k = 0;k < T.size();k++){
         s << T[k] << endl;
+        }
+        s.close();
+
     }
-    s.close();
     seats_cinema.close();
     seats.close();
     
     
 }
+
 
