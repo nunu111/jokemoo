@@ -355,13 +355,13 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
                 }
                 else if (a.size() == i+1){
                     SetConsoleTextAttribute(h,4);
-                    cout << setw(10) <<  "There have not movie ";
+                    cout << setw(10) <<  "There is not movie ";
                     SetConsoleTextAttribute(h,10);
                     cout <<name;
                     SetConsoleTextAttribute(h,4);
                     cout <<" in the list try again\n\n";
                     SetConsoleTextAttribute(h,11);
-                    cout << "what movie do want to manage ?" <<endl;
+                    cout << "What movie do want to manage ?" <<endl;
                     getline(cin,name);
                     i=-1;
                     system("CLS");
@@ -410,7 +410,7 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
                 while (1)
                 {
                     SetConsoleTextAttribute(h,6);
-                    cout << "which therter do you want for movie\n";
+                    cout << "Which theater do you want to add movie ?\n";
                     cin >> choose_therter;
                     cin.ignore();
                     if(choose_therter>0&&choose_therter<=room){
@@ -433,7 +433,7 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
             }
             double price=0;
             SetConsoleTextAttribute(h,6);
-            cout << "How cost do you want to make\n";
+            cout << "How cost do you want to make ?\n";
             cin >> price;
             cin.ignore();
             vector<string> Cmovie;
@@ -466,7 +466,7 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
                 else if (toUpperStr(exit) == toUpperStr("n")) break;
                 else{
                     SetConsoleTextAttribute(h,4);
-                    cout << "There have not comman ";
+                    cout << "There is not command.";
                     SetConsoleTextAttribute(h,11);
                     cout <<exit;
                     SetConsoleTextAttribute(h,6);
@@ -609,7 +609,7 @@ void admin(){
         }else if(s==2){//ระบบจัดการรอบหนัง
             if(theater.size() ==0) {
                 SetConsoleTextAttribute(h,4);
-                cout << "you don't have theater pleses config theater first\n";
+                cout << "You don't have theater pleses config theater first\n";
                 SetConsoleTextAttribute(h,6);
                 system("pause");
                 system("CLS");
@@ -742,6 +742,7 @@ void admin(){
                         remove_movietheater(r,a[i]);
                     }
                     a.clear();
+                    b.clear();
                     ofstream movielist1 ("listmovie.txt");
                     for(int i=0;i<a.size();i++){
                         movielist1 << a[i] << endl;
