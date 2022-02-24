@@ -332,6 +332,7 @@ void remove_movietheater(int r,string name){
 }
 
 void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int mode,string name1,int time1,int room){
+    string schoose_therter;
     int choose_therter;
     do{
         if(a.size() == 0){
@@ -382,10 +383,10 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
             cout << "How many [ " << name << " ] show ?" << endl;
             SetConsoleTextAttribute(h,11);
             cin >> sN;
+            cin.ignore();
             stringstream ab;
             ab << sN;
             ab >> N;
-            cin.ignore();
             if(N == 0){
                 SetConsoleTextAttribute(h,4);
                 cout << "show cannot be lower than 1 or character\n";
@@ -394,12 +395,13 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
             else break;
         }
         for(int i=0;i<N;i++){
+            string shr,smin;
             int hr,min,t;
             while(1){
                 SetConsoleTextAttribute(h,10);
                 show_movietheater(room);
                 SetConsoleTextAttribute(h,6);
-                cout << "What time " << name << " show " << i+1 << "# ?"<< endl;
+                cout << "What time [ " << name << " ] show " << i+1 << "# ?"<< endl;
                 cout << "Example : 8:00am ==> hr : 8" << endl;
                 cout << "                     min : 0" << endl;
                 cout << "          3:25pm ==> hr : 15" << endl;
@@ -407,9 +409,17 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
                 while(1){
                     SetConsoleTextAttribute(h,11);
                     cout << "Your anwser is :\nHr : " ;
-                    cin >> hr;
+                    cin >> shr;
+                    cin.ignore();
+                    stringstream ab;
+                    ab << shr;
+                    ab >> hr;
                     cout << "Min : ";
-                    cin >> min;
+                    cin >> smin;
+                    cin.ignore();
+                    stringstream abc;
+                    abc << smin;
+                    abc >> min;
                     if(hr <= 0 || hr > 24 ){
                         SetConsoleTextAttribute(h,4);
                         cout << "Hr is wrong !!! please try again.\n";
@@ -426,8 +436,11 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
                 {
                     SetConsoleTextAttribute(h,6);
                     cout << "Which theater do you want to add movie ?\n";
-                    cin >> choose_therter;
+                    cin >> schoose_therter;
                     cin.ignore();
+                    stringstream ab;
+                    ab << schoose_therter;
+                    ab >> choose_therter;
                     if(choose_therter>0&&choose_therter<=room){
                         break;
                     }else{
@@ -447,10 +460,34 @@ void movie_theater(vector<string> &a,vector<int> &b,vector<string> &theater,int 
             
             }
             double price=0;
+            string sprice;
             SetConsoleTextAttribute(h,6);
-            cout << "How cost do you want to make ?\n";
-            cin >> price;
-            cin.ignore();
+            while(true){
+                SetConsoleTextAttribute(h,6);
+                cout << "How cost do you want to make ?\n";
+                cin >> sprice;
+                cin.ignore();
+                stringstream ab;
+                ab << sprice;
+                ab >> price;
+                if(price == 0){
+                    string y;
+                    cout << "Are you sure you want to make price of movie at 0 ?\n[Y] Yes [N] No\n>>";
+                    while(true){
+                        cin >> y;
+                        cin.ignore();
+                        if(toUpperStr(y) == "Y") break;
+                        else if (toUpperStr(y) == "N") break;
+                        else{
+                            SetConsoleTextAttribute(h,4);
+                            cout << "worng command\n";
+                        }
+                    }
+                    if(toUpperStr(y) == "Y") break;
+                    else if (toUpperStr(y) == "N") continue;
+                }
+                else break;
+            }
             vector<string> Cmovie;
             for(unsigned int i=0; i < theater.size();i++){
                 if(choose_therter == atoi(theater[i].c_str())){
