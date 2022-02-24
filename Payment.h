@@ -135,6 +135,8 @@ void Payment1(string name_movie,string time_movie,vector<string> R){
     SetConsoleTextAttribute(h,7);
     cout << "-----------------------------------------" << endl;
     cout << "_________________________________________" << "\n";
+    pay.close();
+    seats.close();
     system("pause");
     system("CLS");
 }

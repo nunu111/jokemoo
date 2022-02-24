@@ -291,7 +291,9 @@ void SelectSeat(string name_movie,string time_movie){
     for(int k = 0;k < T.size();k++){
         s << T[k] << endl;
     }
+    s.close();
     seats_cinema.close();
+    seats.close();
     
     
 }

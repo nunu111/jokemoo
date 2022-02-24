@@ -40,6 +40,7 @@ void check_time(string movie){
             movie_time.push_back(a);
         }
     }
+    check_list.close();
     cout << "this movie have time ....\n";
     for(int i=0; i<movie_time.size();i++){
         cout << "["<<i+1<<"] ";
@@ -504,22 +505,25 @@ void admin(){
     while(getline(movie,moviename)){
         a.push_back(moviename);
     }
+    movie.close();
     for(int i =0;getline(time,movietime);i++){
         b.push_back(stoi(movietime));
     }
+    time.close();
     for(int i =0;getline(theatera,theatervec);i++){
         theater.push_back(theatervec);
-        if(theatervec != "0" && theatervec != " "){
+        if(theatervec != "0" && theatervec != " " && theatervec != "X"){
             r++;
         }
-
     }
+    theatera.close();
+
     while(1){
         //เลือกระบบที่ต้องการแก้ไข
         SetConsoleTextAttribute(h,14);
         cout << "Which system do you want to manage ?" ;
         SetConsoleTextAttribute(h,6);
-        cout << " \n1 : Theater manage\n2 : Movie manage\n3 : Showing movie manage\n9 : Reset Password\n0 : Go to Home page";
+        cout << " \n1 : Theater manage\n2 : Movie manage\n3 : Showing movie manage\n4 : delete all movie\n9 : Reset Password\n0 : Go to Home page";
         SetConsoleTextAttribute(h,11);
         cout << "\nYour answer is ";
         cin >> Ans1;
@@ -700,6 +704,45 @@ void admin(){
             timemovie1.close();
         }else if(Ans1 ==3){
             movie_theater(a,b,theater,0,"name",0,r);
+        }else if(Ans1 == 4){
+            string check;
+            SetConsoleTextAttribute(h,4);
+            cout << "Are you you want to delete all movie?" << endl << "[Y] Yes   [N] No\n>>> " ;
+            cin >> check;
+            while(true){
+                if(toUpperStr(check) == "Y"){
+                    int ai=a.size();
+                    for(int i=0;i<ai;i++){
+                        cout << directfile_movie+a[i]+file << endl;
+                        remove_movie(directfile_movie+a[i]+file);
+                        remove_movie(directfile_price+a[i]+p+file);
+                        remove_movietheater(r,a[i]);
+                    }
+                    a.clear();
+                    ofstream movielist1 ("listmovie.txt");
+                    for(int i=0;i<a.size();i++){
+                        movielist1 << a[i] << endl;
+                    }
+                    movielist1.close();
+                    ofstream timemovie1 ("timemovie.txt");
+                    for(int i=0;i<b.size();i++){
+                        timemovie1 << b[i] << endl;
+                    }
+                    timemovie1.close();
+                    system("CLS");
+                    break;
+                }
+                else if(toUpperStr(check) == "N") {
+                    system("CLS");
+                    break;
+                }
+                else {
+                    cout << "worng command please try again\n>>>";
+                    cin >> check;
+                    continue;
+                }
+            }
+            SetConsoleTextAttribute(h,7);
         }else if(Ans1 == 9){
             reset_password();
         }else if(Ans1==0) {//ออกไปหน้าหลัก(หน้าลูกค้า)
