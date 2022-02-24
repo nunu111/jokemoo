@@ -179,6 +179,7 @@ void SelectSeat(string name_movie,string time_movie){
 
         do{
             SetConsoleTextAttribute(h,7);
+            /*cout << "Price per Seat : " << endl;*/
             show(t,N,M);
           
 

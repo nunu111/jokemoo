@@ -33,7 +33,8 @@ void showEX2(int &);
 void check_time(string movie){
     string a;
     vector<string> movie_time;
-    int number,i=0;
+    string number;
+    int i=0;
     ifstream check_list (directfile_movie+movie+file);
     for (int i=0;getline(check_list,a);i++){
         if(a != "0" && a != " " && a != "X"){
@@ -54,17 +55,21 @@ void check_time(string movie){
         }
     
     }
-    cout <<"[0] go to home screen";
+    cout <<"[H] go to home screen";
     while(true){
     cout << endl<< ">>> ";
     cin >> number;
+    stringstream ss;
+    ss << number;
+    int s;
+    ss >> s;
     cin.ignore();
-        if(number ==0) {
+        if(toUpperStr(number) == "H") {
             system("CLS");
             runprogram();
         }
-        else if (number <= movie_time.size() &&  number > 0){
-            SelectSeat(movie,movie_time[number-1]);
+        else if (s <= movie_time.size() &&  s > 0){
+            SelectSeat(movie,movie_time[s-1]);
             system("CLS");
             runprogram();
         }
