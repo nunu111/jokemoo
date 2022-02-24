@@ -33,16 +33,14 @@ void reset_password(){
         cout << " is your old password\nInput your new password\n";
         SetConsoleTextAttribute(t,11);
         cout << ">>> ";
-        cin >> newpassword;
-        cin.ignore();
+        getline(cin,newpassword);
         cout << newpassword;
         SetConsoleTextAttribute(t,6);
         cout << " is your new password are you sure?\nInput your password again to confirm(to unconfirm type anything)\n";
         while(true){
             SetConsoleTextAttribute(t,11);
             cout << ">>> ";
-            cin >> conf;
-            cin.ignore();
+            getline(cin,conf);
             if(conf == newpassword){
                 ofstream password ("Password");
                 password << newpassword;
