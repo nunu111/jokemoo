@@ -692,7 +692,7 @@ void admin(){
         }else if(s==2){//ระบบจัดการรอบหนัง
             string Ans5,st,sAns2,sAns4;
             int Ans2,Ans4;
-            char Ans3;
+            string Ans3;
             while(1){
                 if(theater.size() ==0) {
                 SetConsoleTextAttribute(h,4);
@@ -787,10 +787,21 @@ void admin(){
                             timemovie1 << b[i] << endl;
                         }
                         timemovie1.close();
-                        cout << "Anything else ? (Yes = [Y] or anything,No = [N])"<< endl;
-                        cin >> Ans3;
-                        cin.ignore();
-                        if(Ans3 == 'n') break;
+                        while(true){
+                            cout << "Anything else ? (Yes = [Y] or anything,No = [N])"<< endl;
+                            cin >> Ans3;
+                            cin.ignore();
+                            if(toUpperStr(Ans3) == "N") break;
+                            else if(toUpperStr(Ans3) == "Y") break;
+                            else{
+                                SetConsoleTextAttribute(h,4);
+                                cout << "Wrong command Please try again."<< endl;
+                                continue;
+                            }
+                            
+                        }
+                        if(toUpperStr(Ans3) == "N") break;
+                        else if(toUpperStr(Ans3) == "Y") continue;
                     }
                 }else if(Ans5 == "2"){//ระบบลบหนัง
                     while(1){
@@ -838,12 +849,20 @@ void admin(){
                         if(a.size() == 0) {
                             system("CLS");
                             break;
+                        }while(true){
+                            cout << "Anything else ? (Yes = [Y] or anything,No = [N])"<< endl;
+                            cin >> Ans3;
+                            cin.ignore();
+                            if(toUpperStr(Ans3) == "N") break;
+                            else if(toUpperStr(Ans3) == "Y") break;
+                            else{
+                                SetConsoleTextAttribute(h,4);
+                                cout << "Wrong command Please try again."<< endl;
+                                continue;
+                            }
                         }
-                        cout << "Anything else ? (Yes = [Y] or anything,No = [N])"<< endl;
-                        SetConsoleTextAttribute(h,11);
-                        cin >> Ans3;
-                        system("CLS");
-                        if(Ans3 == 'n') break;
+                        if(toUpperStr(Ans3) == "N") break;
+                        else if(toUpperStr(Ans3) == "Y") continue;
                         
                     }
                 }else if(Ans5 == "0"){
